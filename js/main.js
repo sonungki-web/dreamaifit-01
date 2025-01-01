@@ -6,7 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
         card.addEventListener('click', function(e) {
             if (!e.target.matches('button')) {
                 const button = this.querySelector('button');
-                button.click();
+                if (button) {
+                    // 페이지 전환 효과
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        button.click();
+                    }, 300);
+                }
             }
         });
     });

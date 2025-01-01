@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-FIT Career Exploration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background: #6366f1;
+            color: white;
+            padding: 2.2rem 2rem;
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .header-content p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .exploration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .exploration-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .exploration-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2rem;
+            color: #6366f1;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 2rem;
+            min-height: 100px;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 4;
+            -moz-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            -moz-box-orient: vertical;
+            box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            width: 100%;
+            max-height: 6.4em;
+        }
+
+        @supports not (display: -webkit-box) {
+            .card-description {
+                display: block;
+                height: 6.4em;
+                position: relative;
+            }
+            
+            .card-description::after {
+                content: "...";
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                padding-left: 1em;
+                background: white;
+            }
+        }
+
+        .explore-button {
+            margin-top: auto;
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #6366f1;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: center;
+        }
+
+        .explore-button:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .exploration-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .exploration-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            .header-content p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>꿈 AI-FIT [나를 찾는 훈련]</h1>
+            <p>Discover your path with AI-powered guidance</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="exploration-grid">
+            <div class="exploration-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="6" fill="white"/>
+                </svg>
+                <h2 class="card-title">자아탐색</h2>
+                <p class="card-description">AI 기반 평가와 맞춤형 인사이트를 통해 당신의 강점, 관심사, 가치관을 이해하세요</p>
+                <button class="explore-button" onclick="startJourney()">Start Journey</button>
+            </div>
+
+            <div class="exploration-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3Z"/>
+                </svg>
+                <h2 class="card-title">학과탐색</h2>
+                <p class="card-description">당신의 관심사에 맞는 학업 경로를 발견하고 적합한 대학 전공에 대한 AI 추천을 받으세요.</p>
+                <button class="explore-button" onclick="exploreMajors()">Explore Majors</button>
+            </div>
+
+            <div class="exploration-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6Z"/>
+                </svg>
+                <h2 class="card-title">직업탐색</h2>
+                <p class="card-description">잠재적인 직업 경로를 탐색하고, 업계 동향을 파악하며, AI 기반의 맞춤형 일자리 추천을 받으세요</p>
+                <button class="explore-button" onclick="discoverCareers()">Discover Careers</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startJourney() {
+            // Self Exploration 기능 구현
+            console.log("Starting self exploration journey...");
+        }
+
+        function exploreMajors() {
+            // Major Exploration 기능 구현
+            console.log("Exploring majors...");
+        }
+
+        function discoverCareers() {
+            // Career Exploration 기능 구현
+            console.log("Discovering careers...");
+        }
+    </script>
+</body>
+</html>
