@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꿈 소통 | 인터뷰 FIT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .board-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-title {
+            font-size: 1.5rem;
+            color: #4f46e5;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .post-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .heart-button {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .points-badge {
+            background: #4f46e5;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .chat-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mentor-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>꿈 소통 AI-FIT</h1>
+            <p>함께 성장하는 학습 커뮤니티</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 공부시간 인증 게시판 -->
+        <section class="board-section">
+            <div class="board-title">
+                <h2>공부시간 인증</h2>
+                <button class="btn btn-primary">인증하기</button>
+            </div>
+            <div class="post-grid">
+                <div class="post-card">
+                    <img src="placeholder.jpg" alt="공부 인증" class="post-image">
+                    <p>오늘도 열심히 3시간 공부했어요!</p>
+                    <div class="post-info">
+                        <button class="heart-button">❤️</button>
+                        <span class="points-badge">+50P</span>
+                    </div>
+                </div>
+                <!-- 추가 포스트 카드들 -->
+            </div>
+        </section>
+
+        <!-- 친한 응원 게시판 -->
+        <section class="board-section">
+            <div class="board-title">
+                <h2>친구 응원 게시판</h2>
+                <button class="btn btn-primary">채팅방 입장</button>
+            </div>
+            <div class="chat-container">
+                <!-- 채팅 메시지들이 여기에 표시됩니다 -->
+                <p><strong>김멘토:</strong> 오늘도 모두 화이팅하세요! 👋</p>
+                <p><strong>이학생:</strong> 네, 감사합니다! 열심히 할게요 💪</p>
+            </div>
+        </section>
+
+        <!-- 학습 고수 찾기 -->
+        <section class="board-section">
+            <div class="board-title">
+                <h2>학습 고수 찾기</h2>
+                <button class="btn btn-primary">멘토 신청</button>
+            </div>
+            <div class="mentor-grid">
+                <div class="mentor-card">
+                    <img src="avatar-placeholder.jpg" alt="멘토 프로필" class="mentor-avatar">
+                    <h3>박멘토</h3>
+                    <p>수학/과학 전문</p>
+                    <button class="btn btn-primary">매칭 신청</button>
+                </div>
+                <!-- 추가 멘토 카드들 -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 하트 버튼 기능
+        document.querySelectorAll('.heart-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.textContent = this.textContent === '❤️' ? '🤍' : '❤️';
+            });
+        });
+    </script>
+</body>
+</html> 

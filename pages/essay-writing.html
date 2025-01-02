@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-FIT Essay Writing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 유지 */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background: #6366f1;
+            color: white;
+            padding: 2.2rem 2rem;
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .header-content p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* 마인드맵 스타일 */
+        .mindmap-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+        }
+
+        .mindmap-card {
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 첫 번째 카드 스타일 (보라색 계열) - 더 진한 버전 */
+        .mindmap-card:nth-child(1) {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e1e3ff 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .mindmap-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #f0f1ff 0%, #d4d6ff 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 두 번째 카드 스타일 (민트 계열) - 더 진한 버전 */
+        .mindmap-card:nth-child(2) {
+            background: linear-gradient(135deg, #f8fffd 0%, #e1fff9 100%);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        .mindmap-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #f0fff9 0%, #d4fff5 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(45, 212, 191, 0.2);
+        }
+
+        /* 세 번째 카드 스타일 (핑크 계열) - 더 진한 버전 */
+        .mindmap-card:nth-child(3) {
+            background: linear-gradient(135deg, #fff0f7 0%, #ffe1ee 100%);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .mindmap-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #ffeaf3 0%, #ffd4e5 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+        }
+
+        /* 각 카드의 아이콘 색상도 매칭 */
+        .mindmap-card:nth-child(1) .card-icon {
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.15);
+        }
+
+        .mindmap-card:nth-child(2) .card-icon {
+            color: #2dd4bf;
+            background: rgba(45, 212, 191, 0.15);
+        }
+
+        .mindmap-card:nth-child(3) .card-icon {
+            color: #ec4899;
+            background: rgba(236, 72, 153, 0.15);
+        }
+
+        /* 각 카드의 제목 색상도 매칭 */
+        .mindmap-card:nth-child(1) .card-title {
+            color: #4f46e5;
+        }
+
+        .mindmap-card:nth-child(2) .card-title {
+            color: #0d9488;
+        }
+
+        .mindmap-card:nth-child(3) .card-title {
+            color: #be185d;
+        }
+
+        /* 각 카드의 버튼 스타일도 매칭 */
+        .mindmap-card:nth-child(1) .start-button {
+            background: #6366f1;
+        }
+
+        .mindmap-card:nth-child(2) .start-button {
+            background: #2dd4bf;
+        }
+
+        .mindmap-card:nth-child(3) .start-button {
+            background: #ec4899;
+        }
+
+        .mindmap-card:nth-child(1) .start-button:hover {
+            background: #4f46e5;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .mindmap-card:nth-child(2) .start-button:hover {
+            background: #0d9488;
+            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
+        }
+
+        .mindmap-card:nth-child(3) .start-button:hover {
+            background: #be185d;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .mindmap-card:hover .card-icon {
+            background: rgba(99, 102, 241, 0.15);
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            text-align: left;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 0.5rem;
+        }
+
+        .card-description br {
+            margin-bottom: 0.5rem;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: center;
+            margin-top: auto;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 1024px) {
+            .mindmap-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mindmap-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .mindmap-card {
+                padding: 2rem;
+            }
+        }
+
+        /* hover 시 아이콘 배경 더 진하게 */
+        .mindmap-card:nth-child(1):hover .card-icon {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .mindmap-card:nth-child(2):hover .card-icon {
+            background: rgba(45, 212, 191, 0.2);
+        }
+
+        .mindmap-card:nth-child(3):hover .card-icon {
+            background: rgba(236, 72, 153, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>꿈 에세이 AI-FIT</h1>
+            <p>Systematic writing training with AI</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="mindmap-container">
+            <div class="mindmap-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L1 9l11 7 9-5.7V17h2V9L12 2z"/>
+                </svg>
+                <h2 class="card-title">진로 구체화 전략</h2>
+                <p class="card-description">
+                    - 진로를 위한 자료만 만들기<br>
+                    - 자기예시/예행동<br>
+                    - 진로 관련성 점검<br>
+                    - 자기소개서 자료 생성<br>
+                    - 목표 작성하기
+                </p>
+                <button class="start-button" onclick="startWriting('strategy')">작성 시작</button>
+            </div>
+
+            <div class="mindmap-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                <h2 class="card-title">자소서 자료 생성</h2>
+                <p class="card-description">
+                    - 자원봉사 활동<br>
+                    - 진로관련성 점검<br>
+                    - 교내외 활동<br>
+                    - 특별활동교과외 영역<br>
+                    - 자기소개서 자료 가져오기
+                </p>
+                <button class="start-button" onclick="startWriting('materials')">작성 시작</button>
+            </div>
+
+            <div class="mindmap-card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+                <h2 class="card-title">AI 자료 생성</h2>
+                <p class="card-description">
+                    - 위 데이터를 기반으로 자기소개서 생성<br>
+                    - 추가로 기입할 수 있도록 더하기<br>
+                    - 관심 직업 구체화에 맞기
+                </p>
+                <button class="start-button" onclick="startWriting('ai-generation')">작성 시작</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startWriting(type) {
+            // 각 영역별 작성 페이지로 이동하는 로직
+            console.log(`Starting ${type} essay writing...`);
+            // 추후 실제 작성 페이지로 연결
+        }
+    </script>
+</body>
+</html> 
