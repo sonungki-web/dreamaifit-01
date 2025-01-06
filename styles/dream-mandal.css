@@ -1,0 +1,408 @@
+:root {
+    --main-blue: #a8c8ff;
+    --light-blue: #e8f1ff;
+    --border-color: #e0e0e0;
+    --hover-color: #f8f9fa;
+    --green-pastel: #C1E1C1;
+    --pink-pastel: #FFD1DC;
+    --yellow-pastel: #FFF4BD;
+    --purple-pastel: #E0B0FF;
+    --blue-pastel: #B5E5FF;
+    --orange-pastel: #FFE4D6;
+    --mint-pastel: #B4F0E0;
+    --lavender-pastel: #E6E6FA;
+    --lime-pastel: #E8FFD1;
+}
+
+body {
+    margin: 0;
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    width: 100%;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 3rem;
+}
+
+/* 진행률 바 스타일 */
+.progress-container {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.progress-text {
+    color: #110c0c;
+    font-size: 1.3rem;
+}
+
+/* AI 어시스턴트 영역 */
+.ai-assistant {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.ai-assistant input {
+    width: 70%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+#aiSearchBtn {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--main-blue);
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* 버튼 컨테이너 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.action-button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--main-blue);
+    color: #333;
+}
+
+.action-button.warning {
+    background-color: var(--pink-pastel);
+}
+
+/* 만다라트 그리드 스타일 */
+.mandal-container {
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 1;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    margin: 0 auto;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 3px;
+    aspect-ratio: 1;
+    border: 10px solid #ccc;
+    padding: 3px;
+    background: #c7bff3;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: white;
+    border: 2px solid #b3b4b3;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    position: relative;
+}
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="0"][data-col="0"],
+.cell[data-row="0"][data-col="1"],
+.cell[data-row="0"][data-col="2"],
+.cell[data-row="1"][data-col="0"],
+
+.cell[data-row="1"][data-col="1"],
+
+.cell[data-row="1"][data-col="2"],
+.cell[data-row="2"][data-col="0"],
+.cell[data-row="2"][data-col="1"],
+.cell[data-row="2"][data-col="2"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid hwb(61 2% 4%);
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="0"][data-col="3"],
+.cell[data-row="0"][data-col="4"],
+.cell[data-row="0"][data-col="5"],
+.cell[data-row="1"][data-col="3"],
+.cell[data-row="1"][data-col="4"],
+.cell[data-row="1"][data-col="5"],
+.cell[data-row="2"][data-col="3"],
+.cell[data-row="2"][data-col="4"],
+.cell[data-row="2"][data-col="5"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #50f504;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="0"][data-col="6"],
+.cell[data-row="0"][data-col="7"],
+.cell[data-row="0"][data-col="8"],
+.cell[data-row="1"][data-col="6"],
+.cell[data-row="1"][data-col="7"],
+.cell[data-row="1"][data-col="8"],
+.cell[data-row="2"][data-col="6"],
+.cell[data-row="2"][data-col="7"],
+.cell[data-row="2"][data-col="8"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #04c5f5;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="3"][data-col="0"],
+.cell[data-row="3"][data-col="1"],
+.cell[data-row="3"][data-col="2"],
+.cell[data-row="4"][data-col="0"],
+.cell[data-row="4"][data-col="1"],
+.cell[data-row="4"][data-col="2"],
+.cell[data-row="5"][data-col="0"],
+.cell[data-row="5"][data-col="1"],
+.cell[data-row="5"][data-col="2"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #5f61f3;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="3"][data-col="6"],
+.cell[data-row="3"][data-col="7"],
+.cell[data-row="3"][data-col="8"],
+.cell[data-row="4"][data-col="6"],
+.cell[data-row="4"][data-col="7"],
+.cell[data-row="4"][data-col="8"],
+.cell[data-row="5"][data-col="6"],
+.cell[data-row="5"][data-col="7"],
+.cell[data-row="5"][data-col="8"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #ea85f3;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="6"][data-col="0"],
+.cell[data-row="6"][data-col="1"],
+.cell[data-row="6"][data-col="2"],
+.cell[data-row="7"][data-col="0"],
+.cell[data-row="7"][data-col="1"],
+.cell[data-row="7"][data-col="2"],
+.cell[data-row="8"][data-col="0"],
+.cell[data-row="8"][data-col="1"],
+.cell[data-row="8"][data-col="2"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #1cf0cc;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="6"][data-col="3"],
+.cell[data-row="6"][data-col="4"],
+.cell[data-row="6"][data-col="5"],
+.cell[data-row="7"][data-col="3"],
+.cell[data-row="7"][data-col="4"],
+.cell[data-row="7"][data-col="5"],
+.cell[data-row="8"][data-col="3"],
+.cell[data-row="8"][data-col="4"],
+.cell[data-row="8"][data-col="5"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #fa9848;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="6"][data-col="6"],
+.cell[data-row="6"][data-col="7"],
+.cell[data-row="6"][data-col="8"],
+.cell[data-row="7"][data-col="6"],
+.cell[data-row="7"][data-col="7"],
+.cell[data-row="7"][data-col="8"],
+.cell[data-row="8"][data-col="6"],
+.cell[data-row="8"][data-col="7"],
+.cell[data-row="8"][data-col="8"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #d8f148;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 소주제 셀들에 3D 효과 적용 */
+.cell[data-row="3"][data-col="3"],
+.cell[data-row="3"][data-col="4"],
+.cell[data-row="3"][data-col="5"],
+.cell[data-row="4"][data-col="3"],
+.cell[data-row="4"][data-col="4"],
+.cell[data-row="4"][data-col="5"],
+.cell[data-row="5"][data-col="3"],
+.cell[data-row="5"][data-col="4"],
+.cell[data-row="5"][data-col="5"] {
+    transform: translateZ(10px);
+    box-shadow: 0 4px 8px rgba(61, 224, 12, 0.2);
+    border: 5px solid #f36161;
+    z-index: 1;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+/* 셀 색상 클래스 */
+
+
+.cell:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-color: #666;
+}
+
+/* 팝업 스타일 */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 98, 98, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: rgb(216, 211, 211);
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 320px;
+}
+
+.popup-content h3 {
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+.input-container textarea {
+    width: 90%;
+    height: 80px;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    resize: none;
+    font-size: 1.5rem;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.popup-buttons button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.popup-buttons button:first-child {
+    background-color: var(--main-blue);
+    color: #333;
+}
+
+.popup-buttons button:last-child {
+    background-color: #f1f1f1;
+    color: #666;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1100px) {
+    .mandal-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .cell {
+        font-size: 0.8rem;
+        padding: 4px;
+    }
+}
+
+/* 중앙 셀(5x5) 스타일 추가 */
+.cell[data-position="5-5"] {
+    background-color: var(--lime-pastel);
+    border: 5px solid #112202;
+    box-shadow: 0 0 0 1px #111111;
+}
+
+/* 특정 위치 셀 스타일 */
+.cell[data-position="4-4"],
+.cell[data-position="2-2"] {
+    background-color: #962328;
+    border-color: #FFF176;
+}
+
+/* JavaScript에서 중앙 셀 위치를 확인할 수 있도록 data-position 속성을 추가해야 합니다 */ 
+
+.center-cell {
+    background-color: var(--lime-pastel) !important;
+    border-color: #D1E8B0;
+} 

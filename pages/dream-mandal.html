@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꿈만다라트</title>
+    
+    <!-- html2pdf.js 라이브러리 -->
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    
+    <link rel="stylesheet" href="../styles/dream-mandal.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>꿈만다라트 with AI</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+                <span class="progress-text">0% 완성</span>
+            </div>
+        </header>
+
+        <div class="ai-assistant">
+            <input type="text" placeholder="목표를 위한 구체적 실천 전략을 찾아보세요 " id="aiInput">
+            <button id="aiSearchBtn">AI 도우받기</button>
+        </div>
+
+        <div class="mandal-container">
+            <!-- 메인 3x3 그리드 -->
+            <div class="main-grid">
+                <!-- 그리드는 JavaScript로 동적 생성 -->
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="pdfExport" class="action-button button" onclick="generatePDF()">PDF 저장</button>
+            <button id="resetBtn" class="action-button warning" onclick="resetMandal()">초기화</button>
+        </div>
+    </div>
+
+    <!-- 입력 팝업 -->
+    <div class="popup" id="inputPopup">
+        <div class="popup-content">
+            <h3 id="popupTitle">목표 입력</h3>
+            <div class="input-container">
+                <textarea maxlength="20" id="popupInput"></textarea>
+                <div class="char-count">
+                    <span id="currentCount">0</span>/20
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button id="popupSave">저장</button>
+                <button id="popupCancel">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/dream-mandal.js"></script>
+</body>
+</html> 

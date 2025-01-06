@@ -5,6 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: start;
+    overflow-y: auto;
+    min-width: fit-content;
 }
 
 .card {
@@ -13,6 +15,9 @@
     padding: 2rem;
     width: 100%;
     max-width: 70rem;
+    min-width: fit-content;
+    overflow: auto;
+    margin-bottom: 2rem;
 }
 
 h1 {
@@ -25,6 +30,7 @@ h1 {
     border-collapse: separate;
     border-spacing: 0.5rem;
     margin-bottom: 1.5rem;
+    min-width: max-content;
 }
 
 .header-cell:first-child {
@@ -383,5 +389,17 @@ h1 {
     .info-box {
         max-width: 90%;
         width: auto;
+    }
+    
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .trait-table {
+        border-spacing: 0.25rem;
     }
 } 
