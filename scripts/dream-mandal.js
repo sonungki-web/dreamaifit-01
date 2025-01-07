@@ -13,15 +13,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 진행률 업데이트
     function updateProgress() {
-        const cells = document.querySelectorAll('.cell');
-        const filledCells = Array.from(cells).filter(cell => cell.textContent.trim() !== '').length;
-        const totalCells = cells.length;
-        const progress = Math.round((filledCells / totalCells) * 100);
+        // 전체 셀 개수 구하기 (중앙 셀 제외)
+        const totalCells = document.querySelectorAll('.cell').length - 1;  // 중앙 셀 제외
         
-        if (progressBar && progressText) {
-            progressBar.style.width = `${progress}%`;
-            progressText.textContent = `${progress}% 완성`;
+        // 내용이 입력된 셀 개수 구하기
+        const filledCells = Array.from(document.querySelectorAll('.cell')).filter(cell => {
+            // 중앙 셀 제외
+            if (cell.classList.contains('center-cell')) return false;
+            
+            // 내용이 있는 셀 카운트
+            const content = cell.getAttribute('data-content');
+            return content && content.trim() !== '';
+        }).length;
+        
+        // 진행률 계산 (소수점 첫째자리까지)
+        const progressPercentage = Math.round((filledCells / totalCells) * 1000) / 10;
+        
+        // 진행바 업데이트
+        const progressBar = document.querySelector('.progress');
+        const progressText = document.querySelector('.progress-text');
+        
+        // 진행률에 따른 클래스 추가/제거
+        if (progressPercentage === 0) {
+            progressText.classList.add('empty');
+        } else {
+            progressText.classList.remove('empty');
         }
+        
+        // 진행바 애니메이션 적용
+        requestAnimationFrame(() => {
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}% 완성`;
+            
+            // 진행률이 높을 때 색상 변화 효과
+            if (progressPercentage > 80) {
+                progressBar.style.backgroundColor = 'var(--orange-pastel)';
+            } else if (progressPercentage > 50) {
+                progressBar.style.backgroundColor = 'var(--yellow-pastel)';
+            } else {
+                progressBar.style.backgroundColor = 'var(--lime-pastel)';
+            }
+        });
+        
+        // 콘솔에 진행 상황 출력 (디버깅용)
+        console.log(`Total cells: ${totalCells}, Filled cells: ${filledCells}, Progress: ${progressPercentage}%`);
     }
 
     // 그리드 생성
@@ -93,9 +128,55 @@ document.addEventListener('DOMContentLoaded', function() {
             currentCell.textContent = content;
             currentCell.setAttribute('data-content', content);
 
-            // 4x4 셀에서 입력했을 경우 2x2 셀에도 내용 복사
-            if (currentCell.classList.contains('source-cell')) {
-                const linkedCell = document.querySelector('.linked-cell');
+            const row = parseInt(currentCell.dataset.row);
+            const col = parseInt(currentCell.dataset.col);
+            
+            if ((row === 3 && col === 3) || (row === 3 && col === 4) || (row === 3 && col === 5)) {  // 4x4, 4x5, 4x6 위치
+                let targetRow = 1;  // 모든 경우 2행으로
+                let targetCol;
+                
+                if (col === 3) targetCol = 1;      // 4x4 → 2x2
+                else if (col === 4) targetCol = 4;  // 4x5 → 2x5
+                else if (col === 5) targetCol = 7;  // 4x6 → 2x8
+                
+                const linkedCell = document.querySelector(`.cell[data-row="${targetRow}"][data-col="${targetCol}"]`);
+                if (linkedCell) {
+                    linkedCell.textContent = content;
+                    linkedCell.setAttribute('data-content', content);
+                }
+            } else if (row === 4 && (col === 1 || col === 3)) {  // 5x2 또는 5x4 위치
+                const targetCol = col === 1 ? 3 : 1;  // 5x2 → 5x4 또는 5x4 → 5x2
+                const linkedCell = document.querySelector(`.cell[data-row="4"][data-col="${targetCol}"]`);
+                if (linkedCell) {
+                    linkedCell.textContent = content;
+                    linkedCell.setAttribute('data-content', content);
+                }
+            } else if (row === 4 && (col === 5 || col === 7)) {  // 5x6 또는 5x8 위치
+                const targetCol = col === 5 ? 7 : 5;  // 5x6 → 5x8 또는 5x8 → 5x6
+                const linkedCell = document.querySelector(`.cell[data-row="4"][data-col="${targetCol}"]`);
+                if (linkedCell) {
+                    linkedCell.textContent = content;
+                    linkedCell.setAttribute('data-content', content);
+                }
+            } else if ((row === 5 && col === 3) || (row === 7 && col === 1)) {  // 6x4 또는 8x2 위치
+                const targetRow = row === 5 ? 7 : 5;  // 6x4 → 8x2 또는 8x2 → 6x4
+                const targetCol = row === 5 ? 1 : 3;  // 6x4 → 8x2 또는 8x2 → 6x4
+                const linkedCell = document.querySelector(`.cell[data-row="${targetRow}"][data-col="${targetCol}"]`);
+                if (linkedCell) {
+                    linkedCell.textContent = content;
+                    linkedCell.setAttribute('data-content', content);
+                }
+            } else if ((row === 5 && col === 4) || (row === 7 && col === 4)) {  // 6x5 또는 8x5 위치
+                const targetRow = row === 5 ? 7 : 5;  // 6x5 → 8x5 또는 8x5 → 6x5
+                const linkedCell = document.querySelector(`.cell[data-row="${targetRow}"][data-col="4"]`);
+                if (linkedCell) {
+                    linkedCell.textContent = content;
+                    linkedCell.setAttribute('data-content', content);
+                }
+            } else if ((row === 5 && col === 5) || (row === 7 && col === 7)) {  // 6x6 또는 8x8 위치
+                const targetRow = row === 5 ? 7 : 5;  // 6x6 → 8x8 또는 8x8 → 6x6
+                const targetCol = row === 5 ? 7 : 5;  // 6x6 → 8x8 또는 8x8 → 6x6
+                const linkedCell = document.querySelector(`.cell[data-row="${targetRow}"][data-col="${targetCol}"]`);
                 if (linkedCell) {
                     linkedCell.textContent = content;
                     linkedCell.setAttribute('data-content', content);
@@ -179,7 +260,7 @@ function generatePDF() {
         const row = Math.floor(index / 9);
         const col = index % 9;
         const isSubTheme = subThemeCells.some(([r, c]) => r === row && c === col);
-        const isTargetCell = row === 0 && col === 0;  // 1행 1열 셀 (0,0)
+        const isTargetCell = row === 0 && col === 0;  // 1행 1열 셀
         
         cell.style.cssText = `
             aspect-ratio: 1 !important;
@@ -256,13 +337,27 @@ function generatePDF() {
 
 // 초기화 함수
 function resetMandal() {
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => {
-        cell.textContent = '';
-        cell.removeAttribute('data-content');
-    });
-    
-    // 진행률 초기화
-    updateProgress();
-    alert('초기화가 완료되었습니다.');
+    if (confirm('정말 초기화하시겠습니까?')) {
+        // 모든 셀의 내용과 data-content 속성 제거
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            if (!cell.classList.contains('center-cell')) {  // 중앙 셀 제외
+                cell.textContent = '';
+                cell.removeAttribute('data-content');
+            }
+        });
+        
+        // 진행바를 0%로 설정 (애니메이션 적용)
+        const progressBar = document.querySelector('.progress');
+        const progressText = document.querySelector('.progress-text');
+        
+        requestAnimationFrame(() => {
+            progressBar.style.width = '0%';
+            progressText.textContent = '0% 완성';
+            progressText.classList.add('empty');
+            progressBar.style.backgroundColor = 'var(--lime-pastel)';
+        });
+        
+        localStorage.removeItem('mandalData');
+    }
 } 
