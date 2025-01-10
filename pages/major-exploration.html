@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공학계열 학과 소개</title>
+     
+      
+        
+    <style>
+        /* 공학계열 소개 섹션 스타일 */
+        .intro-section {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .intro-section h1 {
+            color: #1a237e;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 슬라이더 섹션 스타일 */
+        .majors-slider {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .majors-grid {
+            display: flex;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .major-card {
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .major-image-container {
+            width: 100%;
+            height: 200px;
+            background: #1a237e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .major-profile {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+        }
+
+        .major-profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .major-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .major-title {
+            color: #1a237e;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .major-description {
+            color: #171616;
+            margin-bottom: 2.5rem;
+            font-size: 1.0rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1a237e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            bottom: 10px;
+            
+        }
+
+        .read-more {
+            background: #1a237e;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* 슬라이더 버튼 */
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: #ed06a0;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev-button { left: 0; }
+        .next-button { right: 0; }
+
+        /* 검색 섹션 스타일 */
+        .search-section {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .search-section h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .search-section p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .ai-button {
+            padding: 1rem 2rem;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            background-color: #f3f4f6;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background-color: #6366f1;
+            color: white;
+        }
+
+        .category-btn:hover {
+            background-color: #6366f1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 학과 탐색 헤더 섹션 -->
+    <section class="search-section">
+        <h1>학과 탐색</h1>
+        <p>나에게 맞는 학과를 찾아보세요</p>
+        <div class="search-container">
+            <input type="text" placeholder="동물을 좋아하는데 학과 추천해줘" class="search-input">
+            <button class="ai-button">AI도움</button>
+        </div>
+        <div class="category-buttons">
+            <button class="category-btn active">전체</button>
+            <button class="category-btn">공학계열</button>
+            <button class="category-btn">의학계열</button>
+            <button class="category-btn">교육계열</button>
+            <button class="category-btn">인문계열</button>
+            <button class="category-btn">자연계열</button>
+            <button class="category-btn">사회계열</button>
+            <button class="category-btn">예체능계열</button>
+        </div>
+    </section>
+
+    <!-- 공학계열 소개 섹션 -->
+    <section class="intro-section">
+        <h1>공학계열 학과 소개</h1>
+        <p class="intro-text">
+            공학계열은 과학 기술을 실용화하여 인류의 삶의 질을 향상시키는 학문 분야입니다. 
+            수학과 기초과학을 바탕으로 창의적인 문제 해결 능력을 키우고, 
+            첨단 기술 개발을 통해 미래 사회를 이끌어갈 인재를 양성합니다.
+        </p>
+    </section>
+
+    <!-- 학과 슬라이더 섹션 -->
+    <div class="majors-slider">
+        <button class="slider-button prev-button">←</button>
+        <button class="slider-button next-button">→</button>
+        <div class="majors-grid" id="majorsGrid">
+            <!-- 카드들이 여기에 동적으로 추가됨 -->
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // 공학계열 학과 데이터
+    const engineeringMajors = [
+        {
+            title: "컴퓨터공학과",
+            description: "컴퓨터 시스템, 소프트웨어 개발, 인공지능 등을 연구하는 학과입니다.",
+            imageUrl: "../assets/images/engineering/computer-engineering.jpg",
+            employment: "92%",
+            satisfaction: "4.5/5"
+        },
+        {
+            title: "기계공학과",
+            description: "기계 시스템 설계와 제어, 로봇공학 등을 연구하는 학과입니다.",
+            imageUrl: "../assets/images/engineering/mechanical-engineering.jpg",
+            employment: "88%",
+            satisfaction: "4.3/5"
+        },
+        {
+            title: "전기전자공학과",
+            description: "전기, 전자, 반도체 기술을 연구하는 학과입니다.",
+            imageUrl: "../assets/images/engineering/electrical-engineering.jpg",
+            employment: "90%",
+            satisfaction: "4.4/5"
+        },
+        {
+            title: "화학공학과",
+            description: "화공과는 화학 반응과 물리적 원리를 기반으로 산업적 생산 과정의 설계, 최적화, 관리 등을 연구하는 학문입니다",
+            imageUrl: "../assets/images/engineering/chemical-engineering.jpg",
+            employment: "90%",
+            satisfaction: "4.4/5"
+        },
+        // ... 나머지 학과 데이터 추가
+    ];
+
+    // 카드 생성 함수
+    function createMajorCard(major) {
+        return `
+            <div class="major-card">
+                <div class="major-image-container">
+                    <div class="major-profile">
+                        <img src="${major.imageUrl}" 
+                             alt="${major.title}" 
+                             onerror="this.src='../assets/images/engineering/default-profile.jpg'">
+                    </div>
+                </div>
+                <div class="major-info">
+                    <h3 class="major-title">${major.title}</h3>
+                    <p class="major-description">${major.description}</p>
+                    <div class="major-stats">
+                        
+                    </div>
+                    <div class="social-links" style="margin-top: auto; padding-bottom: 1mm;">
+                        <a href="#" class="social-link">상세보기</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 슬라이더 초기화
+    const majorsGrid = document.getElementById('majorsGrid');
+    engineeringMajors.forEach(major => {
+        majorsGrid.innerHTML += createMajorCard(major);
+    });
+
+    // 슬라이더 컨트롤
+    const slider = document.querySelector('.majors-grid');
+    const prevButton = document.querySelector('.prev-button');
+    const nextButton = document.querySelector('.next-button');
+    const cardWidth = 320; // 카드 너비 + 간격
+
+    nextButton.addEventListener('click', () => {
+        slider.scrollBy({
+            left: cardWidth,
+            behavior: 'smooth'
+        });
+    });
+
+    prevButton.addEventListener('click', () => {
+        slider.scrollBy({
+            left: -cardWidth,
+            behavior: 'smooth'
+        });
+    });
+
+    // 자동 슬라이드 기능
+    let autoSlideInterval;
+
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+            const isAtEnd = slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth);
+            if (isAtEnd) {
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        }, 3000); // 3초마다 슬라이드
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    // 마우스 오버시 자동 슬라이드 멈춤
+    slider.addEventListener('mouseenter', stopAutoSlide);
+    slider.addEventListener('mouseleave', startAutoSlide);
+
+    // 초기 자동 슬라이드 시작
+    startAutoSlide();
+</script>
+
+<style>
+    /* 기존 스타일에 추가 */
+    .majors-grid {
+        display: flex;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        gap: 2rem;
+        padding: 2rem 0;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .majors-grid::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari, Opera */
+    }
+
+    .major-card {
+        min-width: 300px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .major-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .major-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 1rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .social-link {
+        background: #1a237e;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .slider-button {
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+
+    .slider-button:hover {
+        opacity: 1;
+    }
+</style> 

@@ -43,9 +43,29 @@ h1 {
 
 /* 진행률 바 스타일 */
 .progress-container {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 1.5rem;
+    width: 300px;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    position: relative;
+}
+
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;  /* 진행 상태 텍스트와 진행바 사이 간격 */
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.progress-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
 }
 
 .progress {
@@ -62,9 +82,10 @@ h1 {
     color: #333;
     font-weight: bold;
     transition: opacity 0.3s ease-in-out;
+    line-height: 20px;
+    font-size: 14px;
 }
 
-/* 진행률이 0%일 때 텍스트 투명도 조절 */
 .progress-text.empty {
     opacity: 0.5;
 }
@@ -81,9 +102,25 @@ h1 {
 .ai-assistant input {
     width: 70%;
     padding: 0.8rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: rgba(230, 233, 240, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.ai-assistant input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.ai-assistant input:focus {
+    outline: none;
+    border-color: var(--main-blue);
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(var(--main-blue-rgb), 0.15);
 }
 
 #aiSearchBtn {
@@ -93,7 +130,7 @@ h1 {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.3rem;
 }
 
 /* 버튼 컨테이너 */

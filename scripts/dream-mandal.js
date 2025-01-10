@@ -14,14 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 진행률 업데이트
     function updateProgress() {
         // 전체 셀 개수 구하기 (중앙 셀 제외)
-        const totalCells = document.querySelectorAll('.cell').length - 1;  // 중앙 셀 제외
+        const totalCells = document.querySelectorAll('.cell').length - 1;
         
         // 내용이 입력된 셀 개수 구하기
         const filledCells = Array.from(document.querySelectorAll('.cell')).filter(cell => {
-            // 중앙 셀 제외
             if (cell.classList.contains('center-cell')) return false;
-            
-            // 내용이 있는 셀 카운트
             const content = cell.getAttribute('data-content');
             return content && content.trim() !== '';
         }).length;
@@ -40,23 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
             progressText.classList.remove('empty');
         }
         
-        // 진행바 애니메이션 적용
-        requestAnimationFrame(() => {
-            progressBar.style.width = `${progressPercentage}%`;
-            progressText.textContent = `${progressPercentage}% 완성`;
-            
-            // 진행률이 높을 때 색상 변화 효과
-            if (progressPercentage > 80) {
-                progressBar.style.backgroundColor = 'var(--orange-pastel)';
-            } else if (progressPercentage > 50) {
-                progressBar.style.backgroundColor = 'var(--yellow-pastel)';
-            } else {
-                progressBar.style.backgroundColor = 'var(--lime-pastel)';
-            }
-        });
-        
-        // 콘솔에 진행 상황 출력 (디버깅용)
-        console.log(`Total cells: ${totalCells}, Filled cells: ${filledCells}, Progress: ${progressPercentage}%`);
+        // 진행바 너비와 텍스트 업데이트
+        progressBar.style.width = `${progressPercentage}%`;
+        progressText.textContent = `${progressPercentage}% 완성`;
     }
 
     // 그리드 생성
@@ -338,26 +321,29 @@ function generatePDF() {
 // 초기화 함수
 function resetMandal() {
     if (confirm('정말 초기화하시겠습니까?')) {
-        // 모든 셀의 내용과 data-content 속성 제거
+        // 모든 셀의 내용과 data-content 속성 제거 (중앙 셀 제외)
         const cells = document.querySelectorAll('.cell');
         cells.forEach(cell => {
-            if (!cell.classList.contains('center-cell')) {  // 중앙 셀 제외
+            if (!cell.classList.contains('center-cell')) {
                 cell.textContent = '';
                 cell.removeAttribute('data-content');
             }
         });
         
-        // 진행바를 0%로 설정 (애니메이션 적용)
+        // 진행바 초기화
         const progressBar = document.querySelector('.progress');
         const progressText = document.querySelector('.progress-text');
         
-        requestAnimationFrame(() => {
-            progressBar.style.width = '0%';
-            progressText.textContent = '0% 완성';
-            progressText.classList.add('empty');
-            progressBar.style.backgroundColor = 'var(--lime-pastel)';
-        });
+        progressBar.style.width = '0%';
+        progressText.textContent = '0% 완성';
+        progressText.classList.add('empty');
         
+        // 로컬 스토리지 데이터 초기화
         localStorage.removeItem('mandalData');
     }
-} 
+}
+
+// 페이지 로드 시 진행률 초기화
+document.addEventListener('DOMContentLoaded', () => {
+    updateProgress();
+}); 

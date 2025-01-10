@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>꿈만다라트 with AI</h1>
+            <h1>🎯 꿈만다라트 with AI 🎯</h1>
             <div class="progress-container">
                 <div class="progress-bar">
                     <div class="progress" style="width: 0%"></div>
@@ -23,8 +23,13 @@
         </header>
 
         <div class="ai-assistant">
-            <input type="text" placeholder="목표를 위한 구체적 실천 전략을 찾아보세요(예)수학 공부 방법 등" id="aiInput">
-            <button id="aiSearchBtn">AI 도움받기</button>
+            <input type="text" placeholder="목표를 위한 구체적 실천 전략을 찾아보세요(예)수학 공부 방법 등" id="aiInput" style="background: rgba(230, 230, 250, 0.3); border: 2px solid #9370DB; box-shadow: 0 4px 12px rgba(147, 112, 219, 0.15);">
+            <button id="aiSearchBtn" style="background: linear-gradient(135deg, #9370DB, #8A2BE2); color: rgb(236, 210, 247); font-weight: 500; box-shadow: 0 4px 15px rgba(147, 112, 219, 0.3); transition: all 0.3s ease;">AI 도움받기</button>
+        </div>
+
+        <div class="button-container">
+            <button id="pdfExport" class="action-button button" onclick="generatePDF()" style="font-weight: bold; background: linear-gradient(135deg, #a8c8ff, #7ba4ff); color: #333;">PDF 저장</button>
+            <button id="resetBtn" class="action-button warning" onclick="resetMandal()" style="font-weight: bold; background: linear-gradient(135deg, #FFD1DC, #FF99AC); color: #333;">초기화</button>
         </div>
 
         <div class="mandal-container">
@@ -34,10 +39,7 @@
             </div>
         </div>
 
-        <div class="button-container">
-            <button id="pdfExport" class="action-button button" onclick="generatePDF()">PDF 저장</button>
-            <button id="resetBtn" class="action-button warning" onclick="resetMandal()">초기화</button>
-        </div>
+        
     </div>
 
     <!-- 입력 팝업 -->
