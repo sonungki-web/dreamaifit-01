@@ -32,7 +32,8 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
             max-width: 1320px;
-            margin: 0 auto;
+            margin: 0 auto 30px;
+            min-height: 460px;
         }
 
         .slider {
@@ -119,7 +120,7 @@
             justify-content: center;
             font-size: 30px;
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1;
+            z-index: 10;
             transition: all 0.3s ease;
         }
 
@@ -465,6 +466,33 @@
             object-fit: cover;
             border-radius: 15px;
         }
+
+        .category-label {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 0;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 빈 즐겨찾기 메시지 스타일 */
+        .empty-favorites {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -515,148 +543,174 @@
             </div>
         </div>
 
-        <!-- 공학계열 다음에 추가 -->
-
-<!-- 의학계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">⚕️ 의학계열 🏥</h2>
-            <p class="intro-description" style="text-align: center;">
-                의학계열은 인간의 생명과 건강을 다루는 전문적인 학문 분야입니다. 
-                질병의 예방, 진단, 치료를 통해 국민 건강 증진에 기여하는 의료 전문가를 양성합니다.
-            </p>
+        <!-- 의학계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">⚕️ 의학계열 🏥</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        의학계열은 인간의 생명과 건강을 다루는 전문적인 학문 분야입니다. 
+                        질병의 예방, 진단, 치료를 통해 국민 건강 증진에 기여하는 의료 전문가를 양성합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/medical.jpg" alt="의학계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/medical.jpg" alt="의학계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="medicalSlider">
-        <!-- 이미지는 JavaScript로 동적 생성됨 -->
-    </div>
-</div>
-
-<!-- 자연계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">🔬 자연계열 🧪</h2>
-            <p class="intro-description" style="text-align: center;">
-                자연계열은 자연현상의 원리와 법칙을 탐구하는 학문 분야입니다. 
-                수학, 물리, 화학, 생물학 등을 통해 자연과학의 기초를 연구하고 발전시킵니다.
-            </p>
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="medicalSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/science.jpg" alt="자연계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="scienceSlider">
-        <!-- 이미지는 JavaScript로 동적 생성됨 -->
-    </div>
-</div>
-
-<!-- 교육계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">📚 교육계열 🎓</h2>
-            <p class="intro-description" style="text-align: center;">
-                교육계열은 미래 세대의 성장을 이끄는 교육 전문가를 양성하는 분야입니다. 
-                교육학의 이론과 실제를 배우며, 효과적인 교수법과 학습법을 연구합니다.
-            </p>
+        <!-- 자연계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🔬 자연계열 🧪</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        자연계열은 자연현상의 원리와 법칙을 탐구하는 학문 분야입니다. 
+                        수학, 물리, 화학, 생물학 등을 통해 자연과학의 기초를 연구하고 발전시킵니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/science.jpg" alt="자연계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/education.jpg" alt="교육계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="educationSlider">
-        <!-- 이미지는 JavaScript로 동적 생성됨 -->
-    </div>
-</div>
-
-<!-- 인문계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">📖 인문계열 ✒️</h2>
-            <p class="intro-description" style="text-align: center;">
-                인문계열은 인간의 문화, 역사, 언어를 연구하는 학문 분야입니다. 
-                인문학적 소양과 비판적 사고력을 키워 인류 문화 발전에 기여합니다.
-            </p>
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="scienceSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/humanities.jpg" alt="인문계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="humanitiesSlider">
-        <!-- 이미지는 JavaScript로 동적 생성됨 -->
-    </div>
-</div>
-
-<!-- 사회계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">🌏 사회계열 📊</h2>
-            <p class="intro-description" style="text-align: center;">
-                사회계열은 인간 사회의 다양한 현상과 문제를 연구하는 학문입니다. 
-                경제, 정치, 사회 현상을 분석하고 해결방안을 모색합니다.
-            </p>
+        <!-- 교육계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">📚 교육계열 🎓</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        교육계열은 미래 세대의 성장을 이끄는 교육 전문가를 양성하는 분야입니다. 
+                        교육학의 이론과 실제를 배우며, 효과적인 교수법과 학습법을 연구합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/education.jpg" alt="교육계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/social.jpg" alt="사회계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="socialSlider">
-        <!-- 이미지는 JavaScript로 동적 생성됨 -->
-    </div>
-</div>
-
-<!-- 예체능계열 -->
-<div class="department-intro">
-    <div class="intro-content">
-        <div class="intro-text">
-            <h2 class="intro-title" style="text-align: center;">🎨 예체능계열 🎭</h2>
-            <p class="intro-description" style="text-align: center;">
-                예체능계열은 예술과 체육 분야의 전문가를 양성하는 학문입니다. 
-                음악, 미술, 체육 등 다양한 분야에서 창의적 표현과 기량을 발전시킵니다.
-            </p>
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="educationSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
         </div>
-        <div class="intro-image">
-            <img src="/static/images/departments/arts.jpg" alt="예체능계열 대표 이미지" class="department-thumbnail">
-        </div>
-    </div>
-</div>
 
-<div class="slider-container">
-    <button class="nav-button prev-button">⬅️</button>
-    <button class="nav-button next-button">➡️</button>
-    <div class="slider" id="artsSlider">
+        <!-- 인문계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">📖 인문계열 ✒️</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        인문계열은 인간의 문화, 역사, 언어를 연구하는 학문 분야입니다. 
+                        인문학적 소양과 비판적 사고력을 키워 인류 문화 발전에 기여합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/humanities.jpg" alt="인문계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="humanitiesSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 사회계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🌏 사회계열 📊</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        사회계열은 인간 사회의 다양한 현상과 문제를 연구하는 학문입니다. 
+                        경제, 정치, 사회 현상을 분석하고 해결방안을 모색합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/social.jpg" alt="사회계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="socialSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 예체능계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🎨 예체능계열 🎭</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        예체능계열은 예술과 체육 분야의 전문가를 양성하는 학문입니다. 
+                        음악, 미술, 체육 등 다양한 분야에서 창의적 표현과 기량을 발전시킵니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/arts.jpg" alt="예체능계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="artsSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 즐겨찾기 갤러리 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">⭐ 즐겨찾기한 학과 ⭐</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        관심있는 학과들을 한눈에 모아보세요.
+                        하트 아이콘을 클릭하여 즐겨찾기를 추가하거나 제거할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container" id="favoritesContainer" style="min-height: 460px;">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="favoritesSlider">
+                <div class="empty-favorites" style="display: none;">
+                    <p style="text-align: center; width: 100%; color: #666; font-size: 1.2rem; padding: 20px;">
+                        아직 즐겨찾기한 학과가 없습니다. 하트 아이콘을 클릭하여 관심 있는 학과를 추가해보세요!
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -680,7 +734,8 @@
                 { id: 'nursing', name: '간호학과' },
                 { id: 'pharmacy', name: '약학과' },
                 { id: 'dental', name: '치의예과' },
-                { id: 'oriental', name: '한의예과' }
+                { id: 'oriental', name: '한의예과' },
+                { id: 'physical therapy', name: '물리치료학과' }
             ],
             '자연계열': [
                 { id: 'physics', name: '물리학과' },
@@ -719,9 +774,64 @@
             ]
         };
 
-        // 이미지 로딩 함수 수정
-        function loadImages(category) {
-            slider.innerHTML = ''; // 슬라이더 비우기
+        // 하트 아이콘 이벤트 설정 함수 수정
+        function setupHeartIcons() {
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            
+            document.querySelectorAll('.heart-icon').forEach(heart => {
+                const deptId = heart.dataset.department;
+                
+                // 초기 상태 설정
+                if (favorites[deptId]) {
+                    heart.classList.add('active');
+                }
+                
+                // 이벤트 리스너가 중복 등록되지 않도록 제거 후 다시 등록
+                heart.removeEventListener('click', handleFavoriteClick);
+                heart.addEventListener('click', handleFavoriteClick);
+            });
+        }
+
+        // handleFavoriteClick 함수 수정
+        function handleFavoriteClick(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            
+            const heart = e.target;
+            const deptId = heart.dataset.department;
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            
+            // 즐겨찾기 토글
+            if (heart.classList.contains('active')) {
+                heart.classList.remove('active');
+                delete favorites[deptId];
+            } else {
+                heart.classList.add('active');
+                favorites[deptId] = true;
+            }
+            
+            // localStorage 업데이트
+            localStorage.setItem('departmentFavorites', JSON.stringify(favorites));
+            
+            // 모든 동일한 학과의 하트 아이콘 상태 동기화
+            document.querySelectorAll(`.heart-icon[data-department="${deptId}"]`).forEach(icon => {
+                if (favorites[deptId]) {
+                    icon.classList.add('active');
+                    icon.style.animation = 'pulse 0.3s ease';
+                } else {
+                    icon.classList.remove('active');
+                    icon.style.animation = 'none';
+                }
+            });
+            
+            // 즐겨찾기 갤러리 업데이트
+            updateFavoritesGallery();
+        }
+
+        // 각 계열별 이미지 로드 함수
+        function loadCategoryImages(category, sliderId) {
+            const slider = document.getElementById(sliderId);
+            slider.innerHTML = '';
             
             const departments = departmentsByCategory[category] || [];
             
@@ -729,11 +839,14 @@
                 const card = document.createElement('div');
                 card.className = 'image-card';
                 
-                // 카테고리별 폴더명 매핑
                 const folderMapping = {
                     '공학계열': 'engineering',
-                    '의학계열': 'medical'
-                    // 필요한 다른 카테고리 매핑 추가
+                    '의학계열': 'medical',
+                    '자연계열': 'science',
+                    '교육계열': 'education',
+                    '인문계열': 'humanities',
+                    '사회계열': 'social',
+                    '예체능계열': 'arts'
                 };
                 
                 const folderName = folderMapping[category] || category.toLowerCase();
@@ -747,163 +860,41 @@
                                  this.src='/static/images/placeholder.jpg'; 
                                  this.style.objectFit='contain';
                                  this.style.padding='20px';">
-                    <div class="heart-icon">♥</div>
+                    <div class="heart-icon" data-department="${dept.id}">♥</div>
                     <div class="size-label">${dept.name}</div>
                 `;
                 
                 slider.appendChild(card);
             });
-
-            // 슬라이더 위치 초기화
-            currentIndex = 0;
-            slider.style.transform = 'translateX(0)';
             
-            // 하트 아이콘 이벤트 리스너 추가
+            // 하트 아이콘 설정
             setupHeartIcons();
-        }
-
-        // 하트 아이콘 설정
-        function setupHeartIcons() {
-            document.querySelectorAll('.heart-icon').forEach(heart => {
-                heart.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    heart.classList.toggle('active');
-                });
-            });
-        }
-
-        // 슬라이더 이동 함수 수정
-        function moveSlider(direction) {
-            const sliderWidth = slider.clientWidth;
-            const cardWidth = 320; // 이미지 카드의 너비 (gap 포함)
-            const visibleCards = Math.floor(sliderWidth / cardWidth); // 한 번에 보이는 카드 수
-            const maxIndex = Math.max(0, slider.children.length - visibleCards);
-            
-            if (direction === 'next' && currentIndex < maxIndex) {
-                currentIndex++;
-            } else if (direction === 'prev' && currentIndex > 0) {
-                currentIndex--;
-            }
-            
-            const translateX = -currentIndex * cardWidth;
-            slider.style.transform = `translateX(${translateX}px)`;
-        }
-
-        // 이벤트 리스너 다시 설정
-        document.querySelector('.prev-button').addEventListener('click', () => moveSlider('prev'));
-        document.querySelector('.next-button').addEventListener('click', () => moveSlider('next'));
-
-        // 반응형 처리
-        window.addEventListener('resize', () => {
-            currentIndex = 0;
-            slider.style.transform = 'translateX(0)';
-        });
-
-        // 페 버튼 이벤트 설정
-        function setupTabButtons() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // 활성 탭 스타일 변경
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    // 선택된 카테고리의 이미지 로드
-                    loadImages(button.textContent);
-                    
-                    // 학과 소개 박스 제목과 설명 업데이트
-                    updateDepartmentIntro(button.textContent);
-                });
-            });
-        }
-
-        // 학과 소개 박스 업데이트 함수
-        function updateDepartmentIntro(category) {
-            const introTitle = document.querySelector('.intro-title');
-            const introDescription = document.querySelector('.intro-description');
-            const introImage = document.querySelector('.department-thumbnail');
-            
-            const categoryInfo = {
-                '공학계열': {
-                    icon: '🔧',
-                    icon2: '🤖',
-                    description: '공학계열은 과학 기술을 실용화하여 인류의 삶의 질을 향상시키는 학문 분야입니다. 수학과 기초과학을 바탕으로 창의적인 문제 해결 능력을 키우고, 첨단 기술 개발을 통해 미래 사회를 이끌어갈 인재를 양성합니다.'
-                },
-                '의학계열': {
-                    icon: '⚕️',
-                    icon2: '🏥',
-                    description: '의학계열은 인간의 생명과 건강을 다루는 전문적인 학문 분야입니다. 질병의 예방, 진단, 치료를 통해 국민 건강 증진에 기여하는 의료 전문가를 양성합니다.'
-                },
-                // 다른 카테고리 정보도 추가
-            };
-
-            const info = categoryInfo[category] || categoryInfo['공학계열'];
-            introTitle.innerHTML = `${info.icon}${category}${info.icon2}`;
-            introDescription.textContent = info.description;
-            introImage.src = `/static/images/departments/${category.toLowerCase()}.jpg`;
         }
 
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', () => {
-            setupTabButtons();
-            // 기본값으로 공학계열 로드
-            const firstTab = document.querySelector('.tab-button');
-            firstTab.classList.add('active');
-            loadImages('공학계열');
-        });
-
-        // 각 계열별 슬라이더 초기화
-        document.addEventListener('DOMContentLoaded', () => {
-            // 모든 슬라이더 컨테이너에 대한 초기화
-            const sliderContainers = document.querySelectorAll('.slider-container');
+            // 각 계열별 이미지 로드
+            loadCategoryImages('공학계열', 'imageSlider');
+            loadCategoryImages('의학계열', 'medicalSlider');
+            loadCategoryImages('자연계열', 'scienceSlider');
+            loadCategoryImages('교육계열', 'educationSlider');
+            loadCategoryImages('인문계열', 'humanitiesSlider');
+            loadCategoryImages('사회계열', 'socialSlider');
+            loadCategoryImages('예체능계열', 'artsSlider');
             
-            sliderContainers.forEach(container => {
+            // 즐겨찾기 갤러리 초기화
+            updateFavoritesGallery();
+            
+            // 모든 슬라이더의 네비게이션 버튼에 이벤트 리스너 추가
+            document.querySelectorAll('.slider-container').forEach(container => {
                 const slider = container.querySelector('.slider');
                 const prevButton = container.querySelector('.prev-button');
                 const nextButton = container.querySelector('.next-button');
                 let currentIndex = 0;
-
-                // 슬라이더 ID에서 카테고리 추출
-                const category = slider.id.replace('Slider', '');
-                const categoryMapping = {
-                    'medical': '의학계열',
-                    'science': '자연계열',
-                    'education': '교육계열',
-                    'humanities': '인문계열',
-                    'social': '사회계열',
-                    'arts': '예체능계열'
-                };
-
-                const departments = departmentsByCategory[categoryMapping[category]] || [];
                 
-                // 이미지 카드 생성
-                departments.forEach(dept => {
-                    const card = document.createElement('div');
-                    card.className = 'image-card';
-                    
-                    const folderName = category;
-                    const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
-                    
-                    card.innerHTML = `
-                        <img src="${imagePath}" 
-                             alt="${dept.name}" 
-                             class="department-image"
-                             onerror="this.onerror=null; 
-                                     this.src='/static/images/placeholder.jpg'; 
-                                     this.style.objectFit='contain';
-                                     this.style.padding='20px';">
-                        <div class="heart-icon">♥</div>
-                        <div class="size-label">${dept.name}</div>
-                    `;
-                    
-                    slider.appendChild(card);
-                });
-
-                // 이전 버튼 클릭 이벤트
                 prevButton.addEventListener('click', () => {
                     const sliderWidth = slider.clientWidth;
-                    const cardWidth = 320; // 이미지 카드의 너비 (gap 포함)
+                    const cardWidth = 320;
                     const visibleCards = Math.floor(sliderWidth / cardWidth);
                     const maxIndex = Math.max(0, slider.children.length - visibleCards);
                     
@@ -913,8 +904,7 @@
                         slider.style.transform = `translateX(${translateX}px)`;
                     }
                 });
-
-                // 다음 버튼 클릭 이벤트
+                
                 nextButton.addEventListener('click', () => {
                     const sliderWidth = slider.clientWidth;
                     const cardWidth = 320;
@@ -927,17 +917,75 @@
                         slider.style.transform = `translateX(${translateX}px)`;
                     }
                 });
+            });
+            
+            // 탭 버튼 설정
+            setupTabButtons();
+            const firstTab = document.querySelector('.tab-button');
+            firstTab.classList.add('active');
+        });
 
-                // 하트 아이콘 이벤트 설정
-                const heartIcons = container.querySelectorAll('.heart-icon');
-                heartIcons.forEach(heart => {
-                    heart.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        heart.classList.toggle('active');
-                    });
+        // 즐겨찾기 슬라이더 업데이트 함수 수정
+        function updateFavoritesGallery() {
+            const favoritesSlider = document.getElementById('favoritesSlider');
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
+            
+            // 즐겨찾기 항목만 제거하고 빈 메시지는 유지
+            Array.from(favoritesSlider.children).forEach(child => {
+                if (!child.classList.contains('empty-favorites')) {
+                    child.remove();
+                }
+            });
+            
+            // 즐겨찾기가 있는지 확인
+            const hasFavorites = Object.keys(favorites).length > 0;
+            
+            if (!hasFavorites) {
+                emptyMessage.style.display = 'flex';
+                return;
+            }
+            
+            emptyMessage.style.display = 'none';
+            
+            // 즐겨찾기 항목 추가
+            Object.entries(departmentsByCategory).forEach(([category, departments]) => {
+                departments.forEach(dept => {
+                    if (favorites[dept.id]) {
+                        const card = document.createElement('div');
+                        card.className = 'image-card';
+                        
+                        const folderMapping = {
+                            '공학계열': 'engineering',
+                            '의학계열': 'medical',
+                            '자연계열': 'science',
+                            '교육계열': 'education',
+                            '인문계열': 'humanities',
+                            '사회계열': 'social',
+                            '예체능계열': 'arts'
+                        };
+                        
+                        const folderName = folderMapping[category] || category.toLowerCase();
+                        const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                        
+                        card.innerHTML = `
+                            <img src="${imagePath}" 
+                                 alt="${dept.name}" 
+                                 class="department-image"
+                                 onerror="this.onerror=null; 
+                                         this.src='/static/images/placeholder.jpg'; 
+                                         this.style.objectFit='contain';
+                                         this.style.padding='20px';">
+                            <div class="heart-icon active" data-department="${dept.id}">♥</div>
+                            <div class="size-label">${dept.name}</div>
+                            <div class="category-label">${category}</div>
+                        `;
+                        
+                        favoritesSlider.appendChild(card);
+                    }
                 });
             });
-        });
+        }
     </script>
 </body>
 </html>

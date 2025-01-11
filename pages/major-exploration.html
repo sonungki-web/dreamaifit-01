@@ -1,160 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공학계열 학과 소개</title>
-     
-      
-        
+    <title>학과 이미지 갤러리</title>
+
+    
     <style>
-        /* 공학계열 소개 섹션 스타일 */
-        .intro-section {
-            background: #f8f9fa;
-            padding: 4rem 2rem;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .intro-section h1 {
-            color: #1a237e;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro-text {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* 슬라이더 섹션 스타일 */
-        .majors-slider {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 50px;
-        }
-
-        .majors-grid {
-            display: flex;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        .major-card {
-            min-width: 300px;
-            background: white;
-            border-radius: 15px;
+        * {
+            margin: 0;
             padding: 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        .major-image-container {
-            width: 100%;
-            height: 200px;
-            background: #1a237e;
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Apple SD Gothic Neo', sans-serif;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .slider-container {
             position: relative;
             overflow: hidden;
+            background: rgb(166, 236, 238);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1320px;
+            margin: 0 auto 30px;
+            min-height: 460px;
         }
 
-        .major-profile {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 20px;
+        }
+
+        .image-card {
+            position: relative;
+            min-width: 300px;
+            height: 400px;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: #eee;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .major-profile img {
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .department-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .major-info {
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .major-title {
-            color: #1a237e;
-            margin: 0 0 0.5rem 0;
-        }
-
-        .major-description {
-            color: #171616;
-            margin-bottom: 2.5rem;
-            font-size: 1.0rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-link {
-            width: 60px;
-            height: 20px;
-            border-radius: 50%;
-            background: #1a237e;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
+        .heart-icon {
+            position: absolute;
             bottom: 10px;
-            
-        }
-
-        .read-more {
-            background: #1a237e;
+            left: 50%;
+            transform: translateX(-50%);
             color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            display: inline-block;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 2;
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                2px 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        /* 슬라이더 버튼 */
-        .slider-button {
+        .heart-icon:hover {
+            transform: translateX(-50%) scale(1.2);
+            color: #ff6b6b;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .heart-icon.active {
+            color: #ff4d4d;
+            transform: translateX(-50%) scale(1.2);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.3); }
+            100% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        .nav-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: #ed06a0;
+            width: 50px;
+            height: 50px;
+            background: rgba(194, 231, 135, 0.9);
             border: none;
             border-radius: 50%;
-            color: white;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
             z-index: 10;
+            transition: all 0.3s ease;
         }
 
-        .prev-button { left: 0; }
-        .next-button { right: 0; }
+        .nav-button:hover {
+            background: rgb(228, 116, 238);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-button {
+            left: 30px;
+        }
+
+        .next-button {
+            right: 30px;
+        }
+
+        /* 크기 표시용 라벨 */
+        .size-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);  /* 반투명 검정 배경 */
+            padding: 10px 0;  /* 상하 여백 */
+            text-align: center;  /* 텍스트 중앙 정렬 */
+            backdrop-filter: blur(2px);  /* 배경 블러 효과 */
+        }
+
+        @media (max-width: 1024px) {
+            .gallery-container {
+                padding: 0 10px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .slider-container {
+                padding: 10px;
+            }
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-description {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            .section-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* 설명 섹션 관련 스타일 제거 */
+        .description-section,
+        .description-container,
+        .section-title,
+        .section-description,
+        .section-stats,
+        .stat-item,
+        .stat-number,
+        .stat-label {
+            display: none;
+        }
 
         /* 검색 섹션 스타일 */
         .search-section {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 40px 20px;
+            margin-bottom: 30px;
         }
 
-        .search-section h1 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 1rem;
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            padding: 20px 40px;
+            display: inline-block;
+            position: relative;
+            background: linear-gradient(120deg, #e9f5ff 0%, #f0f0ff 100%);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .search-section p {
+        .main-title:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .sub-title {
+            font-size: 1.2rem;
             color: #666;
             margin-bottom: 2rem;
         }
@@ -163,259 +239,792 @@
             max-width: 600px;
             margin: 0 auto 2rem;
             display: flex;
-            gap: 1rem;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: searchContainerFadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
         }
+
+        @keyframes searchContainerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(108, 92, 231, 0.15);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .search-container:hover::before {
+            left: 100%;
+        }
+        
 
         .search-input {
             flex: 1;
-            padding: 1rem 1.5rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
+            padding: 15px 20px;
+            border: 2px solid #f3d9d9;
+            border-radius: 30px;
             font-size: 1rem;
             outline: none;
+            transition: border-color 0.3s;
         }
 
-        .ai-button {
-            padding: 1rem 2rem;
-            background-color: #6366f1;
+        .search-input:focus {
+            border-color: #6c5ce7;
+        }
+
+        .search-button {
+            padding: 15px 30px;
+            background: #4f3aee;
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
+            font-size: 1rem;
             cursor: pointer;
-            font-weight: bold;
+            transition: background 0.3s;
         }
 
-        .category-buttons {
+        .search-button:hover {
+            background: #5b4cc4;
+        }
+
+        .category-tabs {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
-        .category-btn {
-            padding: 0.5rem 1.5rem;
+        .tab-button {
+            padding: 8px 24px;
             border: none;
             border-radius: 20px;
-            background-color: #f3f4f6;
-            color: #666;
+            background: #f89f6c;
+            color: #240404;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 1.0em; /* 30% 더 큰 글씨 크기 */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        .category-btn.active {
-            background-color: #6366f1;
-            color: white;
+        
+
+        .tab-button:hover {
+            background: #64e48a;
         }
 
-        .category-btn:hover {
-            background-color: #6366f1;
+        .tab-button.active:hover {
+            background: #5b4cc4;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+                padding: 15px 30px;
+            }
+            
+            .sub-title {
+                font-size: 1rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-button {
+                width: 100%;
+            }
+            
+            .category-tabs {
+                gap: 8px;
+            }
+            
+            .tab-button {
+                padding: 6px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 공학계열 소개 박스 스타일 */
+        .department-intro {
+            background: rgb(150, 240, 240);
+            border-radius: 50px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 3px solid #2eaeff;
+            position: relative;
+            text-align: left;
+        }
+
+        .intro-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .intro-text {
+            flex: 1;
+        }
+
+        .intro-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000305;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .intro-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #080000;
+            text-align: left;
+        }
+
+        .intro-image {
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .image-placeholder {
+            background: #f8f9fa;
+            border-radius: 15px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+            font-size: 1.2rem;
+            border: 2px dashed #dee2e6;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .intro-content {
+                flex-direction: column;
+            }
+
+            .intro-image {
+                width: 100%;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            .image-placeholder {
+                height: 100px;
+            }
+
+            .intro-title {
+                font-size: 1.8rem;
+            }
+
+            .intro-description {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+
+        .department-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .category-label {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
             color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 0;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 빈 즐겨찾기 메시지 스타일 */
+        .empty-favorites {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- 학과 탐색 헤더 섹션 -->
-    <section class="search-section">
-        <h1>학과 탐색</h1>
-        <p>나에게 맞는 학과를 찾아보세요</p>
-        <div class="search-container">
-            <input type="text" placeholder="동물을 좋아하는데 학과 추천해줘" class="search-input">
-            <button class="ai-button">AI도움</button>
+    <div class="gallery-container">
+        <div class="search-section">
+            <h1 class="main-title">🎓 학과 탐색 📚</h1>
+            <p class="sub-title">관심 있는 학과를 학과 장바구니에 담아보세요</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="동물을 좋아하는데 학과 추천해줘">
+                <button class="search-button">AI도움</button>
+            </div>
+            
+            <div class="category-tabs">
+                
+                <button class="tab-button">공학계열</button>
+                <button class="tab-button">의학계열</button>
+                <button class="tab-button">자연계열</button>
+                <button class="tab-button">교육계열</button>
+                <button class="tab-button">인문계열</button>
+                <button class="tab-button">사회계열</button>
+                <button class="tab-button">예체능계열</button>
+            </div>
         </div>
-        <div class="category-buttons">
-            <button class="category-btn active">전체</button>
-            <button class="category-btn">공학계열</button>
-            <button class="category-btn">의학계열</button>
-            <button class="category-btn">교육계열</button>
-            <button class="category-btn">인문계열</button>
-            <button class="category-btn">자연계열</button>
-            <button class="category-btn">사회계열</button>
-            <button class="category-btn">예체능계열</button>
-        </div>
-    </section>
 
-    <!-- 공학계열 소개 섹션 -->
-    <section class="intro-section">
-        <h1>공학계열 학과 소개</h1>
-        <p class="intro-text">
-            공학계열은 과학 기술을 실용화하여 인류의 삶의 질을 향상시키는 학문 분야입니다. 
-            수학과 기초과학을 바탕으로 창의적인 문제 해결 능력을 키우고, 
-            첨단 기술 개발을 통해 미래 사회를 이끌어갈 인재를 양성합니다.
-        </p>
-    </section>
-
-    <!-- 학과 슬라이더 섹션 -->
-    <div class="majors-slider">
-        <button class="slider-button prev-button">←</button>
-        <button class="slider-button next-button">→</button>
-        <div class="majors-grid" id="majorsGrid">
-            <!-- 카드들이 여기에 동적으로 추가됨 -->
-        </div>
-    </div>
-</body>
-</html>
-<script>
-    // 공학계열 학과 데이터
-    const engineeringMajors = [
-        {
-            title: "컴퓨터공학과",
-            description: "컴퓨터 시스템, 소프트웨어 개발, 인공지능 등을 연구하는 학과입니다.",
-            imageUrl: "../assets/images/engineering/computer-engineering.jpg",
-            employment: "92%",
-            satisfaction: "4.5/5"
-        },
-        {
-            title: "기계공학과",
-            description: "기계 시스템 설계와 제어, 로봇공학 등을 연구하는 학과입니다.",
-            imageUrl: "../assets/images/engineering/mechanical-engineering.jpg",
-            employment: "88%",
-            satisfaction: "4.3/5"
-        },
-        {
-            title: "전기전자공학과",
-            description: "전기, 전자, 반도체 기술을 연구하는 학과입니다.",
-            imageUrl: "../assets/images/engineering/electrical-engineering.jpg",
-            employment: "90%",
-            satisfaction: "4.4/5"
-        },
-        {
-            title: "화학공학과",
-            description: "화공과는 화학 반응과 물리적 원리를 기반으로 산업적 생산 과정의 설계, 최적화, 관리 등을 연구하는 학문입니다",
-            imageUrl: "../assets/images/engineering/chemical-engineering.jpg",
-            employment: "90%",
-            satisfaction: "4.4/5"
-        },
-        // ... 나머지 학과 데이터 추가
-    ];
-
-    // 카드 생성 함수
-    function createMajorCard(major) {
-        return `
-            <div class="major-card">
-                <div class="major-image-container">
-                    <div class="major-profile">
-                        <img src="${major.imageUrl}" 
-                             alt="${major.title}" 
-                             onerror="this.src='../assets/images/engineering/default-profile.jpg'">
-                    </div>
+        <!-- 공학계열 소개 박스를 슬라이더 위로 이동 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;"> 🤖 공학계열 🚀</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        공학계열은 과학 기술을 실용화하여 인류의 삶의 질을 향상시키는 학문 분야입니다. 
+                        수학과 기초과학을 바탕으로 창의적인 문제 해결 능력을 키우고, 
+                        첨단 기술 개발을 통해 미래 사회를 이끌어갈 인재를 양성합니다.
+                    </p>
                 </div>
-                <div class="major-info">
-                    <h3 class="major-title">${major.title}</h3>
-                    <p class="major-description">${major.description}</p>
-                    <div class="major-stats">
-                        
-                    </div>
-                    <div class="social-links" style="margin-top: auto; padding-bottom: 1mm;">
-                        <a href="#" class="social-link">상세보기</a>
-                    </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/engineering.jpg" alt="공학계열 대표 이미지" class="department-thumbnail">
                 </div>
             </div>
-        `;
-    }
+        </div>
 
-    // 슬라이더 초기화
-    const majorsGrid = document.getElementById('majorsGrid');
-    engineeringMajors.forEach(major => {
-        majorsGrid.innerHTML += createMajorCard(major);
-    });
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="imageSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
 
-    // 슬라이더 컨트롤
-    const slider = document.querySelector('.majors-grid');
-    const prevButton = document.querySelector('.prev-button');
-    const nextButton = document.querySelector('.next-button');
-    const cardWidth = 320; // 카드 너비 + 간격
+        <!-- 의학계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">⚕️ 의학계열 🏥</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        의학계열은 인간의 생명과 건강을 다루는 전문적인 학문 분야입니다. 
+                        질병의 예방, 진단, 치료를 통해 국민 건강 증진에 기여하는 의료 전문가를 양성합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/medical.jpg" alt="의학계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
 
-    nextButton.addEventListener('click', () => {
-        slider.scrollBy({
-            left: cardWidth,
-            behavior: 'smooth'
-        });
-    });
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="medicalSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
 
-    prevButton.addEventListener('click', () => {
-        slider.scrollBy({
-            left: -cardWidth,
-            behavior: 'smooth'
-        });
-    });
+        <!-- 자연계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🔬 자연계열 🧪</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        자연계열은 자연현상의 원리와 법칙을 탐구하는 학문 분야입니다. 
+                        수학, 물리, 화학, 생물학 등을 통해 자연과학의 기초를 연구하고 발전시킵니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/science.jpg" alt="자연계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
 
-    // 자동 슬라이드 기능
-    let autoSlideInterval;
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="scienceSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
 
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            const isAtEnd = slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth);
-            if (isAtEnd) {
-                slider.scrollTo({ left: 0, behavior: 'smooth' });
+        <!-- 교육계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">📚 교육계열 🎓</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        교육계열은 미래 세대의 성장을 이끄는 교육 전문가를 양성하는 분야입니다. 
+                        교육학의 이론과 실제를 배우며, 효과적인 교수법과 학습법을 연구합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/education.jpg" alt="교육계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="educationSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 인문계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">📖 인문계열 ✒️</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        인문계열은 인간의 문화, 역사, 언어를 연구하는 학문 분야입니다. 
+                        인문학적 소양과 비판적 사고력을 키워 인류 문화 발전에 기여합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/humanities.jpg" alt="인문계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="humanitiesSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 사회계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🌏 사회계열 📊</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        사회계열은 인간 사회의 다양한 현상과 문제를 연구하는 학문입니다. 
+                        경제, 정치, 사회 현상을 분석하고 해결방안을 모색합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/social.jpg" alt="사회계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="socialSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 예체능계열 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">🎨 예체능계열 🎭</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        예체능계열은 예술과 체육 분야의 전문가를 양성하는 학문입니다. 
+                        음악, 미술, 체육 등 다양한 분야에서 창의적 표현과 기량을 발전시킵니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <img src="/static/images/departments/arts.jpg" alt="예체능계열 대표 이미지" class="department-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="artsSlider">
+                <!-- 이미지는 JavaScript로 동적 생성됨 -->
+            </div>
+        </div>
+
+        <!-- 즐겨찾기 갤러리 -->
+        <div class="department-intro">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2 class="intro-title" style="text-align: center;">⭐ 즐겨찾기한 학과 ⭐</h2>
+                    <p class="intro-description" style="text-align: center;">
+                        관심있는 학과들을 한눈에 모아보세요.
+                        하트 아이콘을 클릭하여 즐겨찾기를 추가하거나 제거할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container" id="favoritesContainer" style="min-height: 460px;">
+            <button class="nav-button prev-button">⬅️</button>
+            <button class="nav-button next-button">➡️</button>
+            <div class="slider" id="favoritesSlider">
+                <div class="empty-favorites" style="display: none;">
+                    <p style="text-align: center; width: 100%; color: #666; font-size: 1.2rem; padding: 20px;">
+                        아직 즐겨찾기한 학과가 없습니다. 하트 아이콘을 클릭하여 관심 있는 학과를 추가해보세요!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+        let currentIndex = 0;
+
+        // 학과 정보 데이터를 카테고리별로 구성
+        const departmentsByCategory = {
+            '공학계열': [
+                { id: 'computer', name: '컴퓨터공학과' },
+                { id: 'mechanical', name: '기계공학과' },
+                { id: 'electrical', name: '전기전자공학과' },
+                { id: 'chemical', name: '화학공학과' },
+                { id: 'automotive', name: '자동차공학과' },
+                { id: 'nuclear', name: '원자력공학과' }
+            ],
+            '의학계열': [
+                { id: 'medicine', name: '의예과' },
+                { id: 'nursing', name: '간호학과' },
+                { id: 'pharmacy', name: '약학과' },
+                { id: 'dental', name: '치의예과' },
+                { id: 'oriental', name: '한의예과' },
+                { id: 'physical therapy', name: '물리치료학과' }
+            ],
+            '자연계열': [
+                { id: 'physics', name: '물리학과' },
+                { id: 'chemistry', name: '화학과' },
+                { id: 'biology', name: '생물학과' },
+                { id: 'math', name: '수학과' },
+                { id: 'statistics', name: '통계학과' }
+            ],
+            '교육계열': [
+                { id: 'elementary', name: '초등교육과' },
+                { id: 'education', name: '교육학과' },
+                { id: 'english_edu', name: '영어교육과' },
+                { id: 'math_edu', name: '수학교육과' },
+                { id: 'physical_edu', name: '체육교육과' }
+            ],
+            '인문계열': [
+                { id: 'korean', name: '국어국문학과' },
+                { id: 'english', name: '영어영문학과' },
+                { id: 'history', name: '사학과' },
+                { id: 'philosophy', name: '철학과' },
+                { id: 'chinese', name: '중어중문학과' }
+            ],
+            '사회계열': [
+                { id: 'economics', name: '경제학과' },
+                { id: 'business', name: '경영학과' },
+                { id: 'law', name: '법학과' },
+                { id: 'politics', name: '정치외교학과' },
+                { id: 'sociology', name: '사회학과' }
+            ],
+            '예체능계열': [
+                { id: 'fine_arts', name: '미술학과' },
+                { id: 'music', name: '음악과' },
+                { id: 'dance', name: '무용과' },
+                { id: 'theater', name: '연극영화과' },
+                { id: 'design', name: '디자인학과' }
+            ]
+        };
+
+        // 하트 아이콘 이벤트 설정 함수 수정
+        function setupHeartIcons() {
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            
+            document.querySelectorAll('.heart-icon').forEach(heart => {
+                const deptId = heart.dataset.department;
+                
+                // 초기 상태 설정
+                if (favorites[deptId]) {
+                    heart.classList.add('active');
+                }
+                
+                // 이벤트 리스너가 중복 등록되지 않도록 제거 후 다시 등록
+                heart.removeEventListener('click', handleFavoriteClick);
+                heart.addEventListener('click', handleFavoriteClick);
+            });
+        }
+
+        // handleFavoriteClick 함수 수정
+        function handleFavoriteClick(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            
+            const heart = e.target;
+            const deptId = heart.dataset.department;
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            const isFavoriteGallery = heart.closest('#favoritesSlider') !== null;
+            
+            // 즐겨찾기 토글
+            if (heart.classList.contains('active')) {
+                heart.classList.remove('active');
+                delete favorites[deptId];
+                heart.style.animation = 'none';
+                
+                // 즐겨찾기 갤러리에서 클릭한 경우 해당 카드를 즉시 제거
+                if (isFavoriteGallery) {
+                    const card = heart.closest('.image-card');
+                    card.remove();
+                    
+                    // 즐겨찾기가 모두 제거되었는지 확인하고 빈 메시지 표시
+                    const favoritesSlider = document.getElementById('favoritesSlider');
+                    const remainingCards = favoritesSlider.querySelectorAll('.image-card').length;
+                    const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
+                    
+                    if (remainingCards === 0) {
+                        emptyMessage.style.display = 'flex';
+                    }
+                }
             } else {
-                slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                heart.classList.add('active');
+                favorites[deptId] = true;
+                heart.style.animation = 'pulse 0.3s ease';
             }
-        }, 3000); // 3초마다 슬라이드
-    }
+            
+            // localStorage 업데이트
+            localStorage.setItem('departmentFavorites', JSON.stringify(favorites));
+            
+            // 모든 동일한 학과의 하트 아이콘 상태 동기화
+            document.querySelectorAll(`.heart-icon[data-department="${deptId}"]`).forEach(icon => {
+                if (favorites[deptId]) {
+                    icon.classList.add('active');
+                    icon.style.animation = 'pulse 0.3s ease';
+                } else {
+                    icon.classList.remove('active');
+                    icon.style.animation = 'none';
+                }
+            });
+            
+            // 즐겨찾기 갤러리가 아닌 곳에서 클릭한 경우에만 갤러리 전체 업데이트
+            if (!isFavoriteGallery) {
+                updateFavoritesGallery();
+            }
+        }
 
-    function stopAutoSlide() {
-        clearInterval(autoSlideInterval);
-    }
+        // 각 계열별 이미지 로드 함수
+        function loadCategoryImages(category, sliderId) {
+            const slider = document.getElementById(sliderId);
+            slider.innerHTML = '';
+            
+            const departments = departmentsByCategory[category] || [];
+            
+            departments.forEach(dept => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                
+                const folderMapping = {
+                    '공학계열': 'engineering',
+                    '의학계열': 'medical',
+                    '자연계열': 'science',
+                    '교육계열': 'education',
+                    '인문계열': 'humanities',
+                    '사회계열': 'social',
+                    '예체능계열': 'arts'
+                };
+                
+                const folderName = folderMapping[category] || category.toLowerCase();
+                const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                
+                card.innerHTML = `
+                    <img src="${imagePath}" 
+                         alt="${dept.name}" 
+                         class="department-image"
+                         onerror="this.onerror=null; 
+                                 this.src='/static/images/placeholder.jpg'; 
+                                 this.style.objectFit='contain';
+                                 this.style.padding='20px';">
+                    <div class="heart-icon" data-department="${dept.id}">♥</div>
+                    <div class="size-label">${dept.name}</div>
+                `;
+                
+                slider.appendChild(card);
+            });
+            
+            // 하트 아이콘 설정
+            setupHeartIcons();
+        }
 
-    // 마우스 오버시 자동 슬라이드 멈춤
-    slider.addEventListener('mouseenter', stopAutoSlide);
-    slider.addEventListener('mouseleave', startAutoSlide);
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            // 각 계열별 이미지 로드
+            loadCategoryImages('공학계열', 'imageSlider');
+            loadCategoryImages('의학계열', 'medicalSlider');
+            loadCategoryImages('자연계열', 'scienceSlider');
+            loadCategoryImages('교육계열', 'educationSlider');
+            loadCategoryImages('인문계열', 'humanitiesSlider');
+            loadCategoryImages('사회계열', 'socialSlider');
+            loadCategoryImages('예체능계열', 'artsSlider');
+            
+            // 즐겨찾기 갤러리 초기화
+            updateFavoritesGallery();
+            
+            // 모든 슬라이더의 네비게이션 버튼에 이벤트 리스너 추가
+            document.querySelectorAll('.slider-container').forEach(container => {
+                const slider = container.querySelector('.slider');
+                const prevButton = container.querySelector('.prev-button');
+                const nextButton = container.querySelector('.next-button');
+                let currentIndex = 0;
+                
+                prevButton.addEventListener('click', () => {
+                    const sliderWidth = slider.clientWidth;
+                    const cardWidth = 320;
+                    const visibleCards = Math.floor(sliderWidth / cardWidth);
+                    const maxIndex = Math.max(0, slider.children.length - visibleCards);
+                    
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        const translateX = -currentIndex * cardWidth;
+                        slider.style.transform = `translateX(${translateX}px)`;
+                    }
+                });
+                
+                nextButton.addEventListener('click', () => {
+                    const sliderWidth = slider.clientWidth;
+                    const cardWidth = 320;
+                    const visibleCards = Math.floor(sliderWidth / cardWidth);
+                    const maxIndex = Math.max(0, slider.children.length - visibleCards);
+                    
+                    if (currentIndex < maxIndex) {
+                        currentIndex++;
+                        const translateX = -currentIndex * cardWidth;
+                        slider.style.transform = `translateX(${translateX}px)`;
+                    }
+                });
+            });
+            
+            // 탭 버튼 설정
+            setupTabButtons();
+            const firstTab = document.querySelector('.tab-button');
+            firstTab.classList.add('active');
+        });
 
-    // 초기 자동 슬라이드 시작
-    startAutoSlide();
-</script>
+        // 즐겨찾기 슬라이더 업데이트 함수 수정
+        function updateFavoritesGallery() {
+            const favoritesSlider = document.getElementById('favoritesSlider');
+            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
+            
+            // 즐겨찾기 항목만 제거하고 빈 메시지는 유지
+            Array.from(favoritesSlider.children).forEach(child => {
+                if (!child.classList.contains('empty-favorites')) {
+                    child.remove();
+                }
+            });
+            
+            // 즐겨찾기가 있는지 확인
+            const hasFavorites = Object.keys(favorites).length > 0;
+            
+            if (!hasFavorites) {
+                emptyMessage.style.display = 'flex';
+                return;
+            }
+            
+            emptyMessage.style.display = 'none';
+            
+            // 즐겨찾기 항목 추가
+            Object.entries(departmentsByCategory).forEach(([category, departments]) => {
+                departments.forEach(dept => {
+                    if (favorites[dept.id]) {
+                        const card = document.createElement('div');
+                        card.className = 'image-card';
+                        
+                        const folderMapping = {
+                            '공학계열': 'engineering',
+                            '의학계열': 'medical',
+                            '자연계열': 'science',
+                            '교육계열': 'education',
+                            '인문계열': 'humanities',
+                            '사회계열': 'social',
+                            '예체능계열': 'arts'
+                        };
+                        
+                        const folderName = folderMapping[category] || category.toLowerCase();
+                        const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                        
+                        card.innerHTML = `
+                            <img src="${imagePath}" 
+                                 alt="${dept.name}" 
+                                 class="department-image"
+                                 onerror="this.onerror=null; 
+                                         this.src='/static/images/placeholder.jpg'; 
+                                         this.style.objectFit='contain';
+                                         this.style.padding='20px';">
+                            <div class="heart-icon active" data-department="${dept.id}">♥</div>
+                            <div class="size-label">${dept.name}</div>
+                            <div class="category-label">${category}</div>
+                        `;
+                        
+                        favoritesSlider.appendChild(card);
+                    }
+                });
+            });
+            
+            // 새로 추가된 하트 아이콘에 이벤트 리스너 설정
+            setupHeartIcons();
+        }
 
-<style>
-    /* 기존 스타일에 추가 */
-    .majors-grid {
-        display: flex;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-        gap: 2rem;
-        padding: 2rem 0;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-    }
-
-    .majors-grid::-webkit-scrollbar {
-        display: none;  /* Chrome, Safari, Opera */
-    }
-
-    .major-card {
-        min-width: 300px;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-    }
-
-    .major-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .major-stats {
-        display: flex;
-        justify-content: space-around;
-        margin: 1rem 0;
-        color: #666;
-        font-size: 0.9rem;
-    }
-
-    .social-link {
-        background: #1a237e;
-        color: white;
-        padding: 8px 20px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 0.9rem;
-    }
-
-    .slider-button {
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
-    }
-
-    .slider-button:hover {
-        opacity: 1;
-    }
-</style> 
+        // CSS 애니메이션 추가
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
