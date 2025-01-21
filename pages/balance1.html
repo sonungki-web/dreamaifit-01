@@ -210,15 +210,89 @@
             arts: ['fine_arts', 'music', 'dance', 'theater', 'design']
         };
 
-        const departments = [
-            { id: 'computer', name: '컴퓨터공학과', category: '공학계열', folder: 'engineering', imageId: 'computer' },
-            { id: 'medical', name: '의예과', category: '의학계열', folder: 'medical', imageId: 'medicine' },
-            { id: 'chemistry', name: '화학과', category: '자연계열', folder: 'science', imageId: 'chemistry' },
-            { id: 'education', name: '교육학과', category: '교육계열', folder: 'education', imageId: 'education' },
-            { id: 'korean', name: '국어국문학과', category: '인문계열', folder: 'humanities', imageId: 'korean' },
-            { id: 'business', name: '경영학과', category: '사회계열', folder: 'social', imageId: 'business' },
-            { id: 'art', name: '미술학과', category: '예체능계열', folder: 'arts', imageId: 'fine_arts' },
-        ];
+        // departments 배열 생성을 동적으로 수정
+        const departments = [];
+
+        // 각 계열별 학과 정보 매핑
+        const departmentNameMap = {
+            engineering: {
+                computer: '컴퓨터공학과',
+                mechanical: '기계공학과',
+                electrical: '전기전자공학과',
+                chemical: '화학공학과',
+                automotive: '자동차공학과',
+                nuclear: '원자력공학과'
+            },
+            medical: {
+                medicine: '의예과',
+                nursing: '간호학과',
+                pharmacy: '약학과',
+                dental: '치의예과',
+                oriental: '한의예과',
+                'physical therapy': '물리치료학과'
+            },
+            science: {
+                Physics: '물리학과',
+                chemistry: '화학과',
+                Biotechnology: '생명공학과',
+                math: '수학과',
+                statistics: '통계학과',
+                Astronomy: '천문학과',
+                'Veterinary Medicine': '수의학과'
+            },
+            education: {
+                elementary: '초등교육과',
+                education: '교육학과',
+                english_edu: '영어교육과',
+                physical_edu: '체육교육과',
+                math_edu: '수학교육과'
+            },
+            humanities: {
+                korean: '국어국문학과',
+                english: '영어영문학과',
+                history: '사학과',
+                philosophy: '철학과',
+                chinese: '중어중문학과'
+            },
+            social: {
+                business: '경영학과',
+                economics: '경제학과',
+                politics: '정치외교학과',
+                sociology: '사회학과',
+                law: '법학과'
+            },
+            arts: {
+                fine_arts: '미술학과',
+                music: '음악과',
+                dance: '무용과',
+                theater: '연극영화과',
+                design: '디자인학과'
+            }
+        };
+
+        // 카테고리 한글명 매핑
+        const categoryNameMap = {
+            engineering: '공학계열',
+            medical: '의학계열',
+            science: '자연계열',
+            education: '교육계열',
+            humanities: '인문계열',
+            social: '사회계열',
+            arts: '예체능계열'
+        };
+
+        // departments 배열 동적 생성
+        Object.entries(departmentFolders).forEach(([category, depts]) => {
+            depts.forEach(deptId => {
+                departments.push({
+                    id: deptId,
+                    name: departmentNameMap[category][deptId],
+                    category: categoryNameMap[category],
+                    folder: category,
+                    imageId: deptId
+                });
+            });
+        });
 
         let currentQuestion = 1;
         const totalQuestions = 20;
