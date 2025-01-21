@@ -499,7 +499,7 @@
     <div class="gallery-container">
         <div class="search-section">
             <h1 class="main-title">🎓 학과 탐색 📚</h1>
-            <p class="sub-title">나에게 맞는 학과를 찾아보세요</p>
+            <p class="sub-title">관심 있는 학과를 학과 장바구니에 담아보세요</p>
             
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="동물을 좋아하는데 학과 추천해줘">
@@ -738,11 +738,13 @@
                 { id: 'physical therapy', name: '물리치료학과' }
             ],
             '자연계열': [
-                { id: 'physics', name: '물리학과' },
+                { id: 'Physics', name: '물리학과' },
                 { id: 'chemistry', name: '화학과' },
-                { id: 'biology', name: '생물학과' },
+                { id: 'Biotechnology', name: '생물학과' },
                 { id: 'math', name: '수학과' },
-                { id: 'statistics', name: '통계학과' }
+                { id: 'statistics', name: '통계학과' },
+                { id: 'Astronomy', name: '천문학과' },
+                { id: 'Veterinary Medicine', name: '수의학과' }
             ],
             '교육계열': [
                 { id: 'elementary', name: '초등교육과' },
@@ -800,14 +802,32 @@
             const heart = e.target;
             const deptId = heart.dataset.department;
             const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+            const isFavoriteGallery = heart.closest('#favoritesSlider') !== null;
             
             // 즐겨찾기 토글
             if (heart.classList.contains('active')) {
                 heart.classList.remove('active');
                 delete favorites[deptId];
+                heart.style.animation = 'none';
+                
+                // 즐겨찾기 갤러리에서 클릭한 경우 해당 카드를 즉시 제거
+                if (isFavoriteGallery) {
+                    const card = heart.closest('.image-card');
+                    card.remove();
+                    
+                    // 즐겨찾기가 모두 제거되었는지 확인하고 빈 메시지 표시
+                    const favoritesSlider = document.getElementById('favoritesSlider');
+                    const remainingCards = favoritesSlider.querySelectorAll('.image-card').length;
+                    const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
+                    
+                    if (remainingCards === 0) {
+                        emptyMessage.style.display = 'flex';
+                    }
+                }
             } else {
                 heart.classList.add('active');
                 favorites[deptId] = true;
+                heart.style.animation = 'pulse 0.3s ease';
             }
             
             // localStorage 업데이트
@@ -824,8 +844,10 @@
                 }
             });
             
-            // 즐겨찾기 갤러리 업데이트
-            updateFavoritesGallery();
+            // 즐겨찾기 갤러리가 아닌 곳에서 클릭한 경우에만 갤러리 전체 업데이트
+            if (!isFavoriteGallery) {
+                updateFavoritesGallery();
+            }
         }
 
         // 각 계열별 이미지 로드 함수
@@ -850,16 +872,20 @@
                 };
                 
                 const folderName = folderMapping[category] || category.toLowerCase();
-                const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                const imagePathJpg = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                const imagePathJpeg = `/static/images/departments/${folderName}/${dept.id}.jpeg`;
                 
                 card.innerHTML = `
-                    <img src="${imagePath}" 
+                    <img src="${imagePathJpg}" 
                          alt="${dept.name}" 
                          class="department-image"
-                         onerror="this.onerror=null; 
-                                 this.src='/static/images/placeholder.jpg'; 
-                                 this.style.objectFit='contain';
-                                 this.style.padding='20px';">
+                         onerror="if (this.src.endsWith('.jpg')) {
+                                     this.src = '${imagePathJpeg}';
+                                 } else {
+                                     this.src='/static/images/placeholder.jpg';
+                                     this.style.objectFit='contain';
+                                     this.style.padding='20px';
+                                 }">
                     <div class="heart-icon" data-department="${dept.id}">♥</div>
                     <div class="size-label">${dept.name}</div>
                 `;
@@ -966,16 +992,20 @@
                         };
                         
                         const folderName = folderMapping[category] || category.toLowerCase();
-                        const imagePath = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                        const imagePathJpg = `/static/images/departments/${folderName}/${dept.id}.jpg`;
+                        const imagePathJpeg = `/static/images/departments/${folderName}/${dept.id}.jpeg`;
                         
                         card.innerHTML = `
-                            <img src="${imagePath}" 
+                            <img src="${imagePathJpg}" 
                                  alt="${dept.name}" 
                                  class="department-image"
-                                 onerror="this.onerror=null; 
-                                         this.src='/static/images/placeholder.jpg'; 
-                                         this.style.objectFit='contain';
-                                         this.style.padding='20px';">
+                                 onerror="if (this.src.endsWith('.jpg')) {
+                                             this.src = '${imagePathJpeg}';
+                                         } else {
+                                             this.src='/static/images/placeholder.jpg';
+                                             this.style.objectFit='contain';
+                                             this.style.padding='20px';
+                                         }">
                             <div class="heart-icon active" data-department="${dept.id}">♥</div>
                             <div class="size-label">${dept.name}</div>
                             <div class="category-label">${category}</div>
@@ -985,7 +1015,26 @@
                     }
                 });
             });
+            
+            // 새로 추가된 하트 아이콘에 이벤트 리스너 설정
+            setupHeartIcons();
         }
+
+        // CSS 애니메이션 추가
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
     </script>
 </body>
 </html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학과 선택 밸런스 게임</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .game-stats {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-count {
+            font-size: 1.2rem;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .balance-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .vs-badge {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .department-card {
+            flex: 1;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .department-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .department-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .department-name {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .department-category {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #4f46e5;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .balance-container {
+                flex-direction: column;
+            }
+
+            .vs-badge {
+                margin: 1rem 0;
+            }
+
+            .department-card {
+                max-width: 100%;
+            }
+        }
+
+        .department-image.placeholder {
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>학과 선택 밸런스 게임</h1>
+            <p>두 학과 중 더 선호하는 학과를 선택해보세요!</p>
+        </header>
+
+        <div class="game-stats">
+            <span class="question-count">1/20</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+
+        <div class="balance-container">
+            <div class="department-card" id="leftCard">
+                <img src="" alt="" class="department-image">
+                <div class="department-info">
+                    <h2 class="department-name"></h2>
+                    <p class="department-category"></p>
+                </div>
+            </div>
+
+            <div class="vs-badge">VS</div>
+
+            <div class="department-card" id="rightCard">
+                <img src="" alt="" class="department-image">
+                <div class="department-info">
+                    <h2 class="department-name"></h2>
+                    <p class="department-category"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 학과 데이터와 폴더 정보
+        const departmentFolders = {
+            engineering: ['computer', 'mechanical', 'electrical', 'chemical', 'automotive', 'nuclear'],
+            medical: ['medicine', 'nursing', 'pharmacy', 'dental', 'oriental', 'physical therapy'],
+            science: ['Physics', 'chemistry', 'Biotechnology', 'math', 'statistics', 'Astronomy', 'Veterinary Medicine'],
+            education: ['elementary', 'education', 'english_edu', 'physical_edu', 'math_edu'],
+            humanities: ['korean', 'english', 'history', 'philosophy', 'chinese'],
+            social: ['business', 'economics', 'politics', 'sociology', 'law'],
+            arts: ['fine_arts', 'music', 'dance', 'theater', 'design']
+        };
+
+        const departments = [
+            { id: 'computer', name: '컴퓨터공학과', category: '공학계열', folder: 'engineering', imageId: 'computer' },
+            { id: 'medical', name: '의예과', category: '의학계열', folder: 'medical', imageId: 'medicine' },
+            { id: 'chemistry', name: '화학과', category: '자연계열', folder: 'science', imageId: 'chemistry' },
+            { id: 'education', name: '교육학과', category: '교육계열', folder: 'education', imageId: 'education' },
+            { id: 'korean', name: '국어국문학과', category: '인문계열', folder: 'humanities', imageId: 'korean' },
+            { id: 'business', name: '경영학과', category: '사회계열', folder: 'social', imageId: 'business' },
+            { id: 'art', name: '미술학과', category: '예체능계열', folder: 'arts', imageId: 'fine_arts' },
+        ];
+
+        let currentQuestion = 1;
+        const totalQuestions = 20;
+        let usedDepartments = new Set();
+
+        // DOM 요소
+        const leftCard = document.getElementById('leftCard');
+        const rightCard = document.getElementById('rightCard');
+        const questionCount = document.querySelector('.question-count');
+        const progressBar = document.querySelector('.progress');
+
+        // 랜덤 학과 선택
+        function getRandomDepartment() {
+            let availableDepts = departments.filter(dept => !usedDepartments.has(dept.id));
+            if (availableDepts.length === 0) {
+                usedDepartments.clear();
+                availableDepts = departments;
+            }
+            const randomIndex = Math.floor(Math.random() * availableDepts.length);
+            const selectedDept = availableDepts[randomIndex];
+            usedDepartments.add(selectedDept.id);
+            return selectedDept;
+        }
+
+        // 랜덤 이미지 ID 선택 함수
+        function getRandomImageId(folder) {
+            const images = departmentFolders[folder];
+            return images[Math.floor(Math.random() * images.length)];
+        }
+
+        // 카드 업데이트
+        function updateCards() {
+            const leftDept = getRandomDepartment();
+            const rightDept = getRandomDepartment();
+
+            // 왼쪽 카드 업데이트
+            const leftImg = leftCard.querySelector('.department-image');
+            tryLoadImage(leftImg, leftDept.folder, leftDept.imageId);
+            leftCard.querySelector('.department-name').textContent = leftDept.name;
+            leftCard.querySelector('.department-category').textContent = leftDept.category;
+
+            // 오른쪽 카드 업데이트
+            const rightImg = rightCard.querySelector('.department-image');
+            tryLoadImage(rightImg, rightDept.folder, rightDept.imageId);
+            rightCard.querySelector('.department-name').textContent = rightDept.name;
+            rightCard.querySelector('.department-category').textContent = rightDept.category;
+        }
+
+        // 이미지 로드 시도 함수 추가
+        function tryLoadImage(imgElement, folder, imageId) {
+            const tryExtensions = ['jpg', 'jpeg'];
+            let loadSuccess = false;
+
+            function loadNextExtension(index) {
+                if (index >= tryExtensions.length || loadSuccess) return;
+                
+                const extension = tryExtensions[index];
+                const imgPath = `/static/images/departments/${folder}/${imageId}.${extension}`;
+                
+                imgElement.src = imgPath;
+                imgElement.classList.remove('placeholder');
+                
+                imgElement.onerror = function() {
+                    if (index < tryExtensions.length - 1) {
+                        loadNextExtension(index + 1);
+                    } else {
+                        this.classList.add('placeholder');
+                        this.src = 'data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"%3e%3cpath fill="%23ccc" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/%3e%3c/svg%3e';
+                        console.log('이미지 로드 실패:', imgPath);
+                    }
+                };
+
+                imgElement.onload = function() {
+                    loadSuccess = true;
+                };
+            }
+
+            loadNextExtension(0);
+        }
+
+        // 게임 진행 상태 업데이트
+        function updateGameState() {
+            questionCount.textContent = `${currentQuestion}/${totalQuestions}`;
+            progressBar.style.width = `${(currentQuestion / totalQuestions) * 100}%`;
+        }
+
+        // 카드 클릭 이벤트
+        function handleCardClick() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                updateGameState();
+                updateCards();
+            } else {
+                alert('게임이 종료되었습니다!');
+                // 게임 재시작
+                currentQuestion = 1;
+                usedDepartments.clear();
+                updateGameState();
+                updateCards();
+            }
+        }
+
+        // 이벤트 리스너 등록
+        leftCard.addEventListener('click', handleCardClick);
+        rightCard.addEventListener('click', handleCardClick);
+
+        // 초기 카드 로드
+        updateCards();
+        updateGameState();
+
+        // 스타일에 placeholder 이미지 관련 스타일 추가
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            .department-image.placeholder {
+                background-color: #f3f4f6;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 300px;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
