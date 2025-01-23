@@ -79,24 +79,58 @@
         .department-card {
             flex: 1;
             max-width: 500px;
-            background: white;
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.15),
+                0 5px 15px rgba(0, 0, 0, 0.12),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.9);
             position: relative;
+            backdrop-filter: blur(5px);
+            transform: perspective(1000px) rotateX(5deg);
+        }
+
+        .department-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.8), 
+                rgba(255,255,255,0.2), 
+                rgba(255,255,255,0.8)
+            );
+            z-index: 1;
         }
 
         .department-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateX(0deg) translateY(-10px);
+            border-color: #4f46e5;
+            box-shadow: 
+                0 20px 40px rgba(79, 70, 229, 0.2),
+                0 15px 20px rgba(0, 0, 0, 0.1),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.9);
+        }
+
+        .department-card::after {
+            content: none;
         }
 
         .department-image {
             width: 100%;
-            height: 300px;
+            height: 500px;
             object-fit: cover;
+            display: block;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .department-info {
@@ -105,14 +139,14 @@
         }
 
         .department-name {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #1a1a1a;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .department-category {
             color: #666;
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
 
         .progress-bar {
@@ -276,7 +310,7 @@
             <img src="/static/images/balance_header.png" alt="학과 밸런스 게임">
         </div>
         <div class="description-box" style="text-align: center; background: rgba(203, 189, 243, 0.9); padding: 1rem; border-radius: 15px; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <p style="font-size: 1.3rem;">🎯 두 개의 학과 중 더 마음에 드는 학과를 선택해주세요.</p>
+            <p style="font-size: 1.3rem;">두 개의 학과 중 더 마음에 드는 학과를 선택해주세요.</p>
             <p style="font-size: 1.3rem;">🎯 총 30문항을 통해 나에게 맞는 학과를 찾아보세요! </p>
         </div>
 
