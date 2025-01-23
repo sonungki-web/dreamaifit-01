@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #f5f5f5;
+            background-color: #e7ebe1;
             font-family: 'Apple SD Gothic Neo', sans-serif;
         }
 
@@ -326,26 +326,66 @@
         }
 
         .tab-button {
-            padding: 8px 24px;
-            border: none;
-            border-radius: 20px;
-            background: #f89f6c;
-            color: #240404;
+            padding: 10px 28px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: #1a2e4d;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-size: 1.0em; /* 30% 더 큰 글씨 크기 */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.0em;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 2px 2px 3px rgba(255, 255, 255, 0.3),
+                inset -2px -2px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
         }
-
-        
 
         .tab-button:hover {
-            background: #64e48a;
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #5fb8fe, #33f5fe);
+            color: #0f1b2e;
+            box-shadow: 
+                0 6px 20px rgba(79, 172, 254, 0.3),
+                inset 2px 2px 3px rgba(255, 255, 255, 0.4),
+                inset -2px -2px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .tab-button.active:hover {
-            background: #5b4cc4;
+        .tab-button:active {
+            transform: translateY(1px);
+            background: linear-gradient(145deg, #3f9fee, #00e5fe);
+            box-shadow: 
+                0 2px 10px rgba(79, 172, 254, 0.2),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 50%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            border-radius: 25px 25px 0 0;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(145deg, #3d95fe, #00e0fe);
+            color: #0f1b2e;
+            font-weight: 800;
+            box-shadow: 
+                0 4px 15px rgba(61, 149, 254, 0.3),
+                inset 2px 2px 3px rgba(255, 255, 255, 0.2),
+                inset -2px -2px 3px rgba(0, 0, 0, 0.2);
         }
 
         /* 반응형 스타일 */
@@ -493,6 +533,84 @@
             background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
         }
+
+        /* 계열별 색상 스타일 */
+        /* 공학계열 - 하늘색 계열 */
+        .tab-button[data-category="engineering"] {
+            background: linear-gradient(145deg, #9ac0eb, #00f2fe);
+        }
+        .tab-button[data-category="engineering"]:hover {
+            background: linear-gradient(145deg, #acd2fc, #33f5fe);
+        }
+        #engineering {
+            background: rgb(150, 240, 240);
+        }
+
+        /* 의학계열 - 민트색 계열 */
+        .tab-button[data-category="medical"] {
+            background: linear-gradient(145deg, #40d9b8, #2ce6c5);
+        }
+        .tab-button[data-category="medical"]:hover {
+            background: linear-gradient(145deg, #4debc9, #3ef8d6);
+        }
+        #medical {
+            background: rgb(180, 255, 236);
+        }
+
+        /* 자연계열 - 초록색 계열 */
+        .tab-button[data-category="science"] {
+            background: linear-gradient(145deg, #7ed957, #96e674);
+        }
+        .tab-button[data-category="science"]:hover {
+            background: linear-gradient(145deg, #8feb63, #a8f885);
+        }
+        #science {
+            background: rgb(200, 255, 200);
+        }
+
+        /* 교육계열 - 노란색 계열 */
+        .tab-button[data-category="education"] {
+            background: linear-gradient(145deg, #ffd93d, #ffe74c);
+        }
+        .tab-button[data-category="education"]:hover {
+            background: linear-gradient(145deg, #ffeb4e, #fff95d);
+        }
+        #education {
+            background: rgb(255, 250, 200);
+        }
+
+        /* 인문계열 - 분홍색 계열 */
+        .tab-button[data-category="humanities"] {
+            background: linear-gradient(145deg, #ff9a9e, #fad0c4);
+        }
+        .tab-button[data-category="humanities"]:hover {
+            background: linear-gradient(145deg, #ffacaf, #fbe2d5);
+        }
+        #humanities {
+            background: rgb(255, 220, 220);
+        }
+
+        /* 사회계열 - 보라색 계열 */
+        .tab-button[data-category="social"] {
+            background: linear-gradient(145deg, #a18cd1, #b8a6e0);
+        }
+        .tab-button[data-category="social"]:hover {
+            background: linear-gradient(145deg, #b39ef2, #c9b7f1);
+        }
+        #social {
+            background: rgb(220, 220, 255);
+        }
+
+        /* 예체능계열 - 주황색 계열 */
+        .tab-button[data-category="arts"] {
+            background: linear-gradient(145deg, #ffa07a, #ffb88c);
+        }
+        .tab-button[data-category="arts"]:hover {
+            background: linear-gradient(145deg, #ffb28b, #ffc99d);
+        }
+        #arts {
+            background: rgb(255, 230, 200);
+        }
     </style>
 </head>
 <body>
@@ -507,19 +625,18 @@
             </div>
             
             <div class="category-tabs">
-                
-                <button class="tab-button">공학계열</button>
-                <button class="tab-button">의학계열</button>
-                <button class="tab-button">자연계열</button>
-                <button class="tab-button">교육계열</button>
-                <button class="tab-button">인문계열</button>
-                <button class="tab-button">사회계열</button>
-                <button class="tab-button">예체능계열</button>
+                <button class="tab-button" data-category="engineering" onclick="scrollToSection('engineering')">공학계열</button>
+                <button class="tab-button" data-category="medical" onclick="scrollToSection('medical')">의학계열</button>
+                <button class="tab-button" data-category="science" onclick="scrollToSection('science')">자연계열</button>
+                <button class="tab-button" data-category="education" onclick="scrollToSection('education')">교육계열</button>
+                <button class="tab-button" data-category="humanities" onclick="scrollToSection('humanities')">인문계열</button>
+                <button class="tab-button" data-category="social" onclick="scrollToSection('social')">사회계열</button>
+                <button class="tab-button" data-category="arts" onclick="scrollToSection('arts')">예체능계열</button>
             </div>
         </div>
 
         <!-- 공학계열 소개 박스를 슬라이더 위로 이동 -->
-        <div class="department-intro">
+        <div class="department-intro" id="engineering">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;"> 🤖 공학계열 🚀</h2>
@@ -544,7 +661,7 @@
         </div>
 
         <!-- 의학계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="medical">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">⚕️ 의학계열 🏥</h2>
@@ -568,7 +685,7 @@
         </div>
 
         <!-- 자연계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="science">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">🔬 자연계열 🧪</h2>
@@ -592,7 +709,7 @@
         </div>
 
         <!-- 교육계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="education">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">📚 교육계열 🎓</h2>
@@ -616,7 +733,7 @@
         </div>
 
         <!-- 인문계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="humanities">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">📖 인문계열 ✒️</h2>
@@ -640,7 +757,7 @@
         </div>
 
         <!-- 사회계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="social">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">🌏 사회계열 📊</h2>
@@ -664,7 +781,7 @@
         </div>
 
         <!-- 예체능계열 -->
-        <div class="department-intro">
+        <div class="department-intro" id="arts">
             <div class="intro-content">
                 <div class="intro-text">
                     <h2 class="intro-title" style="text-align: center;">🎨 예체능계열 🎭</h2>
@@ -1035,6 +1152,35 @@
             }
         `;
         document.head.appendChild(styleSheet);
+
+        // 스크롤 함수 추가
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const offset = 80; // 상단 여백 조정값
+            
+            // 부드러운 스크롤 효과
+            window.scrollTo({
+                top: section.offsetTop - offset,
+                behavior: 'smooth'
+            });
+            
+            // 클릭된 버튼 활성화 스타일 적용
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if(button.textContent.includes(section.querySelector('.intro-title').textContent.trim())) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        // 페이지 로드 시 URL 해시에 따른 스크롤 처리
+        window.addEventListener('load', () => {
+            if(window.location.hash) {
+                const sectionId = window.location.hash.substring(1);
+                scrollToSection(sectionId);
+            }
+        });
     </script>
 </body>
 </html>

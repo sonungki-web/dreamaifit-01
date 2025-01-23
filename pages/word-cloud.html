@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학과 워드클라우드</title>
+    <style>
+        body {
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #dad1f5 0%, #e9e4ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #2d3748;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px;
+            background: rgba(250, 248, 255, 0.95);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 25px;
+            border: 1px solid #e2e1ff;
+            border-radius: 10px;
+            margin-right: 15px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #9380ff;
+            box-shadow: 0 0 0 3px rgba(147, 128, 255, 0.1);
+            background: white;
+        }
+
+        .search-button {
+            padding: 15px 30px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0 10px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 90%;
+            max-width: 1000px;
+            padding: 20px;
+            background: rgba(250, 248, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: white;
+        }
+
+        .category-button[onclick*='공학'] {
+            background: #4299e1;
+        }
+
+        .category-button[onclick*='의학'] {
+            background: #48bb78;
+        }
+
+        .category-button[onclick*='자연'] {
+            background: #38b2ac;
+        }
+
+        .category-button[onclick*='교육'] {
+            background: #ed8936;
+        }
+
+        .category-button[onclick*='인문'] {
+            background: #9f7aea;
+        }
+
+        .category-button[onclick*='사회'] {
+            background: #667eea;
+        }
+
+        .category-button[onclick*='예체능'] {
+            background: #ed64a6;
+        }
+
+        .category-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(110%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .department-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 40px;
+            background: rgba(250, 248, 255, 0.95);
+            margin: 10px auto;
+            width: 90%;
+            max-width: 900px;
+            min-height: 400px;
+            box-shadow: 0 10px 30px rgba(147, 128, 255, 0.2);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 100px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(250, 248, 255, 0.95) 100%
+            );
+            box-shadow: 
+                0 15px 35px rgba(147, 128, 255, 0.2),
+                inset 0 -10px 20px rgba(255, 255, 255, 0.8),
+                inset 0 10px 20px rgba(255, 255, 255, 0.8);
+            transform: none;
+        }
+
+        .department-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 100%
+            );
+            border-radius: inherit;
+        }
+
+        .department-container > * {
+            transform: none;
+        }
+
+        .department-button {
+            position: relative;
+            z-index: 1;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 0.9em;
+            min-width: 100px;
+            min-height: 100px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 75%,
+                rgba(255, 255, 255, 0.2) 75%
+            );
+            background-size: 10px 10px;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: calc(var(--delay) * 1s);
+        }
+
+        .engineering-dept {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+
+        .medical-dept {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .science-dept {
+            background: linear-gradient(135deg, #38b2ac, #319795);
+            color: white;
+        }
+
+        .education-dept {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+        }
+
+        .humanities-dept {
+            background: linear-gradient(135deg, #9f7aea, #805ad5);
+            color: white;
+        }
+
+        .social-dept {
+            background: linear-gradient(135deg, #667eea, #5a67d8);
+            color: white;
+        }
+
+        .arts-dept {
+            background: linear-gradient(135deg, #ed64a6, #d53f8c);
+            color: white;
+        }
+
+        .department-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .department-button::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            width: 80%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            filter: blur(5px);
+            animation: shadow 6s ease-in-out infinite;
+            animation-delay: calc(var(--delay) * 1s);
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(8px, -15px);
+            }
+            50% {
+                transform: translate(-5px, 8px);
+            }
+            75% {
+                transform: translate(-8px, -12px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes shadow {
+            0% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translateX(-50%) scale(0.8);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translateX(-50%) scale(0.85);
+                opacity: 0.35;
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .wordcloud-container {
+            padding: 30px;
+            background: rgba(250, 248, 255, 0.95);
+            border-radius: 15px;
+            min-height: 300px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wordcloud-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(147, 128, 255, 0.1);
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>학과 워드클라우드 탐색</h1>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="수의학과는 무슨 계열인가요">
+            <button class="search-button">AI 도움</button>
+        </div>
+    </div>
+
+    <div class="category-container">
+        <button class="category-button" onclick="showDepartments('공학')">공학계열</button>
+        <button class="category-button" onclick="showDepartments('의학')">의학계열</button>
+        <button class="category-button" onclick="showDepartments('자연')">자연계열</button>
+        <button class="category-button" onclick="showDepartments('교육')">교육계열</button>
+        <button class="category-button" onclick="showDepartments('인문')">인문계열</button>
+        <button class="category-button" onclick="showDepartments('사회')">사회계열</button>
+        <button class="category-button" onclick="showDepartments('예체능')">예체능계열</button>
+    </div>
+
+    <div class="department-container" id="departmentContainer"></div>
+    <div class="wordcloud-container" id="wordcloudContainer"></div>
+
+    <script>
+        // 학과 데이터
+        const departments = {
+            '공학': ['컴퓨터공학과', '기계공학과', '전자공학과', '화학공학과', '제어계측학과', '로봇공학과', '화학공학과', '나노공학과', '신소재공학과', '고분자공학과', '자동차공학과', '전기공학과', 'IT융합학과', '환경화학과'],
+            '의학': ['의예과', '치의예과', '한의예과', '간호학과'],
+            '자연': ['물리학과', '화학과', '생물학과', '수학과'],
+            '교육': ['교육학과', '초등교육과', '유아교육과'],
+            '인문': ['국어국문학과', '영어영문학과', '철학과'],
+            '사회': ['경영학과', '경제학과', '행정학과'],
+            '예체능': ['음악과', '미술학과', '체육학과']
+        };
+
+        function showDepartments(category) {
+            const container = document.getElementById('departmentContainer');
+            container.innerHTML = '';
+            
+            const categoryClasses = {
+                '공학': 'engineering-dept',
+                '의학': 'medical-dept',
+                '자연': 'science-dept',
+                '교육': 'education-dept',
+                '인문': 'humanities-dept',
+                '사회': 'social-dept',
+                '예체능': 'arts-dept'
+            };
+            
+            departments[category].forEach((dept, index) => {
+                const button = document.createElement('button');
+                button.className = `department-button ${categoryClasses[category]}`;
+                button.textContent = dept;
+                button.style.setProperty('--delay', (index * 0.2).toString());
+                button.onclick = () => showWordcloud(dept);
+                container.appendChild(button);
+            });
+        }
+
+        function showWordcloud(department) {
+            const container = document.getElementById('wordcloudContainer');
+            // 실제 구현시에는 이미지 경로를 적절히 수정해야 합니다
+            container.innerHTML = `<img class="wordcloud-image" src="wordclouds/${department}.png" alt="${department} 워드클라우드">`;
+        }
+    </script>
+</body>
+</html>
