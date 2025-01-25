@@ -20,59 +20,18 @@
         .header {
             text-align: center;
             padding: 30px;
-            background: rgba(250, 248, 255, 0.95);
+            background: url('/static/images/header_bg.png') no-repeat center center;
+            background-size: contain;
             border-radius: 15px;
             margin-bottom: 30px;
             width: 90%;
             max-width: 1080px;
-            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
+            height: 120px;
+            box-shadow: 0 20px 40px rgba(147, 128, 255, 0.15),
+                        0 8px 16px rgba(147, 128, 255, 0.1);
             backdrop-filter: blur(10px);
-        }
-
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin: 25px 0;
-        }
-
-        .search-input {
-            width: 100%;
-            max-width: 600px;
-            padding: 15px 25px;
-            border: 1px solid #e2e1ff;
-            border-radius: 10px;
-            margin-right: 15px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #2d3748;
-            transition: all 0.3s ease;
-        }
-
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #9380ff;
-            box-shadow: 0 0 0 3px rgba(147, 128, 255, 0.1);
-            background: white;
-        }
-
-        .search-button {
-            padding: 15px 30px;
-            background: #4299e1;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .search-button:hover {
-            background: #3182ce;
-            transform: translateY(-2px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transform: translateZ(0);
         }
 
         .category-container {
@@ -81,23 +40,79 @@
             margin: 30px 0 10px 0;
             flex-wrap: wrap;
             gap: 15px;
-            width: 90%;
-            max-width: 1080px;
+            width: 100%;
+            max-width: 1100px;
             padding: 20px;
-            background: rgba(250, 248, 255, 0.95);
+            background: rgba(238, 250, 171, 0.95);
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(147, 128, 255, 0.15),
+                        0 8px 16px rgba(147, 128, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 5px solid rgba(21, 7, 224, 0.5);
+            transform: translateZ(0);
         }
 
         .category-button {
-            padding: 12px 25px;
+            padding: 15px 35px;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
             color: white;
+            font-size: 1.1em;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                        0 3px 8px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .category-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.2)
+            );
+            border-radius: inherit;
+        }
+
+        .category-button::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 90%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            filter: blur(4px);
+            transition: all 0.4s ease;
+        }
+
+        .category-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2),
+                        0 8px 15px rgba(0, 0, 0, 0.1);
+            filter: brightness(110%);
+        }
+
+        .category-button:hover::after {
+            transform: translateX(-50%) scale(0.85);
+            opacity: 0.5;
+            filter: blur(6px);
+        }
+
+        .category-button:active {
+            transform: translateY(-2px) scale(0.95);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         .category-button[onclick*='공학'] {
@@ -128,27 +143,24 @@
             background: #ed64a6;
         }
 
-        .category-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(110%);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
         .department-container {
             flex: 0 0 30%;
             display: flex;
             flex-wrap: wrap;
             gap: 15px 25px;
             padding: 20px;
-            background: linear-gradient(135deg, #ebf0ad 0%, #e8fab8 100%);
+            background: linear-gradient(135deg, rgba(238, 202, 232, 0.9) 0%, rgba(231, 200, 174, 0.9) 100%);
             margin: 10px 0;
             min-height: 600px;
-            box-shadow: 0 10px 30px rgba(75, 127, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(75, 127, 255, 0.25),
+                        0 10px 20px rgba(75, 127, 255, 0.15);
             backdrop-filter: blur(10px);
             justify-content: center;
             align-items: flex-start;
             position: relative;
             border-radius: 20px;
+            border: 5px solid rgba(10, 10, 10, 0.5);
+            transform: translateZ(0);
         }
 
         .department-container::before {
@@ -297,14 +309,16 @@
         }
 
         .wordcloud-container {
-            padding: 30px;
-            background: rgba(250, 248, 255, 0.95);
-            border-radius: 15px;
-            min-height: 300px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 20px rgba(147, 128, 255, 0.1);
+            flex: 0 0 65%;
+            min-height: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(147, 128, 255, 0.25),
+                        0 10px 20px rgba(147, 128, 255, 0.15);
+            padding: 20px;
+            border: 5px solid rgba(12, 12, 12, 0.5);
             backdrop-filter: blur(10px);
+            transform: translateZ(0);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -320,7 +334,7 @@
         h1 {
             color: #2d3748;
             font-size: 2.5em;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .main-container {
@@ -333,20 +347,29 @@
             margin: 0 auto;
         }
 
-        .wordcloud-container {
-            flex: 0 0 65%;
-            min-height: 600px;
-            background: white;
+        h2 {
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .highlight-text {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(147, 128, 255, 0.2);
-            padding: 20px;
+            font-size: 0.95em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>학과 워드클라우드 탐색</h1>        
+        <!-- h1 태그 제거 -->
     </div>
+    <h2>1. 관심 있는 <span class="highlight-text">계열 버튼</span>을 먼저 선택하세요</h2>
+    <h2>2. 관심 있는 <span class="highlight-text">학과 버튼</span>을 클릭하면 해당 학과의 워드 클라우드가 생성됩니다</h2>
     <div class="category-container">
         <button class="category-button" onclick="showDepartments('공학')">공학계열</button>
         <button class="category-button" onclick="showDepartments('의학')">의학계열</button>
