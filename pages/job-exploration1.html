@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학과 이미지 갤러리</title>
-
-    
+    <title>직업 탐색</title>
     <style>
         * {
             margin: 0;
@@ -14,1173 +12,632 @@
         }
 
         body {
-            background-color: #e7ebe1;
-            font-family: 'Apple SD Gothic Neo', sans-serif;
+            font-family: 'Pretendard', sans-serif;
+            background: #f8f9fa;
+            color: #333;
         }
 
-        .gallery-container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            background: rgb(166, 236, 238);
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+        .container {
             max-width: 1320px;
-            margin: 0 auto 30px;
-            min-height: 460px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            gap: 20px;
-        }
-
-        .image-card {
-            position: relative;
-            min-width: 300px;
-            height: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background: #eee;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .image-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .department-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .heart-icon {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 2;
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000,
-                2px 2px 4px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px 15px;
-            border-radius: 20px;
-            backdrop-filter: blur(2px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .heart-icon:hover {
-            transform: translateX(-50%) scale(1.2);
-            color: #ff6b6b;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .heart-icon.active {
-            color: #ff4d4d;
-            transform: translateX(-50%) scale(1.2);
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        @keyframes pulse {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.3); }
-            100% { transform: translateX(-50%) scale(1.2); }
-        }
-
-        .nav-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(194, 231, 135, 0.9);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .nav-button:hover {
-            background: rgb(228, 116, 238);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-button {
-            left: 30px;
-        }
-
-        .next-button {
-            right: 30px;
-        }
-
-        /* 크기 표시용 라벨 */
-        .size-label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 2;
-            background-color: rgba(0, 0, 0, 0.7);  /* 반투명 검정 배경 */
-            padding: 10px 0;  /* 상하 여백 */
-            text-align: center;  /* 텍스트 중앙 정렬 */
-            backdrop-filter: blur(2px);  /* 배경 블러 효과 */
-        }
-
-        @media (max-width: 1024px) {
-            .gallery-container {
-                padding: 0 10px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .slider-container {
-                padding: 10px;
-            }
-            .nav-button {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-        }
-
-        /* 반응형 스타일 */
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .section-description {
-                font-size: 1rem;
-                padding: 0 20px;
-            }
-
-            .section-stats {
-                gap: 2rem;
-            }
-
-            .stat-number {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* 설명 섹션 관련 스타일 제거 */
-        .description-section,
-        .description-container,
-        .section-title,
-        .section-description,
-        .section-stats,
-        .stat-item,
-        .stat-number,
-        .stat-label {
-            display: none;
-        }
-
-        /* 검색 섹션 스타일 */
         .search-section {
             text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .main-title {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-            padding: 20px 40px;
-            display: inline-block;
-            position: relative;
-            background: linear-gradient(120deg, #e9f5ff 0%, #f0f0ff 100%);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+        .search-section h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .main-title:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .sub-title {
-            font-size: 1.2rem;
-            color: #666;
+        .search-section p {
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 2rem;
         }
 
         .search-container {
-            max-width: 600px;
-            margin: 0 auto 2rem;
             display: flex;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px;
-            border-radius: 35px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: searchContainerFadeIn 0.8s ease-out;
-            position: relative;
-            overflow: hidden;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        @keyframes searchContainerFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .search-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(108, 92, 231, 0.15);
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .search-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.6),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .search-container:hover::before {
-            left: 100%;
-        }
-        
 
         .search-input {
             flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #f3d9d9;
-            border-radius: 30px;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
             font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .search-input:focus {
-            border-color: #6c5ce7;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .search-button {
-            padding: 15px 30px;
-            background: #4f3aee;
+            padding: 1rem 2rem;
+            background: #4f46e5;
             color: white;
             border: none;
-            border-radius: 30px;
-            font-size: 1rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
         .search-button:hover {
-            background: #5b4cc4;
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4열 그리드 */
+            gap: 20px; /* 그리드 간격 */
+            padding: 2rem;
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            text-decoration: none;
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .job-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .job-card:hover::after {
+            opacity: 1;
+        }
+
+        .job-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+
+        .job-image {
+            width: 100%;
+            height: 80%; /* 이미지가 카드의 80% 차지 */
+            object-fit: cover;
+        }
+
+        .job-info {
+            height: 20%; /* 제목이 카드의 20% 차지 */
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .job-title {
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            color: #333;
+        }
+
+        .job-description {
+            font-size: 0.85rem; /* 글자 크기 약간 감소 */
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .job-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-item img {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .category-frame {
+            background: rgb(205, 241, 238);
+            border-radius: 20px;
+            padding: 2rem; /* 패딩 증가 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+            margin: 2rem auto;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            max-width: 1500px; /* 최대 너비 증가 */
+            overflow: hidden;
+            box-sizing: border-box;
+            width: calc(100% - 2rem); /* 여백 조정 */
+        }
+
+        .category-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* 미세한 내부 테두리 */
+            pointer-events: none;
+        }
+
+        .category-frame:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); /* 호버 시 그림자 강화 */
+            transform: translateY(-1px); /* 미세한 호버 효과 */
+            transition: all 0.3s ease;
         }
 
         .category-tabs {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(10, 100px);
+            grid-template-rows: repeat(2, 140px); /* 행 높이 증가 */
             gap: 15px;
-            flex-wrap: wrap;
+            padding: 1rem;
+            width: fit-content;
+            box-sizing: border-box;
+            margin: 0 auto;
         }
 
-        .tab-button {
-            padding: 10px 28px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            color: #1a2e4d;
+        .category-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.2rem;
+            background: white;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 700;
-            font-size: 1.0em;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-            box-shadow: 
-                0 4px 15px rgba(0, 0, 0, 0.1),
-                inset 2px 2px 3px rgba(255, 255, 255, 0.3),
-                inset -2px -2px 3px rgba(0, 0, 0, 0.1);
+            width: 100px;
+            height: 100px;
+            justify-content: center;
+            aspect-ratio: 1;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin-bottom: 35px; /* 하단 여백 더 증가 */
             position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
         }
 
-        .tab-button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(145deg, #5fb8fe, #33f5fe);
-            color: #0f1b2e;
-            box-shadow: 
-                0 6px 20px rgba(79, 172, 254, 0.3),
-                inset 2px 2px 3px rgba(255, 255, 255, 0.4),
-                inset -2px -2px 3px rgba(0, 0, 0, 0.1);
+        .category-tab img {
+            width: 85px; /* 이미지 크기 증가 */
+            height: 85px; /* 이미지 크기 증가 */
+            opacity: 0.8;
+            object-fit: cover; /* 이미지가 영역을 꽉 채우도록 */
+            border-radius: 50%; /* 이미지를 원형으로 */
+            transition: all 0.3s ease;
         }
 
-        .tab-button:active {
-            transform: translateY(1px);
-            background: linear-gradient(145deg, #3f9fee, #00e5fe);
-            box-shadow: 
-                0 2px 10px rgba(79, 172, 254, 0.2),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
-                inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+        /* PNG, JPEG 이미지를 위한 스타일 */
+        .category-tab img[src$=".png"],
+        .category-tab img[src$=".jpg"],
+        .category-tab img[src$=".jpeg"] {
+            width: 85px; /* PNG, JPEG도 동일한 크기로 */
+            height: 85px;
+            object-fit: cover;
+            padding: 0; /* 패딩 제거 */
         }
 
-        .tab-button::before {
-            content: '';
+        /* SVG 이미지를 위한 스타일 */
+        .category-tab img[src$=".svg"] {
+            padding: 1rem; /* SVG만 패딩 유지 */
+            object-fit: contain;
+        }
+
+        .category-tab:hover img {
+            opacity: 1;
+            transform: scale(1.1); /* 호버 시 약간 확대 */
+        }
+
+        .category-tab.active img {
+            opacity: 1;
+        }
+
+        .category-tab span {
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            height: 50%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            border-radius: 25px 25px 0 0;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f3f4f6;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333333;
+            text-align: center;
+            width: max-content;
+            white-space: nowrap;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+            border: 1px solid #e5e7eb;
         }
 
-        .tab-button.active {
-            background: linear-gradient(145deg, #3d95fe, #00e0fe);
-            color: #0f1b2e;
-            font-weight: 800;
-            box-shadow: 
-                0 4px 15px rgba(61, 149, 254, 0.3),
-                inset 2px 2px 3px rgba(255, 255, 255, 0.2),
-                inset -2px -2px 3px rgba(0, 0, 0, 0.2);
+        .category-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-color: #9ca3af;
         }
 
-        /* 반응형 스타일 */
+        .category-tab.active {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            border-width: 2px;
+        }
+
+        .category-tab.active span {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+            font-weight: 500;
+        }
+
+        /* 호버 시 텍스트 스타일 */
+        .category-tab:hover span {
+            background-color: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        /* 로딩 애니메이션 */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 반응형 조정 */
+        @media (max-width: 1320px) {
+            .jobs-grid {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .jobs-grid {
+                grid-template-columns: repeat(3, 1fr); /* 태블릿에서 3열 */
+            }
+        }
+
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 2rem;
-                padding: 15px 30px;
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr); /* 모바일에서 2열 */
+                gap: 1rem;
+                padding: 1rem;
             }
-            
-            .sub-title {
-                font-size: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .jobs-grid {
+                grid-template-columns: repeat(1, 1fr); /* 작은 모바일에서 1열 */
             }
-            
-            .search-container {
-                flex-direction: column;
-            }
-            
-            .search-button {
-                width: 100%;
+        }
+
+        /* 반응형 조정 */
+        @media (max-width: 1500px) {
+            .category-frame {
+                padding: 1.5rem;
+                margin: 2rem 1rem;
             }
             
             .category-tabs {
-                gap: 8px;
-            }
-            
-            .tab-button {
-                padding: 6px 16px;
-                font-size: 0.9rem;
+                gap: 10px;
             }
         }
 
-        /* 공학계열 소개 박스 스타일 */
-        .department-intro {
-            background: rgb(150, 240, 240);
-            border-radius: 50px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 3px solid #2eaeff;
-            position: relative;
-            text-align: left;
+        @media (max-width: 1200px) {
+            .category-tabs {
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(4, 125px);
+            }
         }
 
-        .intro-content {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .intro-text {
-            flex: 1;
-        }
-
-        .intro-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000305;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .intro-description {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #080000;
-            text-align: left;
-        }
-
-        .intro-image {
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .image-placeholder {
-            background: #f8f9fa;
-            border-radius: 15px;
-            height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #adb5bd;
-            font-size: 1.2rem;
-            border: 2px dashed #dee2e6;
-        }
-
-        /* 반응형 스타일 */
         @media (max-width: 768px) {
-            .intro-content {
-                flex-direction: column;
+            .category-tabs {
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(7, 125px);
             }
-
-            .intro-image {
-                width: 100%;
-                max-width: 200px;
-                margin: 0 auto;
-            }
-
-            .image-placeholder {
-                height: 100px;
-            }
-
-            .intro-title {
-                font-size: 1.8rem;
-            }
-
-            .intro-description {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-        }
-
-        .department-thumbnail {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .category-label {
-            position: absolute;
-            top: 40px;
-            left: 0;
-            right: 0;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 2;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 5px 0;
-            text-align: center;
-            backdrop-filter: blur(2px);
-        }
-
-        /* 빈 즐겨찾기 메시지 스타일 */
-        .empty-favorites {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-        }
-
-        /* 계열별 색상 스타일 */
-        /* 공학계열 - 하늘색 계열 */
-        .tab-button[data-category="engineering"] {
-            background: linear-gradient(145deg, #9ac0eb, #00f2fe);
-        }
-        .tab-button[data-category="engineering"]:hover {
-            background: linear-gradient(145deg, #acd2fc, #33f5fe);
-        }
-        #engineering {
-            background: rgb(150, 240, 240);
-        }
-
-        /* 의학계열 - 민트색 계열 */
-        .tab-button[data-category="medical"] {
-            background: linear-gradient(145deg, #40d9b8, #2ce6c5);
-        }
-        .tab-button[data-category="medical"]:hover {
-            background: linear-gradient(145deg, #4debc9, #3ef8d6);
-        }
-        #medical {
-            background: rgb(180, 255, 236);
-        }
-
-        /* 자연계열 - 초록색 계열 */
-        .tab-button[data-category="science"] {
-            background: linear-gradient(145deg, #7ed957, #96e674);
-        }
-        .tab-button[data-category="science"]:hover {
-            background: linear-gradient(145deg, #8feb63, #a8f885);
-        }
-        #science {
-            background: rgb(200, 255, 200);
-        }
-
-        /* 교육계열 - 노란색 계열 */
-        .tab-button[data-category="education"] {
-            background: linear-gradient(145deg, #ffd93d, #ffe74c);
-        }
-        .tab-button[data-category="education"]:hover {
-            background: linear-gradient(145deg, #ffeb4e, #fff95d);
-        }
-        #education {
-            background: rgb(255, 250, 200);
-        }
-
-        /* 인문계열 - 분홍색 계열 */
-        .tab-button[data-category="humanities"] {
-            background: linear-gradient(145deg, #ff9a9e, #fad0c4);
-        }
-        .tab-button[data-category="humanities"]:hover {
-            background: linear-gradient(145deg, #ffacaf, #fbe2d5);
-        }
-        #humanities {
-            background: rgb(255, 220, 220);
-        }
-
-        /* 사회계열 - 보라색 계열 */
-        .tab-button[data-category="social"] {
-            background: linear-gradient(145deg, #a18cd1, #b8a6e0);
-        }
-        .tab-button[data-category="social"]:hover {
-            background: linear-gradient(145deg, #b39ef2, #c9b7f1);
-        }
-        #social {
-            background: rgb(220, 220, 255);
-        }
-
-        /* 예체능계열 - 주황색 계열 */
-        .tab-button[data-category="arts"] {
-            background: linear-gradient(145deg, #ffa07a, #ffb88c);
-        }
-        .tab-button[data-category="arts"]:hover {
-            background: linear-gradient(145deg, #ffb28b, #ffc99d);
-        }
-        #arts {
-            background: rgb(255, 230, 200);
         }
     </style>
 </head>
 <body>
-    <div class="gallery-container">
-        <div class="search-section">
-            <h1 class="main-title">🎓 학과 탐색 📚</h1>
-            <p class="sub-title">관심 있는 학과를 학과 장바구니에 담아보세요</p>
-            
+    <div class="container">
+        <section class="search-section">
+            <h1>직업 탐색</h1>
+            <p>다양한 직업 정보를 탐색하고 나에게 맞는 직업을 찾아보세요.</p>
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="동물을 좋아하는데 학과 추천해줘">
-                <button class="search-button">AI도움</button>
+                <input type="text" class="search-input" placeholder="직업명을 입력하세요...">
+                <button class="search-button">검색</button>
             </div>
-            
+        </section>
+
+        <div class="category-frame">
             <div class="category-tabs">
-                <button class="tab-button" data-category="engineering" onclick="scrollToSection('engineering')">공학계열</button>
-                <button class="tab-button" data-category="medical" onclick="scrollToSection('medical')">의학계열</button>
-                <button class="tab-button" data-category="science" onclick="scrollToSection('science')">자연계열</button>
-                <button class="tab-button" data-category="education" onclick="scrollToSection('education')">교육계열</button>
-                <button class="tab-button" data-category="humanities" onclick="scrollToSection('humanities')">인문계열</button>
-                <button class="tab-button" data-category="social" onclick="scrollToSection('social')">사회계열</button>
-                <button class="tab-button" data-category="arts" onclick="scrollToSection('arts')">예체능계열</button>
+                <button class="category-tab">
+                    <img src="/static/icons/AI로봇.jpeg" alt="AI/로봇">
+                    <span>AI/로봇</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/IT통신.jpeg" alt="IT/SW">
+                    <span>IT/SW</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/게임.jpeg" alt="게임">
+                    <span>게임</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/공학.jpeg" alt="공학">
+                    <span>공학</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/교육.jpeg" alt="교육">
+                    <span>교육</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/금융.jpeg" alt="금융">
+                    <span>금융</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/동물.jpeg" alt="동물">
+                    <span>동물</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/디자인그래픽.jpeg" alt="디자인">
+                    <span>디자인</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/미용패션.jpeg" alt="미용/패션">
+                    <span>미용/패션</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/방송.jpeg" alt="방송">
+                    <span>방송</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/법관.jpeg" alt="법/수사">
+                    <span>법/수사</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/복지.jpeg" alt="사회복지">
+                    <span>사회복지</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/스포츠.jpeg" alt="스포츠">
+                    <span>스포츠</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/여행.jpeg" alt="여행">
+                    <span>여행</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/영화.jpeg" alt="영화/드라마">
+                    <span>영화/드라마</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/우주항공.jpeg" alt="우주/항공">
+                    <span>우주/항공</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/음식.jpeg" alt="음식">
+                    <span>음식</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/음악.jpeg" alt="음악">
+                    <span>음악</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/의료.jpeg" alt="의료/바이오">
+                    <span>의료/바이오</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/환경.jpeg" alt="환경/생태">
+                    <span>환경/생태</span>
+                </button>
             </div>
         </div>
 
-        <!-- 공학계열 소개 박스를 슬라이더 위로 이동 -->
-        <div class="department-intro" id="engineering">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;"> 🤖 공학계열 🚀</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        공학계열은 과학 기술을 실용화하여 인류의 삶의 질을 향상시키는 학문 분야입니다. 
-                        수학과 기초과학을 바탕으로 창의적인 문제 해결 능력을 키우고, 
-                        첨단 기술 개발을 통해 미래 사회를 이끌어갈 인재를 양성합니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/engineering.jpg" alt="공학계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
+        <div class="loading">
+            <div class="loading-spinner"></div>
         </div>
 
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="imageSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 의학계열 -->
-        <div class="department-intro" id="medical">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">⚕️ 의학계열 🏥</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        의학계열은 인간의 생명과 건강을 다루는 전문적인 학문 분야입니다. 
-                        질병의 예방, 진단, 치료를 통해 국민 건강 증진에 기여하는 의료 전문가를 양성합니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/medical.jpg" alt="의학계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="medicalSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 자연계열 -->
-        <div class="department-intro" id="science">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">🔬 자연계열 🧪</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        자연계열은 자연현상의 원리와 법칙을 탐구하는 학문 분야입니다. 
-                        수학, 물리, 화학, 생물학 등을 통해 자연과학의 기초를 연구하고 발전시킵니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/science.jpg" alt="자연계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="scienceSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 교육계열 -->
-        <div class="department-intro" id="education">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">📚 교육계열 🎓</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        교육계열은 미래 세대의 성장을 이끄는 교육 전문가를 양성하는 분야입니다. 
-                        교육학의 이론과 실제를 배우며, 효과적인 교수법과 학습법을 연구합니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/education.jpg" alt="교육계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="educationSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 인문계열 -->
-        <div class="department-intro" id="humanities">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">📖 인문계열 ✒️</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        인문계열은 인간의 문화, 역사, 언어를 연구하는 학문 분야입니다. 
-                        인문학적 소양과 비판적 사고력을 키워 인류 문화 발전에 기여합니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/humanities.jpg" alt="인문계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="humanitiesSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 사회계열 -->
-        <div class="department-intro" id="social">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">🌏 사회계열 📊</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        사회계열은 인간 사회의 다양한 현상과 문제를 연구하는 학문입니다. 
-                        경제, 정치, 사회 현상을 분석하고 해결방안을 모색합니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/social.jpg" alt="사회계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="socialSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 예체능계열 -->
-        <div class="department-intro" id="arts">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">🎨 예체능계열 🎭</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        예체능계열은 예술과 체육 분야의 전문가를 양성하는 학문입니다. 
-                        음악, 미술, 체육 등 다양한 분야에서 창의적 표현과 기량을 발전시킵니다.
-                    </p>
-                </div>
-                <div class="intro-image">
-                    <img src="/static/images/departments/arts.jpg" alt="예체능계열 대표 이미지" class="department-thumbnail">
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="artsSlider">
-                <!-- 이미지는 JavaScript로 동적 생성됨 -->
-            </div>
-        </div>
-
-        <!-- 즐겨찾기 갤러리 -->
-        <div class="department-intro">
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">⭐ 즐겨찾기한 학과 ⭐</h2>
-                    <p class="intro-description" style="text-align: center;">
-                        관심있는 학과들을 한눈에 모아보세요.
-                        하트 아이콘을 클릭하여 즐겨찾기를 추가하거나 제거할 수 있습니다.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-container" id="favoritesContainer" style="min-height: 460px;">
-            <button class="nav-button prev-button">⬅️</button>
-            <button class="nav-button next-button">➡️</button>
-            <div class="slider" id="favoritesSlider">
-                <div class="empty-favorites" style="display: none;">
-                    <p style="text-align: center; width: 100%; color: #666; font-size: 1.2rem; padding: 20px;">
-                        아직 즐겨찾기한 학과가 없습니다. 하트 아이콘을 클릭하여 관심 있는 학과를 추가해보세요!
-                    </p>
-                </div>
-            </div>
+        <div class="jobs-grid">
+            <!-- 직업 카드들이 여기에 동적으로 추가됨 -->
         </div>
     </div>
 
     <script>
-        const slider = document.querySelector('.slider');
-        const prevButton = document.querySelector('.prev-button');
-        const nextButton = document.querySelector('.next-button');
-        let currentIndex = 0;
-
-        // 학과 정보 데이터를 카테고리별로 구성
-        const departmentsByCategory = {
-            '공학계열': [
-                { id: 'computer', name: '컴퓨터공학과' },
-                { id: 'mechanical', name: '기계공학과' },
-                { id: 'electrical', name: '전기전자공학과' },
-                { id: 'chemical', name: '화학공학과' },
-                { id: 'automotive', name: '자동차공학과' },
-                { id: 'nuclear', name: '원자력공학과' }
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const jobsGrid = document.querySelector('.jobs-grid');
+        
+        // jobsData 수정 - 각 직업에 링크 필드 추가
+        const jobsData = {
+            'AI/로봇': [
+                {
+                    title: '로봇윤리학자',
+                    image: '/static/jobs/ai-robot/로봇윤리학자.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10038'
+                },
+                {
+                    title: '감성인식기술전문가',
+                    image: '/static/jobs/ai-robot/감성인식기술전문가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10102' // 향후 추가될 링크
+                },
+                {
+                    title: '신경회로망연구원',
+                    image: '/static/jobs/ai-robot/신경회로망연구원.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=98' // 향후 추가될 링크
+                },
+                {
+                    title: '빅데이터전문가',
+                    image: '/static/jobs/ai-robot/빅데이터전문가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10032' // 향후 추가될 링크
+                },
+                {
+                    title: '시스템소프트웨어개발자',
+                    image: '/static/jobs/ai-robot/시스템소프트웨어개발자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '로봇연구원',
+                    image: '/static/jobs/ai-robot/로봇연구원.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '기계공학기술자',
+                    image: '/static/jobs/ai-robot/기계공학기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '메카트로닉스공학기술자',
+                    image: '/static/jobs/ai-robot/메카트로닉스공학기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '산업용로봇조작원',
+                    image: '/static/jobs/ai-robot/산업용로봇조작원.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '메타버스크리에이터',
+                    image: '/static/jobs/ai-robot/메타버스크리에이터.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '컴퓨터하드웨어기술자',
+                    image: '/static/jobs/ai-robot/컴퓨터하드웨어기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                }
             ],
-            '의학계열': [
-                { id: 'medicine', name: '의예과' },
-                { id: 'nursing', name: '간호학과' },
-                { id: 'pharmacy', name: '약학과' },
-                { id: 'dental', name: '치의예과' },
-                { id: 'oriental', name: '한의예과' },
-                { id: 'physical therapy', name: '물리치료학과' }
-            ],
-            '자연계열': [
-                { id: 'Physics', name: '물리학과' },
-                { id: 'chemistry', name: '화학과' },
-                { id: 'Biotechnology', name: '생물학과' },
-                { id: 'math', name: '수학과' },
-                { id: 'statistics', name: '통계학과' },
-                { id: 'Astronomy', name: '천문학과' },
-                { id: 'Veterinary Medicine', name: '수의학과' }
-            ],
-            '교육계열': [
-                { id: 'elementary', name: '초등교육과' },
-                { id: 'education', name: '교육학과' },
-                { id: 'english_edu', name: '영어교육과' },
-                { id: 'math_edu', name: '수학교육과' },
-                { id: 'physical_edu', name: '체육교육과' }
-            ],
-            '인문계열': [
-                { id: 'korean', name: '국어국문학과' },
-                { id: 'english', name: '영어영문학과' },
-                { id: 'history', name: '사학과' },
-                { id: 'philosophy', name: '철학과' },
-                { id: 'chinese', name: '중어중문학과' }
-            ],
-            '사회계열': [
-                { id: 'economics', name: '경제학과' },
-                { id: 'business', name: '경영학과' },
-                { id: 'law', name: '법학과' },
-                { id: 'politics', name: '정치외교학과' },
-                { id: 'sociology', name: '사회학과' }
-            ],
-            '예체능계열': [
-                { id: 'fine_arts', name: '미술학과' },
-                { id: 'music', name: '음악과' },
-                { id: 'dance', name: '무용과' },
-                { id: 'theater', name: '연극영화과' },
-                { id: 'design', name: '디자인학과' }
+            'IT/SW': [
+                {
+                    title: '스마트팜구축가',
+                    image: '/static/jobs/IT-SW/스마트팜구축가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10008'
+                }
             ]
         };
 
-        // 하트 아이콘 이벤트 설정 함수 수정
-        function setupHeartIcons() {
-            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
+        // 직업 카드 생성 함수 수정
+        function createJobCard(job) {
+            const cardLink = job.link || 'javascript:void(0)'; // 링크가 없는 경우 클릭 이벤트 방지
+            return `
+                <a href="${cardLink}" target="_blank" class="job-card">
+                    <img src="${job.image}" alt="${job.title}" class="job-image">
+                    <div class="job-info">
+                        <h3 class="job-title">${job.title}</h3>
+                    </div>
+                </a>
+            `;
+        }
+
+        // 직업 데이터 표시 함수
+        function displayJobs(category) {
+            const jobs = jobsData[category];
+            if (!jobs) {
+                console.error('카테고리를 찾을 수 없습니다:', category);
+                return;
+            }
+
+            // 기존 카드 초기화
+            jobsGrid.innerHTML = '';
             
-            document.querySelectorAll('.heart-icon').forEach(heart => {
-                const deptId = heart.dataset.department;
-                
-                // 초기 상태 설정
-                if (favorites[deptId]) {
-                    heart.classList.add('active');
-                }
-                
-                // 이벤트 리스너가 중복 등록되지 않도록 제거 후 다시 등록
-                heart.removeEventListener('click', handleFavoriteClick);
-                heart.addEventListener('click', handleFavoriteClick);
+            // 새 카드 추가
+            jobs.forEach(job => {
+                jobsGrid.insertAdjacentHTML('beforeend', createJobCard(job));
             });
         }
 
-        // handleFavoriteClick 함수 수정
-        function handleFavoriteClick(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            
-            const heart = e.target;
-            const deptId = heart.dataset.department;
-            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
-            const isFavoriteGallery = heart.closest('#favoritesSlider') !== null;
-            
-            // 즐겨찾기 토글
-            if (heart.classList.contains('active')) {
-                heart.classList.remove('active');
-                delete favorites[deptId];
-                heart.style.animation = 'none';
-                
-                // 즐겨찾기 갤러리에서 클릭한 경우 해당 카드를 즉시 제거
-                if (isFavoriteGallery) {
-                    const card = heart.closest('.image-card');
-                    card.remove();
-                    
-                    // 즐겨찾기가 모두 제거되었는지 확인하고 빈 메시지 표시
-                    const favoritesSlider = document.getElementById('favoritesSlider');
-                    const remainingCards = favoritesSlider.querySelectorAll('.image-card').length;
-                    const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
-                    
-                    if (remainingCards === 0) {
-                        emptyMessage.style.display = 'flex';
-                    }
-                }
-            } else {
-                heart.classList.add('active');
-                favorites[deptId] = true;
-                heart.style.animation = 'pulse 0.3s ease';
-            }
-            
-            // localStorage 업데이트
-            localStorage.setItem('departmentFavorites', JSON.stringify(favorites));
-            
-            // 모든 동일한 학과의 하트 아이콘 상태 동기화
-            document.querySelectorAll(`.heart-icon[data-department="${deptId}"]`).forEach(icon => {
-                if (favorites[deptId]) {
-                    icon.classList.add('active');
-                    icon.style.animation = 'pulse 0.3s ease';
-                } else {
-                    icon.classList.remove('active');
-                    icon.style.animation = 'none';
-                }
-            });
-            
-            // 즐겨찾기 갤러리가 아닌 곳에서 클릭한 경우에만 갤러리 전체 업데이트
-            if (!isFavoriteGallery) {
-                updateFavoritesGallery();
-            }
-        }
+        // 카테고리 탭 클릭 이벤트 처리
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // 기존 active 클래스 제거
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                // 클릭된 탭에 active 클래스 추가
+                tab.classList.add('active');
 
-        // 각 계열별 이미지 로드 함수
-        function loadCategoryImages(category, sliderId) {
-            const slider = document.getElementById(sliderId);
-            slider.innerHTML = '';
-            
-            const departments = departmentsByCategory[category] || [];
-            
-            departments.forEach(dept => {
-                const card = document.createElement('div');
-                card.className = 'image-card';
+                // 카테고리 이름 가져오기
+                const category = tab.querySelector('span').textContent;
                 
-                const folderMapping = {
-                    '공학계열': 'engineering',
-                    '의학계열': 'medical',
-                    '자연계열': 'science',
-                    '교육계열': 'education',
-                    '인문계열': 'humanities',
-                    '사회계열': 'social',
-                    '예체능계열': 'arts'
-                };
-                
-                const folderName = folderMapping[category] || category.toLowerCase();
-                const imagePathJpg = `/static/images/departments/${folderName}/${dept.id}.jpg`;
-                const imagePathJpeg = `/static/images/departments/${folderName}/${dept.id}.jpeg`;
-                
-                card.innerHTML = `
-                    <img src="${imagePathJpg}" 
-                         alt="${dept.name}" 
-                         class="department-image"
-                         onerror="if (this.src.endsWith('.jpg')) {
-                                     this.src = '${imagePathJpeg}';
-                                 } else {
-                                     this.src='/static/images/placeholder.jpg';
-                                     this.style.objectFit='contain';
-                                     this.style.padding='20px';
-                                 }">
-                    <div class="heart-icon" data-department="${dept.id}">♥</div>
-                    <div class="size-label">${dept.name}</div>
-                `;
-                
-                slider.appendChild(card);
+                // 해당 카테고리의 직업 카드 표시
+                displayJobs(category);
             });
-            
-            // 하트 아이콘 설정
-            setupHeartIcons();
-        }
+        });
 
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', () => {
-            // 각 계열별 이미지 로드
-            loadCategoryImages('공학계열', 'imageSlider');
-            loadCategoryImages('의학계열', 'medicalSlider');
-            loadCategoryImages('자연계열', 'scienceSlider');
-            loadCategoryImages('교육계열', 'educationSlider');
-            loadCategoryImages('인문계열', 'humanitiesSlider');
-            loadCategoryImages('사회계열', 'socialSlider');
-            loadCategoryImages('예체능계열', 'artsSlider');
-            
-            // 즐겨찾기 갤러리 초기화
-            updateFavoritesGallery();
-            
-            // 모든 슬라이더의 네비게이션 버튼에 이벤트 리스너 추가
-            document.querySelectorAll('.slider-container').forEach(container => {
-                const slider = container.querySelector('.slider');
-                const prevButton = container.querySelector('.prev-button');
-                const nextButton = container.querySelector('.next-button');
-                let currentIndex = 0;
-                
-                prevButton.addEventListener('click', () => {
-                    const sliderWidth = slider.clientWidth;
-                    const cardWidth = 320;
-                    const visibleCards = Math.floor(sliderWidth / cardWidth);
-                    const maxIndex = Math.max(0, slider.children.length - visibleCards);
-                    
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        const translateX = -currentIndex * cardWidth;
-                        slider.style.transform = `translateX(${translateX}px)`;
-                    }
-                });
-                
-                nextButton.addEventListener('click', () => {
-                    const sliderWidth = slider.clientWidth;
-                    const cardWidth = 320;
-                    const visibleCards = Math.floor(sliderWidth / cardWidth);
-                    const maxIndex = Math.max(0, slider.children.length - visibleCards);
-                    
-                    if (currentIndex < maxIndex) {
-                        currentIndex++;
-                        const translateX = -currentIndex * cardWidth;
-                        slider.style.transform = `translateX(${translateX}px)`;
-                    }
-                });
-            });
-            
-            // 탭 버튼 설정
-            setupTabButtons();
-            const firstTab = document.querySelector('.tab-button');
-            firstTab.classList.add('active');
-        });
-
-        // 즐겨찾기 슬라이더 업데이트 함수 수정
-        function updateFavoritesGallery() {
-            const favoritesSlider = document.getElementById('favoritesSlider');
-            const favorites = JSON.parse(localStorage.getItem('departmentFavorites')) || {};
-            const emptyMessage = favoritesSlider.querySelector('.empty-favorites');
-            
-            // 즐겨찾기 항목만 제거하고 빈 메시지는 유지
-            Array.from(favoritesSlider.children).forEach(child => {
-                if (!child.classList.contains('empty-favorites')) {
-                    child.remove();
-                }
-            });
-            
-            // 즐겨찾기가 있는지 확인
-            const hasFavorites = Object.keys(favorites).length > 0;
-            
-            if (!hasFavorites) {
-                emptyMessage.style.display = 'flex';
-                return;
-            }
-            
-            emptyMessage.style.display = 'none';
-            
-            // 즐겨찾기 항목 추가
-            Object.entries(departmentsByCategory).forEach(([category, departments]) => {
-                departments.forEach(dept => {
-                    if (favorites[dept.id]) {
-                        const card = document.createElement('div');
-                        card.className = 'image-card';
-                        
-                        const folderMapping = {
-                            '공학계열': 'engineering',
-                            '의학계열': 'medical',
-                            '자연계열': 'science',
-                            '교육계열': 'education',
-                            '인문계열': 'humanities',
-                            '사회계열': 'social',
-                            '예체능계열': 'arts'
-                        };
-                        
-                        const folderName = folderMapping[category] || category.toLowerCase();
-                        const imagePathJpg = `/static/images/departments/${folderName}/${dept.id}.jpg`;
-                        const imagePathJpeg = `/static/images/departments/${folderName}/${dept.id}.jpeg`;
-                        
-                        card.innerHTML = `
-                            <img src="${imagePathJpg}" 
-                                 alt="${dept.name}" 
-                                 class="department-image"
-                                 onerror="if (this.src.endsWith('.jpg')) {
-                                             this.src = '${imagePathJpeg}';
-                                         } else {
-                                             this.src='/static/images/placeholder.jpg';
-                                             this.style.objectFit='contain';
-                                             this.style.padding='20px';
-                                         }">
-                            <div class="heart-icon active" data-department="${dept.id}">♥</div>
-                            <div class="size-label">${dept.name}</div>
-                            <div class="category-label">${category}</div>
-                        `;
-                        
-                        favoritesSlider.appendChild(card);
-                    }
-                });
-            });
-            
-            // 새로 추가된 하트 아이콘에 이벤트 리스너 설정
-            setupHeartIcons();
-        }
-
-        // CSS 애니메이션 추가
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = `
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                to {
-                    opacity: 0;
-                    transform: scale(0.8);
-                }
-            }
-        `;
-        document.head.appendChild(styleSheet);
-
-        // 스크롤 함수 추가
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            const offset = 80; // 상단 여백 조정값
-            
-            // 부드러운 스크롤 효과
-            window.scrollTo({
-                top: section.offsetTop - offset,
-                behavior: 'smooth'
-            });
-            
-            // 클릭된 버튼 활성화 스타일 적용
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => {
-                button.classList.remove('active');
-                if(button.textContent.includes(section.querySelector('.intro-title').textContent.trim())) {
-                    button.classList.add('active');
-                }
-            });
-        }
-
-        // 페이지 로드 시 URL 해시에 따른 스크롤 처리
-        window.addEventListener('load', () => {
-            if(window.location.hash) {
-                const sectionId = window.location.hash.substring(1);
-                scrollToSection(sectionId);
+            const firstTab = document.querySelector('.category-tab');
+            if (firstTab) {
+                firstTab.click();
             }
         });
+
+        // 이미지 로드 에러 처리
+        jobsGrid.addEventListener('error', (event) => {
+            if (event.target.tagName === 'IMG') {
+                console.error('이미지 로드 실패:', event.target.src);
+                event.target.src = '/static/icons/default-job.jpeg';
+            }
+        }, true);
     </script>
 </body>
-</html>
+</html> 
