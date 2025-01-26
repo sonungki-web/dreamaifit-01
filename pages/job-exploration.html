@@ -78,23 +78,25 @@
 
         .jobs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 1rem;
+            grid-template-columns: repeat(4, 1fr); /* 4열 그리드로 변경 */
+            gap: 1.5rem; /* 간격 조정 */
+            padding: 2rem 0;
+            max-width: 1320px; /* 최대 너비 설정 */
+            margin: 0 auto;
         }
 
         .job-card {
             background: white;
             border-radius: 15px;
+            border: 1px solid #e5e7eb;
             overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .job-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .job-image {
@@ -104,52 +106,186 @@
         }
 
         .job-info {
-            padding: 1.5rem;
+            padding: 1.2rem; /* 패딩 약간 감소 */
         }
 
         .job-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem; /* 글자 크기 약간 감소 */
+            font-weight: 600;
             color: #1a1a1a;
+            margin-bottom: 0.5rem;
         }
 
         .job-description {
+            font-size: 0.85rem; /* 글자 크기 약간 감소 */
             color: #666;
-            font-size: 0.9rem;
             line-height: 1.5;
         }
 
-        .category-tabs {
+        .job-stats {
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-            padding: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-item img {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .category-frame {
+            background: rgb(205, 241, 238);
+            border-radius: 20px;
+            padding: 2rem; /* 패딩 증가 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+            margin: 2rem auto;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            max-width: 1500px; /* 최대 너비 증가 */
+            overflow: hidden;
+            box-sizing: border-box;
+            width: calc(100% - 2rem); /* 여백 조정 */
+        }
+
+        .category-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* 미세한 내부 테두리 */
+            pointer-events: none;
+        }
+
+        .category-frame:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); /* 호버 시 그림자 강화 */
+            transform: translateY(-1px); /* 미세한 호버 효과 */
+            transition: all 0.3s ease;
+        }
+
+        .category-tabs {
+            display: grid;
+            grid-template-columns: repeat(10, 100px);
+            grid-template-rows: repeat(2, 140px); /* 행 높이 증가 */
+            gap: 15px;
+            padding: 1rem;
+            width: fit-content;
+            box-sizing: border-box;
+            margin: 0 auto;
         }
 
         .category-tab {
-            padding: 0.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.2rem;
             background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 30px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
             cursor: pointer;
-            white-space: nowrap;
             transition: all 0.3s ease;
+            width: 100px;
+            height: 100px;
+            justify-content: center;
+            aspect-ratio: 1;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            margin-bottom: 35px; /* 하단 여백 더 증가 */
+            position: relative;
+        }
+
+        .category-tab img {
+            width: 85px; /* 이미지 크기 증가 */
+            height: 85px; /* 이미지 크기 증가 */
+            opacity: 0.8;
+            object-fit: cover; /* 이미지가 영역을 꽉 채우도록 */
+            border-radius: 50%; /* 이미지를 원형으로 */
+            transition: all 0.3s ease;
+        }
+
+        /* PNG, JPEG 이미지를 위한 스타일 */
+        .category-tab img[src$=".png"],
+        .category-tab img[src$=".jpg"],
+        .category-tab img[src$=".jpeg"] {
+            width: 85px; /* PNG, JPEG도 동일한 크기로 */
+            height: 85px;
+            object-fit: cover;
+            padding: 0; /* 패딩 제거 */
+        }
+
+        /* SVG 이미지를 위한 스타일 */
+        .category-tab img[src$=".svg"] {
+            padding: 1rem; /* SVG만 패딩 유지 */
+            object-fit: contain;
+        }
+
+        .category-tab:hover img {
+            opacity: 1;
+            transform: scale(1.1); /* 호버 시 약간 확대 */
+        }
+
+        .category-tab.active img {
+            opacity: 1;
+        }
+
+        .category-tab span {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f3f4f6;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333333;
+            text-align: center;
+            width: max-content;
+            white-space: nowrap;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+            border: 1px solid #e5e7eb;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-color: #9ca3af;
         }
 
         .category-tab.active {
             background: #4f46e5;
+            border-color: #4f46e5;
+            border-width: 2px;
+        }
+
+        .category-tab.active span {
+            background-color: #4f46e5;
             color: white;
             border-color: #4f46e5;
+            font-weight: 500;
         }
 
-        .category-tab:hover {
-            background: #f3f4f6;
-        }
-
-        .category-tab.active:hover {
-            background: #4338ca;
+        /* 호버 시 텍스트 스타일 */
+        .category-tab:hover span {
+            background-color: #6366f1;
+            color: white;
+            border-color: #6366f1;
         }
 
         /* 로딩 애니메이션 */
@@ -173,6 +309,59 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* 반응형 조정 */
+        @media (max-width: 1320px) {
+            .jobs-grid {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .jobs-grid {
+                grid-template-columns: repeat(3, 1fr); /* 태블릿에서 3열 */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr); /* 모바일에서 2열 */
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .jobs-grid {
+                grid-template-columns: 1fr; /* 작은 모바일에서 1열 */
+            }
+        }
+
+        /* 반응형 조정 */
+        @media (max-width: 1500px) {
+            .category-frame {
+                padding: 1.5rem;
+                margin: 2rem 1rem;
+            }
+            
+            .category-tabs {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .category-tabs {
+                grid-template-columns: repeat(5, 100px);
+                grid-template-rows: repeat(4, 125px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .category-tabs {
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(7, 125px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -186,15 +375,89 @@
             </div>
         </section>
 
-        <div class="category-tabs">
-            <button class="category-tab active">전체</button>
-            <button class="category-tab">경영·사무</button>
-            <button class="category-tab">IT·인터넷</button>
-            <button class="category-tab">교육</button>
-            <button class="category-tab">의료·보건</button>
-            <button class="category-tab">예술·문화</button>
-            <button class="category-tab">서비스</button>
-            <button class="category-tab">제조·생산</button>
+        <div class="category-frame">
+            <div class="category-tabs">
+                <button class="category-tab">
+                    <img src="/static/icons/AI로봇.jpeg" alt="AI/로봇">
+                    <span>AI/로봇</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/IT통신.jpeg" alt="IT/SW">
+                    <span>IT/SW</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/게임.jpeg" alt="게임">
+                    <span>게임</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/공학.jpeg" alt="공학">
+                    <span>공학</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/교육.jpeg" alt="교육">
+                    <span>교육</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/금융.jpeg" alt="금융">
+                    <span>금융</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/동물.jpeg" alt="동물">
+                    <span>동물</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/디자인그래픽.jpeg" alt="디자인">
+                    <span>디자인</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/미용패션.jpeg" alt="미용/패션">
+                    <span>미용/패션</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/방송.jpeg" alt="방송">
+                    <span>방송</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/법관.jpeg" alt="법/수사">
+                    <span>법/수사</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/복지.jpeg" alt="사회복지">
+                    <span>사회복지</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/스포츠.jpeg" alt="스포츠">
+                    <span>스포츠</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/여행.jpeg" alt="여행">
+                    <span>여행</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/영화.jpeg" alt="영화/드라마">
+                    <span>영화/드라마</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/우주항공.jpeg" alt="우주/항공">
+                    <span>우주/항공</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/음식.jpeg" alt="음식">
+                    <span>음식</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/음악.jpeg" alt="음악">
+                    <span>음악</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/의료.jpeg" alt="의료/바이오">
+                    <span>의료/바이오</span>
+                </button>
+                <button class="category-tab">
+                    <img src="/static/icons/환경.jpeg" alt="환경/생태">
+                    <span>환경/생태</span>
+                </button>
+            </div>
         </div>
 
         <div class="loading">
@@ -207,105 +470,17 @@
     </div>
 
     <script>
-        // 커리어넷 API 키
-        const API_KEY = '여기에_API_키_입력';
-        
-        // DOM 요소
-        const searchInput = document.querySelector('.search-input');
-        const searchButton = document.querySelector('.search-button');
-        const jobsGrid = document.querySelector('.jobs-grid');
+        // 기본적인 버튼 동작을 위한 간단한 스크립트
         const categoryTabs = document.querySelectorAll('.category-tab');
-        const loading = document.querySelector('.loading');
-
-        // 카테고리 탭 이벤트
+        
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
+                // 기존 active 클래스 제거
                 categoryTabs.forEach(t => t.classList.remove('active'));
+                // 클릭된 탭에 active 클래스 추가
                 tab.classList.add('active');
-                loadJobs(tab.textContent);
             });
         });
-
-        // 검색 이벤트
-        searchButton.addEventListener('click', () => {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm) {
-                searchJobs(searchTerm);
-            }
-        });
-
-        // 직업 데이터 로드
-        async function loadJobs(category = '전체') {
-            try {
-                loading.style.display = 'block';
-                jobsGrid.innerHTML = '';
-
-                // API 호출 URL 구성
-                const url = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=${API_KEY}&svcType=api&svcCode=JOB&contentType=json&gubun=job_list`;
-                
-                const response = await fetch(url);
-                const data = await response.json();
-
-                // 데이터 필터링 및 표시
-                const jobs = data.dataSearch.content;
-                jobs.forEach(job => {
-                    if (category === '전체' || job.category === category) {
-                        createJobCard(job);
-                    }
-                });
-
-            } catch (error) {
-                console.error('Error loading jobs:', error);
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        // 직업 카드 생성
-        function createJobCard(job) {
-            const card = document.createElement('div');
-            card.className = 'job-card';
-            card.innerHTML = `
-                <img src="${job.imageUrl || '/static/images/job-placeholder.jpg'}" 
-                     alt="${job.name}" 
-                     class="job-image"
-                     onerror="this.src='/static/images/job-placeholder.jpg'">
-                <div class="job-info">
-                    <h3 class="job-title">${job.name}</h3>
-                    <p class="job-description">${job.description || '설명이 없습니다.'}</p>
-                </div>
-            `;
-
-            card.addEventListener('click', () => {
-                window.location.href = `/job-detail.html?id=${job.id}`;
-            });
-
-            jobsGrid.appendChild(card);
-        }
-
-        // 검색 함수
-        async function searchJobs(term) {
-            try {
-                loading.style.display = 'block';
-                jobsGrid.innerHTML = '';
-
-                const url = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=${API_KEY}&svcType=api&svcCode=JOB&contentType=json&searchWord=${encodeURIComponent(term)}`;
-                
-                const response = await fetch(url);
-                const data = await response.json();
-
-                const jobs = data.dataSearch.content;
-                jobs.forEach(job => createJobCard(job));
-
-            } catch (error) {
-                console.error('Error searching jobs:', error);
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        // 초기 로드
-        loadJobs();
     </script>
 </body>
 </html> 
