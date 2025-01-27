@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대한민국산업지도</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .category-btn {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            text-align: left;
+            background-color: #ff9b50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subcategory-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            text-align: left;
+            background-color: #ffd1a8;
+            border: none;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .detail-category-btn {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: left;
+            background-color: #fff3e6;
+            border: none;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .company-btn {
+            padding: 8px;
+            margin: 5px;
+            background-color: white;
+            border: 1px solid #ffd1a8;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.2s;
+        }
+
+        .company-btn:hover {
+            background-color: #fff3e6;
+        }
+
+        .subcategory-container,
+        .detail-category-container,
+        .company-container {
+            padding-left: 20px;
+            display: none;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .arrow.down {
+            transform: rotate(90deg);
+        }
+
+        /* 에너지 카테고리 스타일 - 기존 주황색 유지 */
+        .category-btn {
+            background-color: #ff9b50;
+        }
+
+        /* 금융 카테고리 기본 스타일 - 더 연한 파란색으로 변경 */
+        .finance.category-btn {
+            background-color: #7FB3FA;  /* 메인 카테고리 */
+        }
+
+        .finance + .subcategory-container .subcategory-btn {
+            background-color: #9CC5FB;  /* 서브 카테고리 */
+        }
+
+        .finance + .subcategory-container .detail-category-btn {
+            background-color: #B8D7FC;  /* 상세 카테고리 */
+        }
+
+        .finance + .subcategory-container .company-btn {
+            border-color: #9CC5FB;
+        }
+
+        .finance + .subcategory-container .company-btn:hover {
+            background-color: #E8F3FF;
+            border-color: #7FB3FA;
+        }
+
+        /* 에너지 카테고리 스타일 - 기존 주황색 유지 */
+        .energy rect {
+            fill: #FF9966;
+        }
+        
+        /* 금융 카테고리 스타일 - 파란색으로 변경 */
+        #금융 > rect {
+            fill: #4B89DC !important;
+        }
+        
+        /* 금융 하위 카테고리 스타일 */
+        #금융 g > rect {
+            fill: #5D9CEC;
+        }
+        
+        /* 금융 텍스트 색상 */
+        #금융 text {
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>대한민국산업지도</h1>
+        <div id="industryMap"></div>
+    </div>
+
+    <script>
+        const industryData = {
+            에너지: {
+                '전기/가스/난방에너지': {
+                    가스: ['한국가스공사', 'SK가스', 'E1', '삼천리', '서울가스', '지역난방공사', '대성에너지', '에스코레일즈', '경동인베스트', '대성풍림', '경동도시가스', '인천도시가스', '지에스이'],
+                    전기: ['한국전력']
+                },
+                '전기인프라': {
+                    계량기: ['파워넥스', '누리텔레스', '휴니시스템', 'HD현대일렉트릭', '효성중공업', '제룡전기', '비츠로테크'],
+                    전력변환기: ['이화전기', '지투파워', '광명전기', '제일전기공업', '제룡산업', '신도전기', '세영전기', '서진전설', '파워맥스', '비츠로시스'],
+                    전선: ['LS', 'LS ELECTRIC', '대한전선', '일진전기', 'LS에너지솔루션', '가온전선', '서울', '대한전선']
+                },
+                '친환경에너지': {
+                    바이오: ['제이에케이팜'],
+                    수소: ['두산퓨얼셀', '일진하이솔루스', '비나텍', '범한퓨얼셀', '에스퓨얼셀', '한화솔루션', 'OCI홀딩스', 'OCI', '신성이엔지', 'HD현대에너지솔루션'],
+                    태양광: ['SDN', '윌링스', '에스에너지', '파루'],
+                    풍력: ['씨에스윈드', 'SK오션플랜트', '태웅', '대명에너지', '씨에스베어링', '동국S&C', '유니슨', 'DGP']
+                }
+            },
+            금융: {
+                '기타금융': {
+                    'VAN': ['한국정보통신', '나이스정보통신'],
+                    '신용평가와채권추심': ['NICE평가정보', '한국기업데이터', '이크레더블', '고려신용정보', 'SCI평가정보', '나이스디앤비'],
+                    '창업투자': ['이지캐피탈', '머하메드센터투자', '에이티넷엠에스티','SV인베스트먼트', '린드먼아시아', '큐캐피탈', 'DSC인베스트먼트', '윈베스트먼트', '소프트뱅커벤처스', '티에스인베스트먼트', '글로본', '리딕스기술투자'],
+                    '카드캐피탈대부업': ['삼성카드', '한국캐피탈', '리드코프', 'CNH', '베이스캐피탈'],
+                },
+                '보험': {
+                    '생명보험': ['삼성생명', '한화생명', '미래에셋생명', '동양생명'],
+                    '손해보험': ['삼성화재', 'DB손해보험', '현대해상', '코리안리', '롯데손해보험', '흥국화재', '종국화재'],
+                    '판매': ['안강글로벌서비스', '에이플러스에셋']
+                },
+                '은행': {
+                    '은행': ['KB금융','신한지주', '하나금융지주', '카카오뱅크', '우리금융지주', '기업은행','BNK금융지주','JB금융지주', 'DGB금융지주', '제주은행', '부산은행']
+                },
+                '증권': {
+                    '증권사': ['메리츠증권자본','미래에셋증권', '삼성증권', 'NH투자증권', '한국금융지주','키움증권','대신증권', '한화투자증권', '교보증권', '신영증권', '유안타증권', '유진투자증권', 'SK증권', '현대차증권', '다올투자증권', '부국증권', '메리츠증권자본']
+                }
+            }
+        };
+
+        function createIndustryMap() {
+            const container = document.getElementById('industryMap');
+
+            Object.entries(industryData).forEach(([category, subCategories]) => {
+                const categoryDiv = document.createElement('div');
+                const categoryBtn = createButton(category, 'category-btn');
+                categoryDiv.appendChild(categoryBtn);
+
+                const subCategoryContainer = document.createElement('div');
+                subCategoryContainer.className = 'subcategory-container';
+
+                Object.entries(subCategories).forEach(([subCategory, detailCategories]) => {
+                    const subCategoryDiv = document.createElement('div');
+                    const subCategoryBtn = createButton(subCategory, 'subcategory-btn');
+                    subCategoryDiv.appendChild(subCategoryBtn);
+
+                    const detailCategoryContainer = document.createElement('div');
+                    detailCategoryContainer.className = 'detail-category-container';
+
+                    Object.entries(detailCategories).forEach(([detailCategory, companies]) => {
+                        const detailCategoryDiv = document.createElement('div');
+                        const detailCategoryBtn = createButton(detailCategory, 'detail-category-btn');
+                        detailCategoryDiv.appendChild(detailCategoryBtn);
+
+                        const companyContainer = document.createElement('div');
+                        companyContainer.className = 'company-container';
+                        const companyGrid = document.createElement('div');
+                        companyGrid.className = 'company-grid';
+
+                        companies.forEach(company => {
+                            const companyBtn = createButton(company, 'company-btn');
+                            companyGrid.appendChild(companyBtn);
+                        });
+
+                        companyContainer.appendChild(companyGrid);
+                        detailCategoryDiv.appendChild(companyContainer);
+                        detailCategoryContainer.appendChild(detailCategoryDiv);
+                    });
+
+                    subCategoryDiv.appendChild(detailCategoryContainer);
+                    subCategoryContainer.appendChild(subCategoryDiv);
+                });
+
+                categoryDiv.appendChild(subCategoryContainer);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        function createButton(text, className) {
+            const button = document.createElement('button');
+            button.textContent = text;
+            button.className = className;
+            
+            // 금융 카테고리에 대한 클래스 추가
+            if (text === '금융') {
+                button.classList.add('finance');
+            }
+            
+            if (className !== 'company-btn') {
+                const arrow = document.createElement('span');
+                arrow.textContent = '▶';
+                arrow.className = 'arrow';
+                button.appendChild(arrow);
+            }
+            button.addEventListener('click', toggleContent);
+            return button;
+        }
+
+        function toggleContent(event) {
+            const button = event.currentTarget;
+            const arrow = button.querySelector('.arrow');
+            const container = button.nextElementSibling;
+            
+            if (container) {
+                const isActive = container.classList.contains('active');
+                
+                // Close other containers at the same level
+                const parent = button.parentElement.parentElement;
+                const siblings = parent.children;
+                Array.from(siblings).forEach(sibling => {
+                    const siblingContainer = sibling.querySelector('.' + container.className);
+                    if (siblingContainer && siblingContainer !== container) {
+                        siblingContainer.classList.remove('active');
+                        const siblingArrow = sibling.querySelector('.arrow');
+                        if (siblingArrow) siblingArrow.classList.remove('down');
+                    }
+                });
+
+                container.classList.toggle('active');
+                if (arrow) {
+                    arrow.classList.toggle('down');
+                }
+            }
+        }
+
+        // Initialize the map when the page loads
+        document.addEventListener('DOMContentLoaded', createIndustryMap);
+    </script>
+</body>
+</html>
