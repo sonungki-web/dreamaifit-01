@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대한민국 산업지도</title>
+    <style>
+        .container {
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            overflow-x: auto;
+            min-height: 100vh;
+        }
+        .category, .subcategory, .industry, .company {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            position: relative;
+        }
+        .subcategory, .industry, .company {
+            display: none;
+        }
+        .category::after, .subcategory::after, .industry::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 10px;
+            height: 2px;
+            background-color: #666;
+        }
+        .active {
+            display: flex;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #FF7F50;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        button:hover {
+            background-color: #FF6347;
+        }
+        .map-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .vertical-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        h1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+        .content {
+            margin-top: 80px;
+        }
+        .horizontal-group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px;
+        }
+        
+        .company-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .company-label {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>대한민국 산업지도</h1>
+    <div class="content">
+        <div class="map-container">
+            <div class="vertical-group">
+                <button onclick="showNext('energy')">에너지</button>
+            </div>
+            
+            <div class="vertical-group" id="energy" style="display: none;">
+                <button onclick="showNext('powerGas')">전기·가스·난방 에너지</button>
+                <button onclick="showNext('powerInfra')">전기인프라</button>
+            </div>
+
+            <div class="vertical-group" id="powerGas" style="display: none;">
+                <button onclick="showNext('gas')">가스</button>
+                <button onclick="showNext('electric')">전기</button>
+            </div>
+
+            <div class="vertical-group" id="powerInfra" style="display: none;">
+                <button onclick="showNext('equipment')">계전기</button>
+                <button onclick="showNext('powerEquip')">전력변환기</button>
+                <button onclick="showNext('electricCompany')">전선</button>
+            </div>
+
+            <div class="horizontal-group" id="gas" style="display: none;">
+                <button>한국가스공사</button>
+                <button>지역난방공사</button>
+                <button>대성에너지</button>
+                <button>SK가스</button>
+                <button>E1</button>
+                <button>삼천리</button>
+                <button>서울가스</button>
+                <button>에스코알폴당</button>
+                <button>경동도시가스</button>
+                <button>인천도시가스</button>
+                <button>코웨스코</button>
+            </div>
+
+            <div class="horizontal-group" id="electric" style="display: none;">
+                <button>한국전력</button>
+                <button>가온전선</button>
+                <button>서전</button>
+                <button>대한전선</button>
+            </div>
+
+            <div class="vertical-group" id="equipment" style="display: none;">
+                <button>피에스텍</button>
+                <button>누리플렉스</button>
+                <button>울시스템</button>
+                <button>HD현대일렉트릭</button>
+                <button>효성중공업</button>
+                <button>비츠로테크</button>
+            </div>
+
+            <div class="vertical-group" id="powerEquip" style="display: none;">
+                <button>이화전기</button>
+                <button>지투파워</button>
+                <button>광명전기</button>
+                <button>제일전기공업</button>
+                <button>제룡산업</button>
+                <button>신도전기</button>
+                <button>세명전기</button>
+                <button>서강전기</button>
+                <button>파워넷테크</button>
+                <button>비츠로시스</button>
+            </div>
+
+            <div class="vertical-group" id="electricCompany" style="display: none;">
+                <button>LS</button>
+                <button>LS ELECTRIC</button>
+                <button>대한전선</button>
+                <button>일진전기</button>
+                <button>LS엠트론에너지</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showNext(id) {
+            const element = document.getElementById(id);
+            if (element.style.display === 'none') {
+                element.style.display = element.classList.contains('horizontal-group') ? 'flex' : 'flex';
+            } else {
+                element.style.display = 'none';
+                // 하위 요소들도 모두 숨기기
+                const children = document.querySelectorAll(`[id^="${id}-"]`);
+                children.forEach(child => {
+                    child.style.display = 'none';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -311,13 +311,13 @@
         </div>
         <div class="description-box" style="text-align: center; background: rgba(203, 189, 243, 0.9); padding: 1rem; border-radius: 15px; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
             <p style="font-size: 1.3rem;">두 개의 학과 중 더 마음에 드는 학과를 선택해주세요.</p>
-            <p style="font-size: 1.3rem;">🎯 총 30문항을 통해 나에게 맞는 학과를 찾아보세요! </p>
+            <p style="font-size: 1.3rem;">🎯 총 32문항을 통해 나에게 맞는 학과를 찾아보세요! </p>
         </div>
 
         <div class="game-stats">
             <div class="progress-container">
                 <div class="progress-info">
-                    <span class="question-count">1/30</span>
+                    <span class="question-count">1/32</span>
                     <span class="progress-text">진행률</span>
                 </div>
                 <div class="progress-bar">
@@ -415,7 +415,7 @@
                 pharmacy: '약학과',
                 dental: '치의예과',
                 oriental: '한의예과',
-                'physical therapy': '물리치료학과'
+                physical_therapy: '물리치료학과'
             },
             science: {
                 Physics: '물리학과',
@@ -424,7 +424,7 @@
                 math: '수학과',
                 statistics: '통계학과',
                 Astronomy: '천문학과',
-                'Veterinary Medicine': '수의학과'
+                Veterinary_Medicine: '수의학과'
             },
             education: {
                 elementary: '초등교육과',
@@ -481,7 +481,7 @@
         });
 
         let currentQuestion = 1;
-        const totalQuestions = 30;
+        const totalQuestions = 32;
         let usedDepartments = new Set();
         let winnerDepartment = null; // 승자 학과 저장 변수 추가
 

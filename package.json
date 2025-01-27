@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sonungki-web/dreamaifit-01#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "styled-components": "^6.1.14"
   }
 }
