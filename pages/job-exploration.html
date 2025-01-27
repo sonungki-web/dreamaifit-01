@@ -78,42 +78,78 @@
 
         .jobs-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4열 그리드로 변경 */
-            gap: 1.5rem; /* 간격 조정 */
-            padding: 2rem 0;
-            max-width: 1320px; /* 최대 너비 설정 */
+            grid-template-columns: repeat(4, 1fr); /* 4열 그리드 */
+            gap: 20px; /* 그리드 간격 */
+            padding: 2rem;
+            max-width: 1320px;
             margin: 0 auto;
         }
 
         .job-card {
             background: white;
-            border-radius: 15px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            text-decoration: none;
         }
 
         .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .job-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .job-card:hover::after {
+            opacity: 1;
+        }
+
+        .job-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
         }
 
         .job-image {
             width: 100%;
-            height: 200px;
+            height: 80%; /* 이미지가 카드의 80% 차지 */
             object-fit: cover;
         }
 
         .job-info {
-            padding: 1.2rem; /* 패딩 약간 감소 */
+            height: 20%; /* 제목이 카드의 20% 차지 */
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .job-title {
-            font-size: 1.1rem; /* 글자 크기 약간 감소 */
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            color: #333;
         }
 
         .job-description {
@@ -333,7 +369,7 @@
 
         @media (max-width: 480px) {
             .jobs-grid {
-                grid-template-columns: 1fr; /* 작은 모바일에서 1열 */
+                grid-template-columns: repeat(1, 1fr); /* 작은 모바일에서 1열 */
             }
         }
 
@@ -351,7 +387,7 @@
 
         @media (max-width: 1200px) {
             .category-tabs {
-                grid-template-columns: repeat(5, 100px);
+                grid-template-columns: repeat(3, 100px);
                 grid-template-rows: repeat(4, 125px);
             }
         }
@@ -470,17 +506,1346 @@
     </div>
 
     <script>
-        // 기본적인 버튼 동작을 위한 간단한 스크립트
         const categoryTabs = document.querySelectorAll('.category-tab');
+        const jobsGrid = document.querySelector('.jobs-grid');
         
+        // jobsData 수정 - 각 직업에 링크 필드 추가
+        const jobsData = {
+            'AI/로봇': [
+                {
+                    title: '로봇윤리학자',
+                    image: '/static/jobs/ai-robot/로봇윤리학자.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10038'
+                },
+                {
+                    title: '감성인식기술전문가',
+                    image: '/static/jobs/ai-robot/감성인식기술전문가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10102' // 향후 추가될 링크
+                },
+                {
+                    title: '신경회로망연구원',
+                    image: '/static/jobs/ai-robot/신경회로망연구원.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=98' // 향후 추가될 링크
+                },
+                {
+                    title: '빅데이터전문가',
+                    image: '/static/jobs/ai-robot/빅데이터전문가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10032' // 향후 추가될 링크
+                },
+                {
+                    title: '시스템소프트웨어개발자',
+                    image: '/static/jobs/ai-robot/시스템소프트웨어개발자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '로봇연구원',
+                    image: '/static/jobs/ai-robot/로봇연구원.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '기계공학기술자',
+                    image: '/static/jobs/ai-robot/기계공학기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '메카트로닉스공학기술자',
+                    image: '/static/jobs/ai-robot/메카트로닉스공학기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '산업용로봇조작원',
+                    image: '/static/jobs/ai-robot/산업용로봇조작원.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '메타버스크리에이터',
+                    image: '/static/jobs/ai-robot/메타버스크리에이터.jpeg',
+                    link: '' // 향후 추가될 링크
+                },
+                {
+                    title: '컴퓨터하드웨어기술자',
+                    image: '/static/jobs/ai-robot/컴퓨터하드웨어기술자.jpeg',
+                    link: '' // 향후 추가될 링크
+                }
+            ],
+            'IT/SW': [
+                {
+                    title: '스마트팜구축가',
+                    image: '/static/jobs/IT-SW/스마트팜구축가.jpeg',
+                    link: 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=10008'
+                },
+                {
+                    title: '게임기획자',
+                    image: '/static/jobs/IT-SW/게임기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '시스템소프트웨어개발자',
+                    image: '/static/jobs/IT-SW/시스템소프트웨어개발자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '크리에이터',
+                    image: '/static/jobs/IT-SW/크리에이터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '정보보호전문가',
+                    image: '/static/jobs/IT-SW/정보보호전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '반도체공학기술자',
+                    image: '/static/jobs/IT-SW/반도체공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '웹디자이너',
+                    image: '/static/jobs/IT-SW/웹디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '가상현실전문가',
+                    image: '/static/jobs/IT-SW/가상현실전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '모바일앱개발자',
+                    image: '/static/jobs/IT-SW/모바일앱개발자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '비디오게임디자이너',
+                    image: '/static/jobs/IT-SW/비디오게임디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '컴퓨터게임시나리오작가',
+                    image: '/static/jobs/IT-SW/컴퓨터게임시나리오작가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '베타테스터',
+                    image: '/static/jobs/IT-SW/베타테스터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '테이터베이스관리자',
+                    image: '/static/jobs/IT-SW/데이터베이스관리자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '3D프린팅전문가',
+                    image: '/static/jobs/IT-SW/3D프린팅전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '드론전문가',
+                    image: '/static/jobs/IT-SW/드론전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '네트워크전문가',
+                    image: '/static/jobs/IT-SW/네트워크전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '인공위성개발자',
+                    image: '/static/jobs/IT-SW/인공위성개발자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '정보시스템개발자',
+                    image: '/static/jobs/IT-SW/정보시스템개발자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '무선주파수엔지니어',
+                    image: '/static/jobs/IT-SW/무선주파수엔지니어.jpeg',
+                    link: ''
+                },
+                {
+                    title: '디지털포렌식전문가',
+                    image: '/static/jobs/IT-SW/디지털포렌식전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '블록체인전문가',
+                    image: '/static/jobs/IT-SW/블록체인전문가.jpeg',
+                    link: ''
+                },
+                    {
+                        title: '생체인식전문가',
+                        image: '/static/jobs/IT-SW/생체인식전문가.jpeg',
+                        link: ''
+                    },
+                    {
+                        title: '데이터마이너',
+                        image: '/static/jobs/IT-SW/데이터마이너.jpeg',
+                        link: ''
+                    },
+
+            ],
+            '게임': [
+                {
+                    title: '게임기획자',
+                    image: '/static/jobs/Game/게임기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '게임방송기획자',
+                    image: '/static/jobs/Game/게임방송기획자.jpeg',
+                    link: ''
+                },
+                
+                {
+                    title: '게임조사관',
+                    image: '/static/jobs/Game/게임조사관.jpeg',
+                    link: ''
+                },
+                
+                {
+                    title: '비디오게임디자이너',
+                    image: '/static/jobs/Game/비디오게임디자이너.jpeg',
+                    link: ''
+                },
+                
+                {
+                    title: '카지노딜러',
+                    image: '/static/jobs/Game/카지노딜러.jpeg',
+                    link: ''
+                },
+                
+                {
+                    title: '컴퓨터게임시나리오작가',
+                    image: '/static/jobs/Game/컴퓨터게임시나리오작가.jpeg',
+                    link: ''
+                },
+                
+                {
+                    title: '프로게이머',
+                    image: '/static/jobs/Game/프로게이머.jpeg',
+                    link: ''
+                },
+            ],
+            '공학': [
+                {
+                    title: 'GIS전문가',
+                    image: '/static/jobs/engineering/GIS전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '건축사',
+                    image: '/static/jobs/engineering/건축사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '금속공학기술자',
+                    image: '/static/jobs/engineering/금속공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '기계공학기술자',
+                    image: '/static/jobs/engineering/기계공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '대체에너지개발원',
+                    image: '/static/jobs/engineering/대체에너지개발원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '반도체공학기술자',
+                    image: '/static/jobs/engineering/반도체공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '산업공학기술자',
+                    image: '/static/jobs/engineering/산업공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '생물공학연구원',
+                    image: '/static/jobs/engineering/생물공학연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '에너지공학기술자',
+                    image: '/static/jobs/engineering/에너지공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '원자력연구원',
+                    image: '/static/jobs/engineering/원자력연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '유전공학연구원',
+                    image: '/static/jobs/engineering/유전공학연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '자동차공학기술자',
+                    image: '/static/jobs/engineering/자동차공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '재료공학기술자',
+                    image: '/static/jobs/engineering/재료공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '전자공학기술자',
+                    image: '/static/jobs/engineering/전자공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '조선공학기술자',
+                    image: '/static/jobs/engineering/조선공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '측량사',
+                    image: '/static/jobs/engineering/측량사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '토목공학기술자',
+                    image: '/static/jobs/engineering/토목공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '통신장비기술자',
+                    image: '/static/jobs/engineering/통신장비기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '항공우주공학기술자',
+                    image: '/static/jobs/engineering/항공우주공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '해양공학기술자',
+                    image: '/static/jobs/engineering/해양공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '화학공학기술자',
+                    image: '/static/jobs/engineering/화학공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '환경공학기술자',
+                    image: '/static/jobs/engineering/환경공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '환경컨설턴트',
+                    image: '/static/jobs/engineering/환경컨설턴트.jpeg',
+                    link: ''
+                },
+                
+            ],
+            '교육': [
+                {
+                    title: '독서지도사',
+                    image: '/static/jobs/education/독서지도사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '레크레이션강사',
+                    image: '/static/jobs/education/레크레이션강사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '보육교사',
+                    image: '/static/jobs/education/보육교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '유치원교사',
+                    image: '/static/jobs/education/유치원교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '음악강사',
+                    image: '/static/jobs/education/음악강사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '중학교교사',
+                    image: '/static/jobs/education/중학교교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '직업능력개발훈련교사',
+                    image: '/static/jobs/education/직업능력개발훈련교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '초등교사',
+                    image: '/static/jobs/education/초등교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '특수교사',
+                    image: '/static/jobs/education/특수교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '학습지방문교사',
+                    image: '/static/jobs/education/학습지방문교사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '학원강사',
+                    image: '/static/jobs/education/학원강사.jpeg',
+                    link: ''
+                },
+
+            ],
+            '금융': [
+                {
+                    title: '감정평가사',
+                    image: '/static/jobs/Finance/감정평가사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '보험계리인',
+                    image: '/static/jobs/Finance/보험계리인.jpeg',
+                    link: ''
+                },
+                {
+                    title: '선물중개인',
+                    image: '/static/jobs/Finance/선물중개인.jpeg',
+                    link: ''
+                },
+                {
+                    title: '신용조사원',
+                    image: '/static/jobs/Finance/신용조사원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '외환딜러',
+                    image: '/static/jobs/Finance/외환딜러.jpeg',
+                    link: ''
+                },
+                {
+                    title: '은행출납사무원',
+                    image: '/static/jobs/Finance/은행출납사무원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '증권분석가',
+                    image: '/static/jobs/Finance/증권분석가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '크라우드펀징전문가',
+                    image: '/static/jobs/Finance/크라우드펀징전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '투자분석가',
+                    image: '/static/jobs/Finance/투자분석가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '펀드매니저',
+                    image: '/static/jobs/Finance/펀드매니저.jpeg',
+                    link: ''
+                },
+            ],
+            '동물': [
+                {
+                    title: '가축사육사',
+                    image: '/static/jobs/Animals/가축사육사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '동물랭글러',
+                    image: '/static/jobs/Animals/동물랭글러.jpeg',
+                    link: ''
+                },
+                {
+                    title: '동물보호보안관',
+                    image: '/static/jobs/Animals/동물보호보안관.jpeg',
+                    link: ''
+                },
+                {
+                    title: '동물조련사',
+                    image: '/static/jobs/Animals/동물조련사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '반려동물훈련사',
+                    image: '/static/jobs/Animals/반려동물훈련사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '수의사',
+                    image: '/static/jobs/Animals/수의사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '아쿠아리스트',
+                    image: '/static/jobs/Animals/아쿠아리스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '애견테란피스트',
+                    image: '/static/jobs/Animals/애견테란피스트.jpeg',
+                    link: ''
+                },
+            ],
+            '디자인': [
+                {
+                    title: 'UX디자이너',
+                    image: '/static/jobs/Design/UX디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '공예원',
+                    image: '/static/jobs/Design/공예원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '모델',
+                    image: '/static/jobs/Design/모델.jpeg',
+                    link: ''
+                },
+                {
+                    title: '보석디자이너',
+                    image: '/static/jobs/Design/보석디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '보석세공원',
+                    image: '/static/jobs/Design/보석세공원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '북디자이너',
+                    image: '/static/jobs/Design/북디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '석재가공전문가',
+                    image: '/static/jobs/Design/석재가공전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '시각디자이너',
+                    image: '/static/jobs/Design/시각디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '웹디자이너',
+                    image: '/static/jobs/Design/웹디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '인테리어디자이너',
+                    image: '/static/jobs/Design/인테리어디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '일러스트레이터',
+                    image: '/static/jobs/Design/일러스트레이터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '제품디자이너',
+                    image: '/static/jobs/Design/제품디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '조각가',
+                    image: '/static/jobs/Design/조각가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '조향사',
+                    image: '/static/jobs/Design/조향사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '캐드전문가',
+                    image: '/static/jobs/Design/캐드전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '캐릭터디자이너',
+                    image: '/static/jobs/Design/캐릭터디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '컬러리스트',
+                    image: '/static/jobs/Design/컬러리스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '컴퓨터그래픽디자이너',
+                    image: '/static/jobs/Design/컴퓨터그래픽디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '큐레이터',
+                    image: '/static/jobs/Design/큐레이터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '패션디자이너',
+                    image: '/static/jobs/Design/패션디자이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '플로리스트',
+                    image: '/static/jobs/Design/플로리스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '한복사',
+                    image: '/static/jobs/Design/한복사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '홀로그램전문가',
+                    image: '/static/jobs/Design/홀로그램전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '화가',
+                    image: '/static/jobs/Design/화가.jpeg',
+                    link: ''
+                },
+
+                
+            ],
+            '미용/패션': [
+                {
+                    title: '메이크업아티스트',
+                    image: '/static/jobs/Beauty/메이크업아티스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '네일아티스트',
+                    image: '/static/jobs/Beauty/네일아티스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '미용사',
+                    image: '/static/jobs/Beauty/미용사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '분장사',
+                    image: '/static/jobs/Beauty/분장사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '웨딩플래너',
+                    image: '/static/jobs/Beauty/웨딩플래너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '의복수선원',
+                    image: '/static/jobs/Beauty/의복수선원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '체형관리사',
+                    image: '/static/jobs/Beauty/체형관리사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '패션코디네이터',
+                    image: '/static/jobs/Beauty/패션코디네이터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '피부관리사',
+                    image: '/static/jobs/Beauty/피부관리사.jpeg',
+                    link: ''
+                },
+            ],
+            '방송': [
+                {
+                    title: '가수',
+                    image: '/static/jobs/Broadcast/가수.jpeg',
+                    link: ''
+                },
+                {
+                    title: '개그맨',
+                    image: '/static/jobs/Broadcast/개그맨.jpeg',
+                    link: ''
+                },
+                {
+                    title: '무대감독',
+                    image: '/static/jobs/Broadcast/무대감독.jpeg',
+                    link: ''
+                },
+                {
+                    title: '문화콘텐츠전문가',
+                    image: '/static/jobs/Broadcast/문화콘텐츠전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '방송연출',
+                    image: '/static/jobs/Broadcast/방송연출.jpeg',
+                    link: ''
+                },
+                {
+                    title: '백댄서',
+                    image: '/static/jobs/Broadcast/백댄서.jpeg',
+                    link: ''
+                },
+                {
+                    title: '사진기자',
+                    image: '/static/jobs/Broadcast/사진기자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '사진작가',
+                    image: '/static/jobs/Broadcast/사진작가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '성우',
+                    image: '/static/jobs/Broadcast/성우.jpeg',
+                    link: ''
+                },
+                {
+                    title: '쇼핑호스트',
+                    image: '/static/jobs/Broadcast/쇼핑호스트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스턴트맨',
+                    image: '/static/jobs/Broadcast/스턴트맨.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠해설가',
+                    image: '/static/jobs/Broadcast/스포츠해설가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '아나운서',
+                    image: '/static/jobs/Broadcast/아나운서.jpeg',
+                    link: ''
+                },
+                {
+                    title: '안무가',
+                    image: '/static/jobs/Broadcast/안무가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '연기자',
+                    image: '/static/jobs/Broadcast/연기자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '연예인매니저',
+                    image: '/static/jobs/Broadcast/연예인매니저.jpeg',
+                    link: ''
+                },
+                {
+                    title: '음반기획자',
+                    image: '/static/jobs/Broadcast/음반기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '음향기사',
+                    image: '/static/jobs/Broadcast/음향기사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '작가',
+                    image: '/static/jobs/Broadcast/작가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '촬영기사',
+                    image: '/static/jobs/Broadcast/촬영기사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '카피라이터',
+                    image: '/static/jobs/Broadcast/카피라이터.jpeg',
+                    link: ''
+                },
+                
+            ],
+            '법/수사': [
+                {
+                    title: '검사',
+                    image: '/static/jobs/Law/검사.jpeg',
+                    link: ''
+                }, 
+                {
+                    title: '경찰관',
+                    image: '/static/jobs/Law/경찰관.jpeg',
+                    link: ''
+                },
+                {
+                    title: '교도관',
+                    image: '/static/jobs/Law/교도관.jpeg',
+                    link: ''
+                },
+                {
+                    title: '범죄과학수사관',
+                    image: '/static/jobs/Law/검사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '법무사',
+                    image: '/static/jobs/Law/법무사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '변리사',
+                    image: '/static/jobs/Law/변리사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '변호사',
+                    image: '/static/jobs/Law/변호사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '사설탐정',
+                    image: '/static/jobs/Law/사설탐정.jpeg',
+                    link: ''
+                },
+                {
+                    title: '판사',
+                    image: '/static/jobs/Law/판사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '프로파일러',
+                    image: '/static/jobs/Law/프로파일러.jpeg',
+                    link: ''
+                },
+
+                       ],
+            '사회복지': [
+                {
+                    title: '간병인',
+                    image: '/static/jobs/Social Welfare/간병인.jpeg',
+                    link: ''
+                },
+                {
+                    title: '노무사',
+                    image: '/static/jobs/Social Welfare/노무사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '사회단체활동가',
+                    image: '/static/jobs/Social Welfare/사회단체활동가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '사회복지사',
+                    image: '/static/jobs/Social Welfare/사회복지사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '상담전문가',
+                    image: '/static/jobs/Social Welfare/상담전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '성직자',
+                    image: '/static/jobs/Social Welfare/성직자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠심리상담원',
+                    image: '/static/jobs/Social Welfare/스포츠심리상담원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '아동청소년시설보호사',
+                    image: '/static/jobs/Social Welfare/아동청소년시설보호사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '직업상담사',
+                    image: '/static/jobs/Social Welfare/직업상담사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '호스피스전문간호사',
+                    image: '/static/jobs/Social Welfare/호스피스전문간호사.jpeg',
+                    link: ''
+                },
+            ],
+            '스포츠': [
+                {
+                    title: '스포츠강사',
+                    image: '/static/jobs/Sports/스포츠강사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠기록분석연구원',
+                    image: '/static/jobs/Sports/스포츠기록분석연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠심리상담원',
+                    image: '/static/jobs/Sports/스포츠심리상담원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠에이전트',
+                    image: '/static/jobs/Sports/스포츠에이전트.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠트레이너',
+                    image: '/static/jobs/Sports/스포츠트레이너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '스포츠해설가',
+                    image: '/static/jobs/Sports/스포츠해설가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '운동감독',
+                    image: '/static/jobs/Sports/운동감독.jpeg',
+                    link: ''
+                },
+                {
+                    title: '운동경기심판',
+                    image: '/static/jobs/Sports/운동경기심판.jpeg',
+                    link: ''
+                },
+                {
+                    title: '운동선수',
+                    image: '/static/jobs/Sports/운동선수.jpeg',
+                    link: ''
+                },
+                {
+                    title: '치어리더',
+                    image: '/static/jobs/Sports/치어리더.jpeg',
+                    link: ''
+                },
+                {
+                    title: '카레이서',
+                    image: '/static/jobs/Sports/카레이서.jpeg',
+                    link: ''
+                },
+                {
+                    title: '캐디',
+                    image: '/static/jobs/Sports/캐디.jpeg',
+                    link: ''
+                },
+                {
+                    title: '프로바둑기사',
+                    image: '/static/jobs/Sports/프로바둑기사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '해양레저전문가',
+                    image: '/static/jobs/Sports/해양레저전문가.jpeg',
+                    link: ''
+                },
+            ],
+            '여행': [
+                {
+                    title: '기관사',
+                    image: '/static/jobs/Travel/기관사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '비행기승무원',
+                    image: '/static/jobs/Travel/비행기승무원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '비행기조종사',
+                    image: '/static/jobs/Travel/비행기조종사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '여행기획자',
+                    image: '/static/jobs/Travel/여행기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '여행상품개발원',
+                    image: '/static/jobs/Travel/여행상품개발원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '여행안내원',
+                    image: '/static/jobs/Travel/여행안내원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '열차객실승무원',
+                    image: '/static/jobs/Travel/열차객실승무원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '호텔지배인',
+                    image: '/static/jobs/Travel/호텔지배인.jpeg',
+                    link: ''
+                },
+            ],
+            '영화/드라마': [
+                {
+                    title: '극작가',
+                    image: '/static/jobs/Movies/극작가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '녹음기사',
+                    image: '/static/jobs/Movies/녹음기사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '무대감독',
+                    image: '/static/jobs/Movies/무대감독.jpeg',
+                    link: ''
+                },
+                {
+                    title: '무인항공촬영감독',
+                    image: '/static/jobs/Movies/무인항공촬영감독.jpeg',
+                    link: ''
+                },
+                {
+                    title: '문화콘텐츠전문가',
+                    image: '/static/jobs/Movies/문화콘텐츠전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '방송연출',
+                    image: '/static/jobs/Movies/방송연출.jpeg',
+                    link: ''
+                },
+                {
+                    title: '성우',
+                    image: '/static/jobs/Movies/성우.jpeg',
+                    link: ''
+                },
+                {
+                    title: '아나운서',
+                    image: '/static/jobs/Movies/아나운서.jpeg',
+                    link: ''
+                },
+                {
+                    title: '연기자',
+                    image: '/static/jobs/Movies/연기자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '영화기획자',
+                    image: '/static/jobs/Movies/영화기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '작가',
+                    image: '/static/jobs/Movies/작가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '촬영기사',
+                    image: '/static/jobs/Movies/촬영기사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '특수효과기술자',
+                    image: '/static/jobs/Movies/특수효과기술자.jpeg',
+                    link: ''
+                },
+            ],
+            '우주/항공': [
+                {
+                    title: '드론콘텐츠전문가',
+                    image: '/static/jobs/Space/드론콘텐츠전문가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '천문학연구원',
+                    image: '/static/jobs/Space/천문학연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '항공교통관제사',
+                    image: '/static/jobs/Space/항공교통관제사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '항공기검사원',
+                    image: '/static/jobs/Space/항공기검사원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '항공기정비원',
+                    image: '/static/jobs/Space/항공기정비원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '항공우주공학기술자',
+                    image: '/static/jobs/Space/항공우주공학기술자.jpeg',
+                    link: ''
+                },
+            ],
+            '음식': [
+                {
+                    title: '곤충음식개발자',
+                    image: '/static/jobs/Food/곤충음식개발자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '바리스타',
+                    image: '/static/jobs/Food/바리스타.jpeg',
+                    link: ''
+                },
+                {
+                    title: '바텐더',
+                    image: '/static/jobs/Food/바텐더.jpeg',
+                    link: ''
+                },
+                {
+                    title: '소믈리에',
+                    image: '/static/jobs/Food/소믈리에.jpeg',
+                    link: ''
+                },
+                {
+                    title: '식품공학기술자',
+                    image: '/static/jobs/Food/식품공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '식품융합엔지니어',
+                    image: '/static/jobs/Food/식품융합엔지니어.jpeg',
+                    link: ''
+                },
+                {
+                    title: '양식원',
+                    image: '/static/jobs/Food/양식원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '영양사',
+                    image: '/static/jobs/Food/스마트팜구축가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '요리배달원',
+                    image: '/static/jobs/Food/요리배달원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '음료제조관련조직원',
+                    image: '/static/jobs/Food/음료제조관련조직원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '제빵사',
+                    image: '/static/jobs/Food/제빵사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '주방보조원',
+                    image: '/static/jobs/Food/주방보조원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '푸드스타일리스트',
+                    image: '/static/jobs/Food/푸드스타일리스트.jpeg',
+                    link: ''
+                },
+            ],
+            '음악': [
+                {
+                    title: '성악가',
+                    image: '/static/jobs/Music/성악가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '악기수리원',
+                    image: '/static/jobs/Music/악기수리원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '악기제조원',
+                    image: '/static/jobs/Music/악기제조원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '연주가',
+                    image: '/static/jobs/Music/연주가.jpeg',
+                    link: ''
+                },
+                {
+                    title: '음반기획자',
+                    image: '/static/jobs/Music/음반기획자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '지휘자',
+                    image: '/static/jobs/Music/지휘자.jpeg',
+                    link: ''
+                },
+            ],
+            '의료/바이오': [
+                {
+                    title: '간호사',
+                    image: '/static/jobs/Medical/간호사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '간호조무사',
+                    image: '/static/jobs/Medical/간호조무사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '노련플래너',
+                    image: '/static/jobs/Medical/노련플래너.jpeg',
+                    link: ''
+                },
+                {
+                    title: '방사선사',
+                    image: '/static/jobs/Medical/방사선사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '생물공학연구원',
+                    image: '/static/jobs/Medical/생물공학연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '안경사',
+                    image: '/static/jobs/Medical/안경사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '약사',
+                    image: '/static/jobs/Medical/약사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '응급구조사',
+                    image: '/static/jobs/Medical/응급구조사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '원격진료코디네이터',
+                    image: '/static/jobs/Medical/원격진료코디네이터.jpeg',
+                    link: ''
+                },
+                {
+                    title: '작업치료사',
+                    image: '/static/jobs/Medical/작업치료사.jpeg',
+                    link: ''
+                },
+                {
+                    title: '호스피스전문간호사',
+                    image: '/static/jobs/Medical/호스피스전문간호사.jpeg',
+                    link: ''
+                },
+            ],
+            '환경/생태': [
+                {
+                    title: '과수직물재배자',
+                    image: '/static/jobs/Environment/과수직물재배자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '기상연구원',
+                    image: '/static/jobs/Environment/기상연구원.jpeg',
+                    link: ''
+                },
+                {
+                    title: '상수도기술자',
+                    image: '/static/jobs/Environment/상수도기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '토양환경기술자',
+                    image: '/static/jobs/Environment/토양환경기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '환경공학기술자',
+                    image: '/static/jobs/Environment/환경공학기술자.jpeg',
+                    link: ''
+                },
+                {
+                    title: '환경설비기술자',
+                    image: '/static/jobs/Environment/환경설비기술자.jpeg',
+                    link: ''
+                },
+            ],
+        };
+
+        // 직업 카드 생성 함수 수정
+        function createJobCard(job) {
+            const cardLink = job.link || 'javascript:void(0)'; // 링크가 없는 경우 클릭 이벤트 방지
+            return `
+                <a href="${cardLink}" target="_blank" class="job-card">
+                    <img src="${job.image}" alt="${job.title}" class="job-image">
+                    <div class="job-info">
+                        <h3 class="job-title">${job.title}</h3>
+                    </div>
+                </a>
+            `;
+        }
+
+        // 직업 데이터 표시 함수
+        function displayJobs(category) {
+            const jobs = jobsData[category];
+            if (!jobs) {
+                console.error('카테고리를 찾을 수 없습니다:', category);
+                return;
+            }
+
+            // 기존 카드 초기화
+            jobsGrid.innerHTML = '';
+            
+            // 새 카드 추가
+            jobs.forEach(job => {
+                jobsGrid.insertAdjacentHTML('beforeend', createJobCard(job));
+            });
+        }
+
+        // 카테고리 탭 클릭 이벤트 처리
         categoryTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
+            tab.addEventListener('click', (e) => {
                 // 기존 active 클래스 제거
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 // 클릭된 탭에 active 클래스 추가
                 tab.classList.add('active');
+
+                // 카테고리 이름 가져오기
+                const category = tab.querySelector('span').textContent;
+                
+                // 해당 카테고리의 직업 카드 표시
+                displayJobs(category);
             });
         });
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstTab = document.querySelector('.category-tab');
+            if (firstTab) {
+                firstTab.click();
+            }
+        });
+
+        // 이미지 로드 에러 처리
+        jobsGrid.addEventListener('error', (event) => {
+            if (event.target.tagName === 'IMG') {
+                console.error('이미지 로드 실패:', event.target.src);
+                event.target.src = '/static/icons/default-job.jpeg';
+            }
+        }, true);
     </script>
 </body>
 </html> 
