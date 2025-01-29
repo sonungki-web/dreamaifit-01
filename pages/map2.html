@@ -25,19 +25,161 @@
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #333;
+            color: transparent; /* 기존 텍스트를 숨김 */
+            font-size: 36px;
+            height: 200px;
+            background-image: url('/static/images/대한민국산업지도.png');
+            background-size: contain; /* 이미지 비율 유지하면서 컨테이너에 맞춤 */
+            background-position: center;
+            background-repeat: no-repeat;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            line-height: normal; /* 기존 line-height 제거 */
         }
 
+        /* 반응형 처리 */
+        @media (max-width: 1200px) {
+            h1 {
+                height: 150px; /* 작은 화면에서 높이 조정 */
+                background-size: contain;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                height: 100px; /* 모바일에서 더 작은 높이로 조정 */
+            }
+        }
+
+        /* 카테고리 컨테이너 스타일을 Flexbox로 변경 */
+        .category-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 플로팅 애니메이션 정의 */
+        @keyframes float {
+            0% {
+                transform: translatey(0px);
+            }
+            50% {
+                transform: translatey(-15px);
+            }
+            100% {
+                transform: translatey(0px);
+            }
+        }
+
+        /* 카테고리 버튼 스타일 */
         .category-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            text-align: left;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            text-align: center;
+            padding: 20px 10px; /* 세로 패딩 추가로 버튼 크기 증가 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px; /* 폰트 크기 증가 */
             font-weight: bold;
+            transition: all 0.4s ease; /* 전환 효과 시간 조정 */
+            cursor: pointer;
+            margin: 2px auto;
+            width: 60%; /* 초기 버튼 폭 */
+            height: 80px; /* 버튼의 높이 증가 */
+            position: relative; /* 화살표 위치를 위해 position 추가 */
+            border-radius: 15px; /* 버튼의 테두리를 둥글게 만듦 */
+            animation: float 3s ease-in-out infinite; /* 플로팅 애니메이션 추가 */
+        }
+
+        /* 버튼의 순서에 따라 폭 증가 */
+        .category-btn:nth-child(1) { 
+            width: 60%; 
+        }
+        .category-btn:nth-child(2) { 
+            width: 65%; 
+        }
+        .category-btn:nth-child(3) { 
+            width: 70%; 
+        }
+        .category-btn:nth-child(4) { 
+            width: 75%; 
+        }
+        .category-btn:nth-child(5) { 
+            width: 80%; 
+        }
+        /* 필요에 따라 추가적인 nth-child 규칙을 정의하세요 */
+
+        /* 새로운 극적인 호버 효과 */
+        .category-btn:hover {
+            background-color: #0056b3; /* 호버 시 배경색 변경 */
+            color: #ffffff; /* 텍스트 색상 변경 */
+            transform: scale(1.2) rotate(10deg); /* 버튼을 확대하고 회전 */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); /* 그림자 강화 */
+            border-radius: 25px; /* 호버 시 테두리 둥글기 증가 */
+        }
+
+        /* 화살표 애니메이션 추가 */
+        .category-btn .arrow {
+            transition: transform 0.4s ease;
+        }
+
+        .category-btn:hover .arrow {
+            transform: rotate(90deg) translateX(10px); /* 화살표 회전 및 이동 */
+        }
+
+        /* 추가적인 애니메이션 효과 */
+        .category-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #0056b3; /* 호버 색상과 일치시킴 */
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .category-btn:hover::after {
+            opacity: 1; /* 호버 시 삼각형 표시 */
+        }
+
+        /* 반응형 디자인 유지 */
+        @media (max-width: 1024px) {
+            .category-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* 필요 시 버튼 폭 조정 */
+            .category-btn:nth-child(1) { width: 70%; }
+            .category-btn:nth-child(2) { width: 75%; }
+            .category-btn:nth-child(3) { width: 80%; }
+            .category-btn:nth-child(4) { width: 85%; }
+            .category-btn:nth-child(5) { width: 90%; }
+        }
+
+        @media (max-width: 768px) {
+            .category-container {
+                padding: 15px;
+            }
+
+            /* 버튼 폭을 100%로 설정하여 모바일에 최적화 */
+            .category-btn {
+                width: 100%;
+                animation: none; /* 모바일에서는 애니메이션 비활성화 */
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            .category-btn::after {
+                display: none; /* 모바일에서는 삼각형 제거 */
+            }
         }
 
         .subcategory-btn {
@@ -108,31 +250,88 @@
             transform: rotate(90deg);
         }
 
-        /* 에너지 카테고리 스타일 - 기존 주황색 유지 */
-        .category-btn {
-            background-color: #ff9b50;
+        /* 카테고리별 기본 스타일 */
+        .category-btn.energy {
+            background-color: #e67e22;  /* 주황색 */
+            color: white;
         }
 
-        /* 금융 카테고리 기본 스타일 - 더 연한 파란색으로 변경 */
-        .finance.category-btn {
-            background-color: #7FB3FA;  /* 메인 카테고리 */
+        .category-btn.finance {
+            background-color: #2c3e50;  /* 남색 */
+            color: white;
         }
 
-        .finance + .subcategory-container .subcategory-btn {
-            background-color: #9CC5FB;  /* 서브 카테고리 */
+        .category-btn.telecom {
+            background-color: #27ae60;  /* 진녹색 */
+            color: white;
         }
 
-        .finance + .subcategory-container .detail-category-btn {
-            background-color: #B8D7FC;  /* 상세 카테고리 */
+        .category-btn.medical {
+            background-color: #c0392b;  /* 진빨간색 */
+            color: white;
         }
 
-        .finance + .subcategory-container .company-btn {
-            border-color: #9CC5FB;
+        .category-btn.pharma {
+            background-color: #2980b9;  /* 진파란색 */
+            color: white;
         }
 
-        .finance + .subcategory-container .company-btn:hover {
-            background-color: #E8F3FF;
-            border-color: #7FB3FA;
+        .category-btn.machinery {
+            background-color: #d35400;  /* 진주황색 */
+            color: white;
+        }
+
+        .category-btn.construction {
+            background-color: #8e44ad;  /* 진보라색 */
+            color: white;
+        }
+
+        .category-btn.steel {
+            background-color: #7f8c8d;  /* 회색 */
+            color: white;
+        }
+
+        .category-btn.chemical {
+            background-color: #16a085;  /* 청록색 */
+            color: white;
+        }
+
+        .category-btn.battery {
+            background-color: #f1c40f;
+            color: white;  /* 노란색 */
+        }
+
+        .category-btn.electronics {
+            background-color: #3498db;  /* 하늘색 */
+            color: white;
+        }
+
+        .category-btn.distribution {
+            background-color: #27ae60;  /* 진녹색 */
+        }
+
+        .category-btn.consumer {
+            background-color: #d35400;  /* 주황갈색 */
+        }
+
+        .category-btn.cosmetics {
+            background-color: #ff69b4;  /* 분홍색 */
+        }
+
+        .category-btn.leisure {
+            background-color: #3498db;  /* 하늘색 */
+        }
+
+        .category-btn.media {
+            background-color: #9b59b6;  /* 보라색 */
+        }
+
+        .category-btn.game {
+            background-color: #2ecc71;  /* 녹색 */
+        }
+
+        .category-btn.automotive {
+            background-color: #e74c3c;  /* 빨간색 */
         }
 
         /* 에너지 카테고리 스타일 - 기존 주황색 유지 */
@@ -156,10 +355,6 @@
         }
 
         /* 통신 카테고리 스타일 - 녹색 계열 */
-        .telecom.category-btn {
-            background-color: #2ecc71;  /* 메인 카테고리 */
-        }
-
         .telecom + .subcategory-container .subcategory-btn {
             background-color: #45d685;  /* 서브 카테고리 */
         }
@@ -178,10 +373,6 @@
         }
 
         /* 의료기기 카테고리 스타일 - 보라색 계열 */
-        .medical.category-btn {
-            background-color: #9b59b6;  /* 메인 카테고리 */
-        }
-
         .medical + .subcategory-container .subcategory-btn {
             background-color: #ac6fc2;  /* 서브 카테고리 */
         }
@@ -197,10 +388,6 @@
         .medical + .subcategory-container .company-btn:hover {
             background-color: #f4ecf7;
             border-color: #9b59b6;
-        }
-
-        .pharma.category-btn {
-            background-color: #3498db;  /* 메인 카테고리 */
         }
 
         .pharma + .subcategory-container .subcategory-btn {
@@ -220,10 +407,6 @@
             border-color: #3498db;
         }
 
-        .machinery.category-btn {
-            background-color: #e67e22;  /* 메인 카테고리 - 주황색 계열 */
-        }
-
         .machinery + .subcategory-container .subcategory-btn {
             background-color: #f39c12;  /* 서브 카테고리 */
         }
@@ -239,11 +422,6 @@
         .machinery + .subcategory-container .company-btn:hover {
             background-color: #fef5e7;
             border-color: #e67e22;
-        }
-
-        .construction.category-btn {
-            background-color: #8e44ad;  /* 메인 카테고리 - 보라색 계열 */
-            color: white;
         }
 
         .construction + .subcategory-container .subcategory-btn {
@@ -264,11 +442,337 @@
             background-color: #f5eef8;
             border-color: #8e44ad;
         }
+
+        .steel + .subcategory-container .subcategory-btn {
+            background-color: #95a5a6;  /* 서브 카테고리 */
+        }
+
+        .steel + .subcategory-container .detail-category-btn {
+            background-color: #a5a5a5;  /* 상세 카테고리 */
+        }
+
+        .steel + .subcategory-container .company-btn {
+            border-color: #95a5a6;
+        }
+
+        .steel + .subcategory-container .company-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #95a5a6;
+        }
+
+        .chemical + .subcategory-container .subcategory-btn {
+            background-color: #1abc9c;  /* 서브 카테고리 */
+        }
+
+        .chemical + .subcategory-container .detail-category-btn {
+            background-color: #27ae60;  /* 상세 카테고리 */
+        }
+
+        .chemical + .subcategory-container .company-btn {
+            border-color: #1abc9c;
+        }
+
+        .chemical + .subcategory-container .company-btn:hover {
+            background-color: #eafaf1;
+            border-color: #27ae60;
+        }
+
+        .battery + .subcategory-container .subcategory-btn {
+            background-color: #f1c40f;  /* 서브 카테고리 */
+        }
+
+        .battery + .subcategory-container .detail-category-btn {
+            background-color: #f39c12;  /* 상세 카테고리 */
+        }
+
+        .battery + .subcategory-container .company-btn {
+            border-color: #f1c40f;
+        }
+
+        .battery + .subcategory-container .company-btn:hover {
+            background-color: #fef5e7;
+            border-color: #f39c12;
+        }
+
+        .electronics + .subcategory-container .subcategory-btn {
+            background-color: #e74c3c;  /* 서브 카테고리 */
+        }
+
+        .electronics + .subcategory-container .detail-category-btn {
+            background-color: #c0392b;  /* 상세 카테고리 */
+        }
+
+        .electronics + .subcategory-container .company-btn {
+            border-color: #e74c3c;
+        }
+
+        .electronics + .subcategory-container .company-btn:hover {
+            background-color: #f5e7e7;
+            border-color: #c0392b;
+        }
+
+        .distribution + .subcategory-container .subcategory-btn {
+            background-color: #27ae60;  /* 서브 카테고리 */
+        }
+
+        .distribution + .subcategory-container .detail-category-btn {
+            background-color: #229954;  /* 상세 카테고리 */
+        }
+
+        .distribution + .subcategory-container .company-btn {
+            border-color: #27ae60;
+        }
+
+        .distribution + .subcategory-container .company-btn:hover {
+            background-color: #eafaf1;
+            border-color: #229954;
+        }
+
+        .consumer + .subcategory-container .subcategory-btn {
+            background-color: #d35400;  /* 서브 카테고리 */
+        }
+
+        .consumer + .subcategory-container .detail-category-btn {
+            background-color: #ca4f00;  /* 상세 카테고리 */
+        }
+
+        .consumer + .subcategory-container .company-btn {
+            border-color: #d35400;
+        }
+
+        .consumer + .subcategory-container .company-btn:hover {
+            background-color: #f5e7e7;
+            border-color: #ca4f00;
+        }
+
+        .cosmetics + .subcategory-container .subcategory-btn {
+            background-color: #ff69b4;  /* 서브 카테고리 */
+        }
+
+        .cosmetics + .subcategory-container .detail-category-btn {
+            background-color: #ec407a;  /* 상세 카테고리 */
+        }
+
+        .cosmetics + .subcategory-container .company-btn {
+            border-color: #ff69b4;
+        }
+
+        .cosmetics + .subcategory-container .company-btn:hover {
+            background-color: #fce4f3;
+            border-color: #ec407a;
+        }
+
+        .leisure + .subcategory-container .subcategory-btn {
+            background-color: #3498db;  /* 서브 카테고리 */
+        }
+
+        .leisure + .subcategory-container .detail-category-btn {
+            background-color: #2980b9;  /* 상세 카테고리 */
+        }
+
+        .leisure + .subcategory-container .company-btn {
+            border-color: #3498db;
+        }
+
+        .leisure + .subcategory-container .company-btn:hover {
+            background-color: #ebf5fb;
+            border-color: #2980b9;
+        }
+
+        .media + .subcategory-container .subcategory-btn {
+            background-color: #9b59b6;  /* 서브 카테고리 */
+        }
+
+        .media + .subcategory-container .detail-category-btn {
+            background-color: #8e44ad;  /* 상세 카테고리 */
+        }
+
+        .media + .subcategory-container .company-btn {
+            border-color: #9b59b6;
+        }
+
+        .media + .subcategory-container .company-btn:hover {
+            background-color: #f5eef8;
+            border-color: #8e44ad;
+        }
+
+        .game + .subcategory-container .subcategory-btn {
+            background-color: #2ecc71;  /* 서브 카테고리 */
+        }
+
+        .game + .subcategory-container .detail-category-btn {
+            background-color: #27ae60;  /* 상세 카테고리 */
+        }
+
+        .game + .subcategory-container .company-btn {
+            border-color: #2ecc71;
+        }
+
+        .game + .subcategory-container .company-btn:hover {
+            background-color: #eafaf1;
+            border-color: #27ae60;
+        }
+
+        .automotive + .subcategory-container .subcategory-btn {
+            background-color: #e74c3c;  /* 서브 카테고리 */
+        }
+
+        .automotive + .subcategory-container .detail-category-btn {
+            background-color: #c0392b;  /* 상세 카테고리 */
+        }
+
+        .automotive + .subcategory-container .company-btn {
+            border-color: #e74c3c;
+        }
+
+        .automotive + .subcategory-container .company-btn:hover {
+            background-color: #f5e7e7;
+            border-color: #c0392b;
+        }
+
+        /* 조선과운송부터 패션까지 카테고리 스타일 수정 */
+        .category-btn.shipbuilding {  /* 조선과운송 */
+            background-color: #1abc9c;  /* 민트색 */
+            color: white;
+        }
+
+        .category-btn.semiconductor {  /* 반도체 */
+            background-color: #9b59b6;  /* 보라색 */
+            color: white;
+        }
+
+        .category-btn.display {  /* 디스플레이 */
+            background-color: #f1c40f;  /* 노란색 */
+            color: white;
+        }
+
+        /* 모바일원기와카메라 스타일 */
+        .category-btn.mobile {  
+            background-color: #d35400 !important;  /* 진한 주황색 */
+            color: white !important;
+        }
+
+        .category-btn.it {  /* IT서비스 */
+            background-color: #43a6e4;  /* 하늘색 */
+            color: white;
+        }
+
+        .category-btn.internet {  /* 인터넷 */
+            background-color: #2ecc71;  /* 녹색 */
+            color: white;
+        }
+
+        .category-btn.food {  /* 음식료 */
+            background-color: #e67e22;  /* 주황색 */
+            color: white;
+        }
+
+        .category-btn.fashion {  /* 패션 */
+            background-color: #8e44ad;  /* 진보라색 */
+            color: white;
+        }
+
+        /* 유통부터 전자기기까지 텍스트 색상 흰색으로 변경 */
+        .category-btn.distribution {  /* 유통 */
+            background-color: #27ae60;
+            color: white !important;
+        }
+
+        .category-btn.consumer {  /* 기타소비재 */
+            background-color: #d35400;
+            color: white !important;
+        }
+
+        .category-btn.cosmetics {  /* 화장품 */
+            background-color: #ff69b4;
+            color: white !important;
+        }
+
+        .category-btn.leisure {  /* 레저 */
+            background-color: #3498db;
+            color: white !important;
+        }
+
+        .category-btn.media {  /* 미디어 */
+            background-color: #9b59b6;
+            color: white !important;
+        }
+
+        .category-btn.game {  /* 게임 */
+            background-color: #2ecc71;
+            color: white !important;
+        }
+
+        .category-btn.automotive {  /* 자동차 */
+            background-color: #e74c3c;
+            color: white !important;
+        }
+
+        .category-btn.electronics {  /* 전자기기 */
+            background-color: #3498db;
+            color: white !important;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 30px;
+            margin: 10px auto;
+            max-width: 1200px;
+        }
+
+        /* 반응형 처리 */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 16px;
+                padding: 0 15px;
+            }
+        }
+
+        .info-box {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #b7f0bf;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        /* 반응형 처리 */
+        @media (max-width: 768px) {
+            .info-box {
+                margin: 20px 15px;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 16px;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>대한민국산업지도</h1>
+        <h1></h1>
+        <div class="info-box">
+            <h2>1. 대한민국에 있는 모든 회사들을 영역별로 정리해 놓았습니다.</h2>
+            <h2>2. 관심 영역을 클릭한 세부 비즈니스 섹터와 관련 회사들을 탐색해 보세요.</h2>
+        </div>
+
+        
         <div id="industryMap"></div>
     </div>
 
@@ -572,7 +1076,7 @@
                     '카메라': ['가온칩스', '에이루트']
                 },
                 '반도체소재': {
-                    '노광': ['동진쎄미켐', '이엔에프', '풍국', '제이오어드밴스'],
+                    '노광': ['동진쎄미켐미켐미켐', '이엔에프', '풍국', '제이오어드밴스'],
                     '웨이퍼마스크': ['에스앤에스텍'],
                     '식각': ['미코', '램트론', '원익큐브머티리얼즈', '나래화학', '티이엠씨'],
                     '증착': ['한솔케미칼', '원익머티리얼즈', '디엔에프', '솔브레인케미칼', '케이씨씨케미칼', '케이씨씨머티리얼즈'],
@@ -931,108 +1435,6 @@
                     '캐주얼': ['데브시스터즈', '빅볼', '조이시티', '위메이드플레이', '티쓰리', '한빛소프트', '벨로프']
                 }
             },
-            '자동차': {
-                'EP': {
-                    'EP': ['BGF레코퍼터티얼즈', 'HDC현대EP']
-                },
-                '고무부품': {
-                    '고무부품': ['동아타이어', '화승코퍼레이션', '화승알앤에이']
-                },
-                '공조장치': {
-                    '공조장치': ['한온시스템', '우리산업', '플라스틱재질', '세원정공', '상신브레이크']
-                },
-                '기타부품': {
-                    '기타부품': ['에코플라스틱', '코리아에프티', '평화산업', '필즈코퍼레이션', '율촌', '티티씨글로벌']
-                },
-                '내외장재': {
-                    '내외장재': ['서진오토', '에코플라스틱', '우신시스템', '삼보모터스', '엔브이에이치코리아',
-                      '플루원에어', '케이아이씨중공업산업', '한국철강', '네오텍스', 'G+H상공']
-                },
-                '도어모듈': {
-                    '도어모듈': ['피에이치에이', '세종']
-                },
-                '램프': {
-                    '램프': ['에스엘', '에프엠케이']
-                },
-                '중단모듈': {
-                    '중단모듈': ['현대모비스', '세보모터스']
-                },
-                '중고차': {
-                    '중고차': ['케이카']
-                },
-                '칼피모듈': {
-                    '칼피모듈': ['덕양산업']
-                },
-                '커넥터': {
-                    '커넥터': ['오트웰']
-                },
-                '타이어': {
-                    '타이어': ['한국타이어앤테크놀로지', '금호타이어', '넥센타이어', 'DN오토모티브', '흥아타이어', '디아이케이씨엔지']
-                },
-                '특장차': {
-                    '특장차': ['아센텍스', '광림', '오텍', '다와이']
-                },
-                '파워트레인': {
-                    '파워트레인': ['현대위아', 'SNT모티브', 'SNT다이내믹스', '모토닉', '한국부품넥스', '에스엠벨텍',
-                                '디아이씨', '세종공업', '현대머티', '만커뮤트로닉스', '세종알앤디', '우수AMS',
-                                '카스트프라자', '씨에스', '화신테크', '성우', 'C&E', '화신정공', '지엠비코리아',
-                                '한국이엘테크', '한영크로즈', '서진오토모티브', '유성기업', '성일공조', '동양피스톤',
-                                '네오오토', 'SJM', '영화금속', 'SJM홀딩스', '오리엔트정공', '부산주공', '태림산업',
-                                '디젠스', '디와이씨', '케스피코리아', '대동공업', '코다코']
-                },
-                '이륜차': {
-                    '이륜차': ['KR모터스']
-                },
-                '제동장치': {
-                    '제동장치': ['새론오토모티브', '상신브레이크', 'KB오토시스', '골프존데카']
-                },
-                '조향장치': {
-                    '조향장치': ['만도', '대유에이피']
-                },
-                '차체': {
-                    '차체': ['명신산업', '성우하이텍', '맥시스모빌', '아진산업', '동원금속', '일진피앤비', '세원물산']
-                },
-                '전장용품': {
-                    'PCB': ['에이엠텍'],
-                    '모터': ['유니온머티리얼', 'KB테크'],
-                    '반도체': ['아이에이', '리노스'],
-                    '보안시스템': ['모베이스코리아', '모베이스'],
-                    '블랙박스': ['팅크웨어', '유비벨록스', '팍트라이팅', '엠씬'],
-                    '센서': ['커민스이이션', 'THE MIDONG'],
-                    '전기': ['뉴인텍', '스마트레이더시스템', '토루팩', '모바일어플라이언스'],
-                    '인포테인먼트': ['모트렉스', '오비고', 'DH오토테크', '미디어텍', '엠스세븐테크놀러지'],
-                    '전기시스템': ['에코텍', '티에이치엔'],
-                    '정밀박스': ['영화테크'],
-                    '제어시스템': ['로스웰'],
-                    '히터': ['대우부품']
-                },
-                '배터리': {
-                    '배터리': ['한국맴브레인', '새빗켐']
-                },
-                '볼트와너트': {
-                    '볼트와너트': ['태양금속', '와이엠', '용강']
-                },
-                '세시': {
-                    '세시': ['화신', '화신정공', '오스템']
-                },
-                '서비스': {
-                    '차량공유': ['쏘카'],
-                    '차량렌탈': ['롯데렌탈', 'SK렌터카', '서비트렉스', '레드모빌']
-                },
-                '수입자유통': {
-                    '수입자유통': ['코오롱모빌리티그룹', '도이치모터스']
-                },
-                '스펙': {
-                    '스펙': ['대원강업', '상원강업']
-                },
-                '시트': {
-                    '시트': ['대원산업', '우종', '한국알앤텍', '구영테크', '이원컴포텍', 'SG글로벌',
-                           '아이원', '케이엔지', '대유에이텍', '대성마이맥', '일정실업']
-                },
-                '완성차': {
-                    '완성차': ['현대차', '기아', 'KG모빌리티', '엘비에이치셰플러']
-                }
-            },
             '2차전지': {
                 '부품': {
                     '부품': ['아이아트랜드셋', '신흥에스이씨', '나노팀', '일진', '상신이디피', '신성덴트',
@@ -1141,19 +1543,41 @@
             button.textContent = text;
             button.className = className;
             
-            // 카테고리별 클래스 추가
-            if (text === '금융') {
-                button.classList.add('finance');
-            } else if (text === '통신') {
-                button.classList.add('telecom');
-            } else if (text === '의료기기') {
-                button.classList.add('medical');
-            } else if (text === '제약&바이오') {
-                button.classList.add('pharma');
-            } else if (text === '기계') {
-                button.classList.add('machinery');
-            } else if (text === '건설과플랜트') {
-                button.classList.add('construction');
+            // 최상위 카테고리 버튼에 추가 클래스 부여
+            if (className === 'category-btn') {
+                const categoryClasses = {
+                    '에너지': 'energy',
+                    '금융': 'finance',
+                    '통신': 'telecom',
+                    '의료기기': 'medical',
+                    '제약&바이오': 'pharma',
+                    '기계': 'machinery',
+                    '건설과플랜트': 'construction',
+                    '철강과광물': 'steel',
+                    '정유와화학': 'chemical',
+                    '2차전지': 'battery',
+                    '전자기기': 'electronics',
+                    '유통': 'distribution',
+                    '기타소비재': 'consumer',
+                    '화장품': 'cosmetics',
+                    '레저': 'leisure',
+                    '미디어': 'media',
+                    '게임': 'game',
+                    '자동차': 'automotive',
+                    '조선과운송': 'shipbuilding',
+                    '반도체': 'semiconductor',
+                    '디스플레이': 'display',
+                    '모바일기기와카메라': 'mobile',
+                    'IT서비스': 'it',
+                    '인터넷': 'internet',
+                    '음식료': 'food',
+                    '패션': 'fashion'
+
+                };
+                
+                if (categoryClasses[text]) {
+                    button.classList.add(categoryClasses[text]);
+                }
             }
             
             if (className !== 'company-btn') {
@@ -1191,6 +1615,13 @@
                     arrow.classList.toggle('down');
                 }
             }
+        }
+
+        function createCategorySection() {
+            const container = document.createElement('div');
+            container.className = 'category-container';
+            // 기존 버튼 생성 코드를 이 컨테이너 안에 추가
+            return container;
         }
 
         // Initialize the map when the page loads

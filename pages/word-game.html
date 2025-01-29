@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학과 밸런스 게임</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f6f6f7;
+        }
+
+        .header {
+            background-image: url('/static/images/header-banner.png');
+            
+            background-position: center;
+            width: 1200px;
+            height: 170px;  /* 이미지 높이에 맞게 조정하세요 */
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background: rgba(240, 232, 208, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-top: 7px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 2px solid rgba(108, 92, 231, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            min-height: 80px;
+            width: 97%;
+        }
+
+        .progress-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .progress-container p {
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 7px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-container p span {
+            color: #6c5ce7;
+            font-size: 1.2em;
+            padding: 10 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(154, 131, 236, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 8px rgba(240, 219, 219, 0.1);
+            border: 2px solid rgba(108, 92, 231, 0.1);
+            padding: 0;
+            margin: 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(45deg, #6c5ce7, #a55eea, #aba3f0);
+            background-size: 100% 100%;
+            border-radius: 18px;
+            width: 0%;
+            transition: all 0.5s ease;
+            animation: gradientShift 3s ease infinite;
+            box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+        }
+
+        .vs-badge {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff5252 !important;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* 기본 카드 스타일 */
+        .card {
+            flex: 1;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            transform-origin: center center;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 4px solid;
+        }
+
+        /* 왼쪽 카드 스타일 */
+        .cards-container > div.card:first-child:not(.vs-badge) {
+            border-color: #6c5ce7 !important;
+            background: #ffffff;
+            cursor: default;
+        }
+
+        /* 오른쪽 카드 스타일 */
+        .cards-container > div.card:last-child:not(.vs-badge) {
+            border-color: #27ae60 !important;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        /* 카드 호버 효과 */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.02);
+        }
+
+        .card h3 {
+            text-align: center;
+            margin-top: 20px;
+            color: #2c3e50;
+            font-size: 2.3em;
+        }
+
+        .major-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.8em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: 3px solid;
+            font-weight: bold;
+            width: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cards-container > div.card:first-child:not(.vs-badge) .major-btn {
+            border-color: #6c5ce7;
+            color: #6c5ce7;
+        }
+
+        .cards-container > div.card:first-child:not(.vs-badge) .major-btn:hover {
+            background: #6c5ce7;
+            color: rgb(241, 199, 199);
+        }
+
+        .cards-container > div.card:last-child:not(.vs-badge) .major-btn {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .cards-container > div.card:last-child:not(.vs-badge) .major-btn:hover {
+            background: #27ae60;
+            color: rgb(206, 243, 201);
+        }
+
+        /* 왼쪽으로 날아가는 애니메이션 */
+        @keyframes flyAwayLeft {
+            0% {
+                transform: translate(0, 0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-200%, -200%) rotate(-30deg);
+                opacity: 0;
+            }
+        }
+
+        /* 오른쪽으로 날아가는 애니메이션 */
+        @keyframes flyAwayRight {
+            0% {
+                transform: translate(0, 0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(200%, -200%) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        /* 왼쪽으로 날아가는 클래스 */
+        .fly-away-left {
+            animation: flyAwayLeft 1s ease-in forwards;
+        }
+
+        /* 오른쪽으로 날아가는 클래스 */
+        .fly-away-right {
+            animation: flyAwayRight 1s ease-in forwards;
+        }
+
+        /* 선택된 카드를 위한 클래스 */
+        .selected {
+            transform: scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 모달 스타일 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: modalPop 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .final-major {
+            font-size: 2.5em;
+            color: #6c5ce7;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .modal-close {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .modal-close:hover {
+            background: #5849c4;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1></h1>
+        <p></p>
+    </div>
+
+    <div class="progress-container">
+        <p><span id="current-round">1</span>/50</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards">
+        <div class="vs-badge">VS</div>
+        <div class="card" onclick="selectMajor(0)">
+            <img src="" alt="학과 1" id="major1-img">
+            <button class="major-btn" id="major1-name"></button>
+        </div>
+        <div class="card" onclick="selectMajor(1)">
+            <img src="" alt="학과 2" id="major2-img">
+            <button class="major-btn" id="major2-name"></button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="gameEndModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🎉 게임 종료!</h2>
+            <p>당신에게 추천하는 학과는</p>
+            <div class="final-major" id="finalMajorName"></div>
+            <button class="modal-close" onclick="closeModal()">확인</button>
+        </div>
+    </div>
+
+    <script>
+        let currentRound = 1;
+        const totalRounds = 50;
+        const majors = ['IT융합학과', '건축공학과', '게임공학과', '고분자공학과', '국방기술학과', '기계공학과', '기계설계학과', '나노공학과', '도시공학과', '디지털콘텐츠학과', '로봇공학과', '반도체학과', '사이버국방학과', '산업공학과', '소프트웨어공학과', '신소재공학과', '에너지공학과', '원자력공학과', '응용소프트웨어공학과', '자동차공학과', '전기공학과', '전자공학과', '정보보호학과', '정보통신공학과', '제어계측학과', '조선공학과', '컴퓨터공학과', '토목공학과', '항공우주학과', '해양공학과', '해양시스템공학과', '화학공학과', '환경화학과','의예과', '간호학과', '약학과', '치의예과', '물리치료학과', '예술치료학과', '한의예과', '환경보건학과', '응급구조학과', '의료정보학과', '치위생학과', '임상병리학과', '재활학과', '보건관리학과', '한약학과', '방사선학과', '작업치료학과', '의용공학과', '치기공학과','수의학과', '천문학과', '생명공학과', '물리학과', '생물학과', '대기과학과', '수학과', '통계학과', '식품영양학과', '화학과', '동물자원학과', '우주과학과', '의류의상학과', '유전공학과', '원예학과', '산림자원학과', '해양자원학과', '지구환경과학과', '생화학과', '지리학과', '식물자원학과', '아동가족과', '축산학과','초등교육과', '윤리교육과', '체육교육과','역사교육과','국어교육과','미술교육과','수학교육과','가정교육과','교육학과','영어교육과','언어치료학과','유아교육학과','음악교육학과','물리교육학과','지구교육학과','농업교육학과','교육공학과','일본어교육과','호텔경영학과', '사회학과', '세무회계학과', '행정학과', '항공서비스학과', '아동학과', '국제통상학과', '스포츠마케팅학과', '관광경영학과', '무역학과', '아동복지학과', '회계학과', '농업경제학과', '해양경찰학과', '보건행정학과', '세무학과', '노인복지학과', '부동산학과','만화에니메이션과', '체육학과', '실내디자인학과', '경호학과', '패션디자인학과', '미디어영상학과', '산업디자인학과', '연극영화학과', '시각디자인학과', '공예학과', '기악과', '사회체육학과', '피아노과', '무용과', '도자기공예과', '실용음악과', '국악과', '미술과', '뷰티미용과', '작곡과', '레져스포츠과', '성악과', '스포츠지도학과', '조소과', '광고디자인학과', '관현악과', '서양화과', '동양화과', '응용미술과']; // 예시 학과명
+
+        function updateProgress() {
+            const progress = (currentRound - 1) / totalRounds * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+            document.getElementById('current-round').textContent = currentRound;
+        }
+
+        function getRandomMajor() {
+            return majors[Math.floor(Math.random() * majors.length)];
+        }
+
+        function loadNewRound() {
+            const major1 = getRandomMajor();
+            let major2;
+            do {
+                major2 = getRandomMajor();
+            } while (major1 === major2);
+
+            document.getElementById('major1-img').src = `/static/wordcloud/${major1}.png`;
+            document.getElementById('major2-img').src = `/static/wordcloud/${major2}.png`;
+            document.getElementById('major1-name').textContent = major1;
+            document.getElementById('major2-name').textContent = major2;
+        }
+
+        function showGameEndModal(finalMajor) {
+            const modal = document.getElementById('gameEndModal');
+            const finalMajorElement = document.getElementById('finalMajorName');
+            finalMajorElement.textContent = finalMajor;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('gameEndModal');
+            modal.style.display = 'none';
+            // 게임 초기화 또는 다른 작업 수행
+            currentRound = 1;
+            updateProgress();
+            loadNewRound();
+        }
+
+        function selectMajor(index) {
+            const cards = document.querySelectorAll('.card');
+            const selectedCard = cards[index];
+            const otherCard = cards[index === 0 ? 1 : 0];
+
+            selectedCard.classList.add('selected');
+            if (index === 0) {
+                otherCard.classList.add('fly-away-right');
+            } else {
+                otherCard.classList.add('fly-away-left');
+            }
+
+            setTimeout(() => {
+                if (currentRound < totalRounds) {
+                    currentRound++;
+                    updateProgress();
+                    selectedCard.classList.remove('selected');
+                    otherCard.classList.remove('fly-away-left', 'fly-away-right');
+                    loadNewRound();
+                } else {
+                    // 게임 종료 시 모달 표시
+                    const finalMajor = document.getElementById(`major${index + 1}-name`).textContent;
+                    showGameEndModal(finalMajor);
+                    selectedCard.classList.remove('selected');
+                    otherCard.classList.remove('fly-away-left', 'fly-away-right');
+                }
+            }, 1000);
+        }
+
+        // 초기 로드
+        updateProgress();
+        loadNewRound();
+    </script>
+</body>
+</html>
