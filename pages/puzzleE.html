@@ -157,11 +157,177 @@
             color: #e74c3c;
             opacity: 1;
         }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px;
+        }
+        .nav-button {
+            padding: 15px 30px;
+            background: #f0b9a9;
+            color: rgb(14, 13, 13);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+                       -2px -2px 6px rgba(255, 255, 255, 0.5);
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .nav-button:hover {
+            background: #e5ae9e;
+            transform: translateY(-2px);
+        }
+        .nav-button:active {
+            background: #dba396;
+            transform: translateY(1px);
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                       inset -2px -2px 6px rgba(255, 255, 255, 0.3);
+        }
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        .nav-button:hover::before {
+            left: 100%;
+        }
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .timer-container {
+            text-align: center;
+            background: #f0b9a9;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 15px rgba(240, 185, 169, 0.5),
+                       -8px -8px 15px #ffffff;
+            margin: 15px auto;
+            max-width: 600px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .timer-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .timer {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            background: #f0b9a9;
+            padding: 8px 20px;
+            border-radius: 15px;
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                       inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+            min-width: 120px;
+        }
+        .timer-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .timer-button {
+            padding: 8px 15px;
+            background: #f0b9a9;
+            color: rgb(14, 13, 13);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+                       -2px -2px 6px rgba(255, 255, 255, 0.5);
+        }
+        .timer-button:hover {
+            background: #e5ae9e;
+            transform: translateY(-2px);
+        }
+        .timer-button.active {
+            background: #dba396;
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                       inset -2px -2px 6px rgba(255, 255, 255, 0.3);
+            transform: translateY(1px);
+        }
+        .timer-label {
+            color: #141414;
+            font-size: 1.2em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            padding: 0 5px;
+        }
+        @media (max-width: 600px) {
+            .timer-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            .timer-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .timer-buttons {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>직업찾기퍼즐</h1>
+        <div class="title-container">
+            <button class="nav-button" onclick="location.href='puzzleD.html'">
+                <span>⬅️</span>
+                <span>D형</span>
+            </button>
+            <h1>직업찾기퍼즐(E형)</h1>
+            <button class="nav-button" onclick="location.href='puzzleA.html'">
+                <span>A형</span>
+                <span>➡️</span>
+            </button>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-section">
+                <div class="timer-label">⏰ 제한 시간</div>
+                <div class="timer" id="timer">00:00</div>
+            </div>
+            <div class="timer-buttons">
+                <button class="timer-button" onclick="selectTimer(10)">10분</button>
+                <button class="timer-button" onclick="selectTimer(20)">20분</button>
+                <button class="timer-button" onclick="selectTimer(30)">30분</button>
+            </div>
+        </div>
+
         <div class="progress">찾은 단어: <span id="found-count">0</span> / <span id="total-count">25</span></div>
         <div id="grid" class="grid"></div>
         <button id="answer-toggle" class="answer-button">정답 보기</button>
@@ -200,6 +366,10 @@
         let selectedCells = [];
         let isDragging = false;
         let foundWords = new Set();
+        let selectedMinutes = 0;
+        let timerInterval;
+        let timeLeft = 0;
+        let isTimerRunning = false;
 
         function initializeGame() {
             const gridElement = document.getElementById('grid');
@@ -342,6 +512,70 @@
                 });
             }
         }
+
+        function selectTimer(minutes) {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+            }
+
+            if (selectedMinutes === minutes) {
+                startTimer(minutes);
+            } else {
+                selectedMinutes = minutes;
+                timeLeft = minutes * 60;
+                updateTimerDisplay();
+            }
+
+            document.querySelectorAll('.timer-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function startTimer(minutes) {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        handleTimeUp();
+                    } else if (timeLeft <= 60) {
+                        document.getElementById('timer').classList.add('warning');
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer').textContent = display;
+        }
+
+        function handleTimeUp() {
+            const popup = document.createElement('div');
+            popup.className = 'success-popup';
+            popup.innerHTML = `
+                <div style="font-size: 3em; margin-bottom: 10px;">⏰</div>
+                <div style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">수고하셨습니다!</div>
+                <div>제한 시간이 종료되었습니다.</div>
+            `;
+            document.body.appendChild(popup);
+
+            setTimeout(() => {
+                popup.remove();
+            }, 3000);
+        }
+
+        window.addEventListener('load', () => {
+            timeLeft = 0;
+            updateTimerDisplay();
+        });
 
         initializeGame();
     </script>

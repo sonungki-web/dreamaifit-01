@@ -157,11 +157,231 @@
             color: #e74c3c;
             opacity: 1;
         }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px;
+        }
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(145deg, #8aeb5e, #79e747);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 10px rgba(121, 231, 71, 0.3),
+                       -2px -2px 6px rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            min-width: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .nav-button:hover {
+            background: linear-gradient(145deg, #95f169, #84f252);
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 12px rgba(121, 231, 71, 0.4),
+                       -2px -2px 8px rgba(255, 255, 255, 0.8);
+        }
+        .nav-button:active {
+            transform: translateY(1px);
+            box-shadow: inset 4px 4px 8px #68c93d,
+                       inset -2px -2px 6px #8aeb5e;
+        }
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        .nav-button:hover::before {
+            left: 100%;
+        }
+        .nav-button:hover span {
+            font-size: 1.2em;
+        }
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .timer-container {
+            text-align: center;
+            background: linear-gradient(145deg, #98f398, #98f398);
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 15px rgba(121, 231, 71, 0.2),
+                       -8px -8px 15px #ffffff;
+            margin: 15px auto;
+            max-width: 600px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .timer-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .timer {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2d8514;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(145deg, #f1f8ee, #e8f5e3);
+            padding: 8px 20px;
+            border-radius: 15px;
+            box-shadow: inset 4px 4px 8px rgba(121, 231, 71, 0.2),
+                       inset -4px -4px 8px #ffffff,
+                       3px 3px 6px rgba(121, 231, 71, 0.1);
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+            min-width: 120px;
+        }
+        .timer-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .timer-button {
+            padding: 8px 15px;
+            background: linear-gradient(145deg, #ceee76, #ceee76);
+            color: rgb(8, 8, 8);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(121, 231, 71, 0.3),
+                       -2px -2px 6px rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .timer-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        .timer-button:hover::before {
+            left: 100%;
+        }
+        .timer-button:hover {
+            background: linear-gradient(145deg, #caec6c, #84f252);
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 10px rgba(121, 231, 71, 0.4),
+                       -2px -2px 6px rgba(255, 255, 255, 0.8);
+        }
+        .timer-button.active {
+            background: linear-gradient(145deg, #79e747, #68c93d);
+            box-shadow: inset 4px 4px 8px #68c93d,
+                       inset -2px -2px 6px #8aeb5e;
+            transform: translateY(1px);
+        }
+        .timer-label {
+            color: #121312;
+            font-size: 1.2em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            white-space: nowrap;
+            padding: 0 5px;
+        }
+        .timer-label::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #79e747, transparent);
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+            100% { transform: translateY(0); }
+        }
+        .timer-container:hover {
+            animation: bounce 0.5s ease;
+        }
+        @media (max-width: 600px) {
+            .timer-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .timer-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .timer-buttons {
+                justify-content: center;
+            }
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 1em;
+                min-width: 100px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>직업찾기퍼즐</h1>
+        <div class="title-container">
+            <button class="nav-button" onclick="location.href='puzzleE.html'">
+                <span>⬅️</span>
+                <span>E형</span>
+            </button>
+            <h1>직업찾기퍼즐(A형)</h1>
+            <button class="nav-button" onclick="location.href='puzzleB.html'">
+                <span>B형</span>
+                <span>➡️</span>
+            </button>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer-section">
+                <div class="timer-label">⏰ 제한 시간</div>
+                <div class="timer" id="timer">00:00</div>
+            </div>
+            <div class="timer-buttons">
+                <button class="timer-button" onclick="selectTimer(10)">10분</button>
+                <button class="timer-button" onclick="selectTimer(20)">20분</button>
+                <button class="timer-button" onclick="selectTimer(30)">30분</button>
+            </div>
+        </div>
         <div class="progress">찾은 단어: <span id="found-count">0</span> / <span id="total-count">25</span></div>
         <div id="grid" class="grid"></div>
         <button id="answer-toggle" class="answer-button">정답 보기</button>
@@ -194,6 +414,10 @@
         let selectedCells = [];
         let isDragging = false;
         let foundWords = new Set();
+        let selectedMinutes = 0;
+        let timerInterval;
+        let timeLeft = 0;  // 초기값을 0으로 설정
+        let isTimerRunning = false;
 
         function initializeGame() {
             const gridElement = document.getElementById('grid');
@@ -336,6 +560,76 @@
                 });
             }
         }
+
+        function selectTimer(minutes) {
+            // 이미 실행 중인 타이머가 있다면 중지
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+            }
+
+            // 같은 버튼을 두 번 클릭했을 때 타이머 시작
+            if (selectedMinutes === minutes) {
+                startTimer(minutes);
+            } else {
+                // 첫 번째 클릭: 시간만 설정
+                selectedMinutes = minutes;
+                timeLeft = minutes * 60;
+                updateTimerDisplay();
+            }
+
+            // 버튼 스타일 업데이트
+            document.querySelectorAll('.timer-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function startTimer(minutes) {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        handleTimeUp();
+                    } else if (timeLeft <= 60) {
+                        document.getElementById('timer').classList.add('warning');
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer').textContent = display;
+        }
+
+        function handleTimeUp() {
+            const popup = document.createElement('div');
+            popup.className = 'success-popup';
+            popup.innerHTML = `
+                <div style="font-size: 3em; margin-bottom: 10px;">⏰</div>
+                <div style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">수고하셨습니다!</div>
+                <div>제한 시간이 종료되었습니다.</div>
+            `;
+            document.body.appendChild(popup);
+
+            // 3초 후에 팝업 제거
+            setTimeout(() => {
+                popup.remove();
+            }, 3000);
+        }
+
+        // 페이지 로드 시 타이머 초기화
+        window.addEventListener('load', () => {
+            timeLeft = 0;  // 초기값 설정
+            updateTimerDisplay();  // 00:00으로 표시
+        });
 
         initializeGame();
     </script>
