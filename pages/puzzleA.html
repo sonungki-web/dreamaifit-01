@@ -21,6 +21,7 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 3em;
         }
         .progress {
             text-align: center;
@@ -167,14 +168,15 @@
             padding: 15px 30px;
             background: linear-gradient(145deg, #8aeb5e, #79e747);
             color: rgb(9, 9, 9);
-            border: none;
+            border: 2px solid #68c93d;
             border-radius: 15px;
             cursor: pointer;
             font-size: 1.3em;
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 5px 5px 10px rgba(121, 231, 71, 0.3),
-                       -2px -2px 6px rgba(255, 255, 255, 0.8);
+                       -2px -2px 6px rgba(255, 255, 255, 0.8),
+                       inset 1px 1px 2px rgba(255, 255, 255, 0.4);
             position: relative;
             overflow: hidden;
             min-width: 150px;
@@ -182,6 +184,8 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
+            outline: 1px solid rgba(255, 255, 255, 0.5);
+            outline-offset: -4px;
         }
         .nav-button:hover {
             background: linear-gradient(145deg, #95f169, #84f252);
@@ -219,8 +223,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding: 0 10px;
+            margin: 20px 0;
+            padding: 15px 25px;
+            background: linear-gradient(145deg, #98f398, #79e747);
+            border: 3px solid #68c93d;
+            border-radius: 20px;
+            box-shadow: 
+                8px 8px 15px rgba(121, 231, 71, 0.3),
+                -4px -4px 15px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.4),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        .title-container:hover {
+            transform: translateY(0);
+            box-shadow: 
+                6px 6px 12px rgba(121, 231, 71, 0.2),
+                -3px -3px 12px rgba(255, 255, 255, 0.7),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.4),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .title-container h1:nth-child(3) {
+            font-size: 2em;  /* 크기 줄임 */
+            color: #1e3799;  /* 파란색으로 변경 */
+            text-shadow: 1px 1px 2px rgba(30, 55, 153, 0.2);
         }
         .timer-container {
             text-align: center;
@@ -364,7 +392,8 @@
                 <span>⬅️</span>
                 <span>E형</span>
             </button>
-            <h1>직업찾기퍼즐(A형)</h1>
+            <h1>직업명 퍼즐(A형)</h1>
+            <h2>[경영,사무,금융,보험 직군]</h2>
             <button class="nav-button" onclick="location.href='puzzleB.html'">
                 <span>B형</span>
                 <span>➡️</span>

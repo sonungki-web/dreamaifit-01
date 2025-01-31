@@ -21,6 +21,7 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 2.5em;
         }
         .progress {
             text-align: center;
@@ -351,7 +352,25 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding: 0 10px;
+            padding: 20px;
+            background: linear-gradient(145deg, #d0c7f3, #b887f0);
+            border: 3px solid #4caf50;
+            border-radius: 15px;
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .title-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.15),
+                -10px -10px 20px rgba(255, 255, 255, 0.9),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 600px) {
@@ -370,7 +389,8 @@
                 <span>⬅️</span>
                 <span>A형</span>
             </button>
-            <h1>직업찾기퍼즐(B형)</h1>
+            <h1>직업명 퍼즐(B형)</h1>
+            <h2>[교육,법률,사회복지,경찰,소방직 직군]</h2>
             <button class="nav-button" onclick="location.href='puzzleC.html'">
                 <span>C형</span>
                 <span>➡️</span>
