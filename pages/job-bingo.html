@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>미래 직업 빙고 게임</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .job-card {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .job-card.liked {
+            background: #ffe6e6;
+        }
+        .heart-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #ff0000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .job-card.liked .heart-icon {
+            opacity: 1;
+        }
+        .bingo-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .bingo-cell {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .bingo-cell:hover {
+            background: #e6e6e6;
+        }
+        .bingo-cell.selected {
+            background: #b3e0ff;
+            font-weight: bold;
+        }
+        .refresh-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .refresh-btn:hover {
+            background: #45a049;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+        }
+        .popup.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="job-grid"></div>
+        <button class="refresh-btn">배열 새로고침</button>
+        <div class="bingo-board"></div>
+    </div>
+    <div class="popup">
+        <h2>축하합니다! 빙고를 완성하셨습니다! 🎉</h2>
+    </div>
+
+    <script>
+        const futureJobs = [
+            "AI 윤리학자", "데이터 형상관리자", "디지털 고고학자", "로봇 상담사", "메타버스 건축가",
+            "바이오 해커", "수직농장 관리자", "우주 관광 가이드", "인공장기 디자이너", "자율주행차 교통관리자",
+            "증강현실 전문가", "기후변화 전략가", "양자컴퓨터 프로그래머", "홀로그램 예술가", "드론 트래픽 관리자",
+            "생체인증 보안전문가", "뇌-컴퓨터 인터페이스 개발자", "감정AI 트레이너", "스마트시티 플래너", "디지털 치료사",
+            "나노봇 엔지니어", "기억 디자이너", "유전자 프로그래머", "아바타 매니저", "시간 은행원",
+            "우주 채굴자", "가상 법률가", "3D 장기 프린터", "미래 고고학자", "기억 삭제 전문가",
+            "인공육류 요리사", "꿈 영상 디자이너", "디지털 장의사", "우주 건축가", "신경망 엔지니어",
+            "가상현실 심리상담사", "기후 조절사", "유전자 조작 윤리학자", "로봇 수의사", "양자 암호학자",
+            "사이버 탐정", "디지털 큐레이터", "생태계 복원 전문가", "우주 폐기물 관리자", "감정 디자이너",
+            "뇌 백업 전문가", "시간여행 가이드", "인공지능 음악가", "테라포밍 엔지니어", "홀로그램 교사",
+            "가상도시 설계자", "기억 은행원", "디지털 농부", "미래예측 분석가", "생체공학 디자이너",
+            "수중도시 건축가", "아바타 심리학자", "우주 관제사", "인공장기 재배자", "자가진화 AI 관리자",
+            "전자정신 치료사", "초음속 여행 설계자", "클론 윤리학자", "탄소발자국 추적자", "포털 관리자",
+            "현실-가상 중재자", "휴먼 업그레이드 디자이너", "DNA 프로그래머", "IoT 큐레이터", "로봇권리 변호사",
+            "반물질 엔지니어", "생체인터넷 보안관", "실험우주 디자이너", "양자현실 건축가", "외계생명체 통역사",
+            "우주엘리베이터 운영자", "인공섬 디자이너", "자율형 로봇 교사", "전염병 예측가", "차원간 여행 가이드",
+            "클라우드 고고학자", "타임라인 관리자", "프라이버시 디자이너", "홀로그램 패션디자이너", "감정 저장소 관리자",
+            "기억 복원 전문가", "나노의학 전문의", "뉴럴링크 프로그래머", "디지털 윤리학자", "마인드 업로더",
+            "바이오닉 수의사", "사이버 심리학자", "신경 해킹 보안관", "인공지능 저널리스트", "자아 설계자",
+            "전자 꿈 기술자", "진화 건축가", "칩 이식 전문의", "태양광 채굴자", "행성간 무역상",
+            "휴먼 API 디자이너", "AR 스토리텔러", "밈 큐레이터", "메타버스 심리학자", "웨어러블 치료사"
+        ];
+
+        let selectedJobs = [];
+        let bingoState = Array(25).fill(false);
+
+        function createJobGrid() {
+            const grid = document.querySelector('.job-grid');
+            grid.innerHTML = '';
+            futureJobs.forEach((job, index) => {
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.innerHTML = `
+                    ${job}
+                    <span class="heart-icon">❤️</span>
+                `;
+                card.addEventListener('click', () => toggleJobSelection(card, job));
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleJobSelection(card, job) {
+            if (selectedJobs.includes(job)) {
+                selectedJobs = selectedJobs.filter(j => j !== job);
+                card.classList.remove('liked');
+            } else if (selectedJobs.length < 25) {
+                selectedJobs.push(job);
+                card.classList.add('liked');
+            }
+            if (selectedJobs.length === 25) {
+                createBingoBoard();
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createBingoBoard() {
+            const board = document.querySelector('.bingo-board');
+            board.innerHTML = '';
+            const shuffledJobs = shuffleArray([...selectedJobs]);
+            shuffledJobs.forEach((job, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'bingo-cell';
+                cell.textContent = job;
+                cell.addEventListener('click', () => selectBingoCell(index, cell));
+                board.appendChild(cell);
+            });
+            bingoState = Array(25).fill(false);
+        }
+
+        function selectBingoCell(index, cell) {
+            bingoState[index] = !bingoState[index];
+            cell.classList.toggle('selected');
+            checkBingo();
+        }
+
+        function checkBingo() {
+            // 가로 확인
+            for (let i = 0; i < 25; i += 5) {
+                if (bingoState.slice(i, i + 5).every(state => state)) {
+                    showPopup();
+                    return;
+                }
+            }
+
+            // 세로 확인
+            for (let i = 0; i < 5; i++) {
+                if (Array.from({length: 5}, (_, j) => bingoState[i + j * 5]).every(state => state)) {
+                    showPopup();
+                    return;
+                }
+            }
+
+            // 대각선 확인
+            const diagonal1 = Array.from({length: 5}, (_, i) => bingoState[i * 6]);
+            const diagonal2 = Array.from({length: 5}, (_, i) => bingoState[4 + i * 4]);
+            
+            if (diagonal1.every(state => state) || diagonal2.every(state => state)) {
+                showPopup();
+            }
+        }
+
+        function showPopup() {
+            const popup = document.querySelector('.popup');
+            popup.classList.add('show');
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 3000);
+        }
+
+        // 초기화
+        createJobGrid();
+
+        // 새로고침 버튼 이벤트
+        document.querySelector('.refresh-btn').addEventListener('click', () => {
+            if (selectedJobs.length === 25) {
+                createBingoBoard();
+            }
+        });
+    </script>
+</body>
+</html>
