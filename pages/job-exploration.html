@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Pretendard', sans-serif;
-            background: #f8f9fa;
+            background: #bbadeb;
             color: #333;
         }
 
@@ -23,20 +23,17 @@
             padding: 2rem;
         }
 
-        .search-section {
-            text-align: center;
-            padding: 3rem 1rem;
-            background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
-            border-radius: 20px;
+        .title-banner {
+            width: 100%;
+            height: 200px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        .search-section h1 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        .title-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .search-section p {
@@ -398,19 +395,47 @@
                 grid-template-rows: repeat(7, 125px);
             }
         }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem 3rem;  /* 패딩 증가 */
+            border-radius: 20px;  /* 더 부드러운 모서리 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1),
+                       0 5px 10px rgba(0, 0, 0, 0.05);  /* 더 세련된 그림자 */
+            margin: 2.5rem auto;
+            max-width: 900px;  /* 너비 증가 */
+            border: 1px solid rgba(255, 255, 255, 0.5);  /* 미세한 테두리 추가 */
+            backdrop-filter: blur(10px);  /* 배경 블러 효과 */
+            transition: transform 0.3s ease;  /* 부드러운 호버 효과 */
+        }
+
+        .message-box:hover {
+            transform: translateY(-5px);  /* 호버시 살짝 위로 떠오르는 효과 */
+        }
+
+        .message-box p {
+            text-align: center;
+            font-size: 1.25rem;  /* 글자 크기 증가 */
+            margin: 0;
+            color: #2d3748;  /* 더 진한 텍스트 색상 */
+            line-height: 2.8;  /* 줄 간격 살짝 증가 */
+            font-weight: 500;  /* 살짝 더 굵은 폰트 */
+            letter-spacing: -0.3px;  /* 자간 미세 조정 */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <section class="search-section">
-            <h1>직업 탐색</h1>
-            <p>다양한 직업 정보를 탐색하고 나에게 맞는 직업을 찾아보세요.</p>
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="직업명을 입력하세요...">
-                <button class="search-button">검색</button>
-            </div>
-        </section>
-
+        <div class="title-banner">
+            <img src="/static/images/job-title-banner-yellow.png" alt="직업 탐색 배너">
+        </div>
+        
+        <div class="message-box">
+            <p>🎯 20가지 업종 중 관심이 가는 업종을 클릭하세요.</p>
+            <p>🔎 업종 내에 다양한 직업을 탐색해 본 후 관심 있는 직업을 선택하세요.</p>
+            <p>✨ 클릭하면 자세한 내용이 나오고 AI튜터를 통해 직업 정보를 얻을 수 있습니다.</p>
+        </div>
+        
         <div class="category-frame">
             <div class="category-tabs">
                 <button class="category-tab">

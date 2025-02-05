@@ -14,9 +14,9 @@
         }
 
         body {
+            background-color: #D8E8D8;  /* 연한 민트색으로 변경 */
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
-            background-color: #f8f9fa;
         }
 
         /* 네비게이션 바 스타일 */
@@ -303,7 +303,7 @@
 
         .cards-container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -316,31 +316,42 @@
             justify-content: center;
         }
 
-        /* 말풍선 화살표 */
-        .cards-container::before {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            clip-path: polygon(0 0, 100% 100%, 0 100%);
-            transform: rotate(45deg);
+        /* 각 섹션별 cards-container 스타일 */
+        #self-exploration .cards-container {
+            background: rgba(179, 229, 252, 0.98);  /* 더 밝은 파란색 */
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
         }
 
-        /* 자아탐색과 직업탐색 섹션의 말풍선 (왼쪽에서 오른쪽) */
-        #self-exploration .cards-container::before,
+        #academic-exploration .cards-container {
+            background: rgba(255, 235, 238, 0.98);  /* 더 밝은 빨간색 */
+            box-shadow: 0 10px 30px rgba(244, 67, 54, 0.2);
+        }
+
+        #career-exploration .cards-container {
+            background: rgba(220, 237, 200, 0.98);  /* 더 밝은 초록색 */
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+        }
+
+        #growth-exploration .cards-container {
+            background: rgba(225, 190, 231, 0.98);  /* 더 밝은 보라색 */
+            box-shadow: 0 10px 30px rgba(103, 58, 183, 0.2);
+        }
+
+        /* 말풍선 화살표도 동일한 색상으로 수정 */
+        #self-exploration .cards-container::before {
+            background: rgba(179, 229, 252, 0.98);
+        }
+
+        #academic-exploration .cards-container::before {
+            background: rgba(255, 235, 238, 0.98);
+        }
+
         #career-exploration .cards-container::before {
-            left: -20px;
-            top: 80px;
-            transform: rotate(-45deg);
+            background: rgba(220, 237, 200, 0.98);
         }
 
-        /* 진학탐색과 성장탐색 섹션의 말풍선 (오른쪽에서 왼쪽) */
-        #academic-exploration .cards-container::before,
         #growth-exploration .cards-container::before {
-            right: -20px;
-            top: 80px;
-            transform: rotate(135deg);
+            background: rgba(225, 190, 231, 0.98);
         }
 
         .cards-wrapper {
@@ -673,37 +684,41 @@
                 <a href="#">자아탐색 FIT</a>
                 <ul class="dropdown-content">
                     <li><a href="mbti-test.html">성격 유형 검사</a></li>
-                    <li><a href="pages/word-cloud.html">동물애니어그램</a></li>
-                    <li><a href="pages/balance-game.html">가치관 밸런스 게임</a></li>
-                    <li><a href="pages/character.html">나의 캐릭터 생성기기</a></li>
+                    <li><a href="animal-test.html">동물애니어그램</a></li>
+                    <li><a href="pages/balance-game.html">가치 경매 게임(준비중)</a></li>
+                    <li><a href="pages/character.html">캐릭터 생성기기(준비중)</a></li>
+                    <li><a href="pages/character.html">나의 뇌구조(준비중)</a></li>
+                    <li><a href="pages/character.html">역량검사모음(준비중)</a></li>
                 </ul>
+
             </li>
             <li class="dropdown">
                 <a href="#">진학탐색 FIT</a>
                 <ul class="dropdown-content">
-                    <li><a href="pages/puzzleA.html">학과 탐색</a></li>
-                    <li><a href="pages/puzzleB.html">학과밸런스게임</a></li>
-                    <li><a href="pages/essay-writing.html">학과워드클라우드</a></li>
-                    <li><a href="pages/essay-writing.html">학과워드밸런스게임</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">직업탐색 FIT</a>
-                <ul class="dropdown-content">
-                    <li><a href="pages/job-exploration.html">직업 탐색</a></li>
-                    <li><a href="pages/puzzleA.html">직업명 퍼즐</a></li>
-                    <li><a href="pages/map.html">대한민국산업지도</a></li>
-                    <li><a href="pages/job-bingo.html">미래직업탐색&빙고게임</a></li>
+                    <li><a href="major-exploration.html">학과 탐색</a></li>
+                    <li><a href="balance-game.html">학과밸런스게임</a></li>
+                    <li><a href="word-cloud.html">학과워드클라우드</a></li>
+                    <li><a href="word-game.html">워드밸런스게임</a></li>
+                    <li><a href="highschool-roadmap.html">고교학점제로드맵(준비중)</a></li>
                 </ul>
             </li>
             <li class="dropdown">
 
+                <a href="#">직업탐색 FIT</a>
+                <ul class="dropdown-content">
+                    <li><a href="job-exploration.html">직업 탐색</a></li>
+                    <li><a href="puzzleA.html">직업명 퍼즐</a></li>
+                    <li><a href="map.html">대한민국산업지도</a></li>
+                    <li><a href="job-bingo.html">미래직업탐색&빙고게임</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
                 <a href="#">성장마인드 FIT</a>
                 <ul class="dropdown-content">
-                    <li><a href="pages/map.html">꿈만다라트</a></li>
-                    <li><a href="pages/map.html">진로 로드맵</a></li>
-                    <li><a href="pages/chat.html">AI 진로 상담</a></li>
-                    <li><a href="pages/note2-5.html">진로 일기장</a></li>
+                    <li><a href="dream-mandal.html">꿈만다라트</a></li>
+                    <li><a href="pages/map.html">진로 로드맵(준비중)</a></li>
+                    <li><a href="pages/chat.html">AI 진로 상담(준비중)</a></li>
+                    <li><a href="pages/note2-5.html">진로 일기장(준비중)</a></li>
                 </ul>
             </li>
         </ul>
@@ -717,8 +732,6 @@
         <div class="hero-content">
             <h1 class="hero-title">AI튜터와 함께 만들어 가는 꿈 여정</h1>
             <p class="hero-subtitle">네 명의 AI 튜터와 함께하는 4단계 진로 설계 플랫폼</p>
-
-           
         </div>
     </section>
 
@@ -739,26 +752,21 @@
                 <div class="cards-container">
                     <button class="slide-btn left"><i class="fas fa-chevron-left"></i></button>
                     <div class="cards-wrapper">
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='mbti-test.html'" style="cursor: pointer;">
                             <img src="assets/personality-test.jpeg" alt="성격 유형 검사">
                             <h3>성격 유형 검사</h3>
-                           
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='animal-test.html'" style="cursor: pointer;">
                             <img src="assets/animal-enneagram.jpeg" alt="동물애니어그램">
                             <h3>동물애니어그램</h3>
-                            
                         </div>
                         <div class="card">
                             <img src="assets/value-balance.jpeg" alt="밸런스 게임">
                             <h3>가치관 밸런스 게임</h3>
-                           
-
                         </div>
                         <div class="card">
                             <img src="assets/character-maker.jpeg" alt="캐릭터 생성기">
                             <h3>캐릭터 생성기</h3>
-                           
                         </div>
                     </div>
                     <button class="slide-btn right"><i class="fas fa-chevron-right"></i></button>
@@ -780,35 +788,22 @@
                 <div class="cards-container">
                     <button class="slide-btn left"><i class="fas fa-chevron-left"></i></button>
                     <div class="cards-wrapper">
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='major-exploration.html'" style="cursor: pointer;">
                             <img src="assets/major-info.jpeg" alt="학과 정보">
                             <h3>학과 탐색</h3>
-                           
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='balance-game.html'" style="cursor: pointer;">
                             <img src="assets/university-info.jpeg" alt="대학 정보">
                             <h3>학과밸런스게임</h3>
-                            
-
-
                         </div>
-                        <div class="card">
-
+                        <div class="card" onclick="window.location.href='word-cloud.html'" style="cursor: pointer;">
                             <img src="assets/word-cloud.jpeg" alt="학과워드클라우드">
                             <h3>학과워드클라우드</h3>
-                          
-
                         </div>
-                        <div class="card">
-
+                        <div class="card" onclick="window.location.href='word-game.html'" style="cursor: pointer;">
                             <img src="assets/word-game.jpeg" alt="학과워드밸런스게임">
                             <h3>학과워드밸런스게임</h3>
-                           
-
-
                         </div>
-
-
                     </div>
                     <button class="slide-btn right"><i class="fas fa-chevron-right"></i></button>
                     <button class="more-btn">더보기</button>
@@ -829,32 +824,22 @@
                 <div class="cards-container">
                     <button class="slide-btn left"><i class="fas fa-chevron-left"></i></button>
                     <div class="cards-wrapper">
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='job-exploration.html'" style="cursor: pointer;">
                             <img src="assets/job-info.jpeg" alt="직업 탐색">
                             <h3>직업 탐색</h3>
-                            
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='puzzleA.html'" style="cursor: pointer;">
                             <img src="assets/job-puzzle.jpeg" alt="직업명 퍼즐">
                             <h3>직업명 퍼즐</h3>
-                            
-
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='map.html'" style="cursor: pointer;">
                             <img src="assets/job-map.jpeg" alt="대한민국 산업지도">
                             <h3>대한민국 산업지도</h3>
-                            
-
-
                         </div>
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='job-bingo.html'" style="cursor: pointer;">
                             <img src="assets/job-bingo.jpeg" alt="미래직업&빙고게임">
                             <h3>미래직업&빙고게임</h3>
-                            
-
-
                         </div>
-                        
                     </div>
                     <button class="slide-btn right"><i class="fas fa-chevron-right"></i></button>
                     <button class="more-btn">더보기</button>
@@ -875,56 +860,41 @@
                 <div class="cards-container">
                     <button class="slide-btn left"><i class="fas fa-chevron-left"></i></button>
                     <div class="cards-wrapper">
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='dream-mandal.html'" style="cursor: pointer;">
                             <img src="assets/mandala.jpeg" alt="꿈만다라트">
                             <h3>꿈만다라트</h3>
-                           
-
                         </div>
                         <div class="card">
                             <img src="assets/interview.jpeg" alt="면접왕">
                             <h3>면접왕</h3>
-                          
                         </div>
                         <div class="card">
                             <img src="assets/dreamroom.jpeg" alt="꿈 다락방">
                             <h3>꿈 다락방</h3>
-                          
                         </div>
                         <div class="card">
                             <img src="assets/dreamcard.jpeg" alt="명함 제작소">
-
                             <h3>꿈꿈명함 제작소</h3>
-                          
                         </div>
                         <div class="card">
                             <img src="assets/ai-counseling.jpeg" alt="AI 진로 상담소">
                             <h3>AI 진로 상담소</h3>
-                           
                         </div>
                         <div class="card">
                             <img src="assets/dreamwall.jpeg" alt="꿈 담벼락">
                             <h3>꿈 담벼락</h3>
-                           
                         </div>
                         <div class="card">
                             <img src="assets/roadmap.jpeg" alt="진로 로드맵">
-
                             <h3>진로 로드맵</h3>
-                          
                         </div>
                         <div class="card">
                             <img src="assets/resume.jpeg" alt="꿈 이력서">
-
                             <h3>꿈 이력서</h3>
-                          
                         </div>
                         <div class="card">
                             <img src="assets/roadmap.jpeg" alt="진로 장벽 깨기기">
-
                             <h3>진로 장벽 깨기</h3>
-                          
-
                         </div>
                     </div>
                     <button class="slide-btn right"><i class="fas fa-chevron-right"></i></button>

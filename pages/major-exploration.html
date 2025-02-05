@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #e7ebe1;
+            background-color: #f1b883;
             font-family: 'Apple SD Gothic Neo', sans-serif;
         }
 
@@ -211,17 +211,20 @@
         }
 
         .main-title {
-            font-size: 2.8rem;
-            font-weight: 800;
             margin-bottom: 1.5rem;
-            color: #2c3e50;
             padding: 20px 40px;
             display: inline-block;
             position: relative;
-            background: linear-gradient(120deg, #e9f5ff 0%, #f0f0ff 100%);
+            background: linear-gradient(120deg, #dfd3ae 0%, #d6ddb8 100%);
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+        }
+
+        .main-title img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         .main-title:hover {
@@ -230,9 +233,27 @@
         }
 
         .sub-title {
-            font-size: 1.2rem;
-            color: #666;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            background: linear-gradient(120deg, #fff8e8 0%, #fff9f9 100%);
+            padding: 15px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .sub-title {
+                font-size: 1.1rem;
+                padding: 12px 20px;
+                margin-bottom: 1.5rem;
+            }
         }
 
         .search-container {
@@ -391,12 +412,11 @@
         /* 반응형 스타일 */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2rem;
                 padding: 15px 30px;
             }
             
-            .sub-title {
-                font-size: 1rem;
+            .main-title img {
+                max-width: 280px; /* 모바일에서의 최대 너비 제한 */
             }
             
             .search-container {
@@ -611,19 +631,32 @@
         #arts {
             background: rgb(255, 230, 200);
         }
+
+        .card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .card:active {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
     <div class="gallery-container">
         <div class="search-section">
-            <h1 class="main-title">🎓 학과 탐색 📚</h1>
-            <p class="sub-title">관심 있는 학과를 학과 장바구니에 담아보세요</p>
+            <h1 class="main-title">
+                <img src="/static/images/major_title.png" alt="학과 탐색" style="max-width: 100%; height: auto;">
+            </h1>
+            <p class="sub-title">관심 있는 학과에 하트표시를 눌러 학과 장바구니에 추가해보세요</p>
             
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="동물을 좋아하는데 학과 추천해줘">
-                <button class="search-button">AI도움</button>
-            </div>
-            
+                     
             <div class="category-tabs">
                 <button class="tab-button" data-category="engineering" onclick="scrollToSection('engineering')">공학계열</button>
                 <button class="tab-button" data-category="medical" onclick="scrollToSection('medical')">의학계열</button>
@@ -808,7 +841,7 @@
         <div class="department-intro">
             <div class="intro-content">
                 <div class="intro-text">
-                    <h2 class="intro-title" style="text-align: center;">⭐ 즐겨찾기한 학과 ⭐</h2>
+                    <h2 class="intro-title" style="text-align: center;">⭐ 학과 장바구니 ⭐</h2>
                     <p class="intro-description" style="text-align: center;">
                         관심있는 학과들을 한눈에 모아보세요.
                         하트 아이콘을 클릭하여 즐겨찾기를 추가하거나 제거할 수 있습니다.
@@ -828,6 +861,8 @@
                 </div>
             </div>
         </div>
+
+        
     </div>
 
     <script>
