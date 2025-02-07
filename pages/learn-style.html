@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습유형 간편 체크리스트</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #1a5e3a;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .score-description {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+
+        .score-item {
+            background-color: #2E8B57;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .scale-guide {
+            display: flex;
+            justify-content: space-between;
+            background-color: #2E8B57;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .question-group {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .group-title {
+            color: #2E8B57;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .question {
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 30px;
+            align-items: center;
+            padding: 40px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(46, 139, 87, 0.2);
+            border-bottom: 4px solid rgba(46, 139, 87, 0.25);
+        }
+
+        /* 문항별로 다른 배경색 적용 - 선명한 그라데이션 */
+        .question:nth-child(4n+1) {
+            background: linear-gradient(to right, rgba(46, 139, 87, 0.2), rgba(46, 139, 87, 0.1));
+            border-left: 5px solid #2E8B57;
+        }
+        .question:nth-child(4n+2) {
+            background: linear-gradient(to right, rgba(100, 139, 46, 0.2), rgba(100, 139, 46, 0.1));
+            border-left: 5px solid #648B2E;
+        }
+        .question:nth-child(4n+3) {
+            background: linear-gradient(to right, rgba(139, 87, 46, 0.2), rgba(139, 87, 46, 0.1));
+            border-left: 5px solid #8B572E;
+        }
+        .question:nth-child(4n+4) {
+            background: linear-gradient(to right, rgba(87, 46, 139, 0.2), rgba(87, 46, 139, 0.1));
+            border-left: 5px solid #572E8B;
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+            border-bottom: 4px solid rgba(46, 139, 87, 0.4);
+        }
+
+        .question-number {
+            font-weight: 600;
+            color: #2E8B57;
+            font-size: 32px;
+            text-shadow: 1px 1px 0 rgba(46, 139, 87, 0.1);
+        }
+
+        /* 문항 번호 색상도 각각 다르게 적용 */
+        .question:nth-child(4n+1) .question-number { color: #2E8B57; }
+        .question:nth-child(4n+2) .question-number { color: #648B2E; }
+        .question:nth-child(4n+3) .question-number { color: #8B572E; }
+        .question:nth-child(4n+4) .question-number { color: #572E8B; }
+
+        .question-text {
+            font-size: 32px;
+            line-height: 1.4;
+            color: #2c3e50;
+            padding-right: 20px;
+        }
+
+        .score-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            min-width: 450px;
+        }
+
+        .score-button {
+            flex: 1;
+            height: 52px;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 
+                8px 8px 15px rgba(0, 0, 0, 0.15),
+                -4px -4px 15px rgba(255, 255, 255, 0.8),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 점수별 버튼 색상 */
+        .score-button:nth-child(1) {
+            color: #d32f2f;
+            border: 2px solid #d32f2f;
+            font-weight: 700;
+        }
+        .score-button:nth-child(2) {
+            color: #f57c00;
+            border: 2px solid #f57c00;
+            font-weight: 700;
+        }
+        .score-button:nth-child(3) {
+            color: #388e3c;
+            border: 2px solid #388e3c;
+            font-weight: 700;
+        }
+        .score-button:nth-child(4) {
+            color: #1976d2;
+            border: 2px solid #1976d2;
+            font-weight: 700;
+        }
+        .score-button:nth-child(5) {
+            color: #7b1fa2;
+            border: 2px solid #7b1fa2;
+            font-weight: 700;
+        }
+
+        .score-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.15),
+                -5px -5px 20px rgba(255, 255, 255, 0.8),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 호버 효과 강화 */
+        .score-button:nth-child(1):hover {
+            background: rgba(211, 47, 47, 0.1);
+            border-color: #ff1744;
+        }
+        .score-button:nth-child(2):hover {
+            background: rgba(245, 124, 0, 0.1);
+            border-color: #ff9100;
+        }
+        .score-button:nth-child(3):hover {
+            background: rgba(56, 142, 60, 0.1);
+            border-color: #00c853;
+        }
+        .score-button:nth-child(4):hover {
+            background: rgba(25, 118, 210, 0.1);
+            border-color: #2979ff;
+        }
+        .score-button:nth-child(5):hover {
+            background: rgba(123, 31, 162, 0.1);
+            border-color: #aa00ff;
+        }
+
+        .score-button.selected {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.3),
+                inset -2px -2px 8px rgba(255, 255, 255, 0.1),
+                2px 2px 10px rgba(46, 139, 87, 0.3);
+        }
+
+        /* 선택된 버튼 스타일 강화 */
+        .score-button.selected:nth-child(1) {
+            background: linear-gradient(145deg, #d32f2f, #b71c1c);
+            color: white;
+            border-color: #ff1744;
+        }
+        .score-button.selected:nth-child(2) {
+            background: linear-gradient(145deg, #f57c00, #e65100);
+            color: white;
+            border-color: #ff9100;
+        }
+        .score-button.selected:nth-child(3) {
+            background: linear-gradient(145deg, #388e3c, #2e7d32);
+            color: white;
+            border-color: #00c853;
+        }
+        .score-button.selected:nth-child(4) {
+            background: linear-gradient(145deg, #1976d2, #1565c0);
+            color: white;
+            border-color: #2979ff;
+        }
+        .score-button.selected:nth-child(5) {
+            background: linear-gradient(145deg, #7b1fa2, #6a1b9a);
+            color: white;
+            border-color: #aa00ff;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 280px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(145deg, #2E8B57, #267347);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                8px 8px 20px rgba(0, 0, 0, 0.2),
+                -4px -4px 20px rgba(255, 255, 255, 0.1),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(145deg, #267347, #2E8B57);
+            transform: translateY(-3px);
+            box-shadow: 
+                10px 10px 30px rgba(0, 0, 0, 0.25),
+                -5px -5px 30px rgba(255, 255, 255, 0.15),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .scores-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>학습유형 간편 체크리스트</h1>
+            <p>자신의 학습유형을 알아보기 위한 체크리스트입니다.</p>
+        </div>
+
+        <div class="instructions">
+            <p>각 문항을 잘 읽고 자신과 가장 일치하는 정도를 선택해주세요.</p>
+            <div class="score-description">
+                <div class="score-item">전혀 그렇지 않다 (1점)</div>
+                <div class="score-item">그렇지 않다 (2점)</div>
+                <div class="score-item">보통이다 (3점)</div>
+                <div class="score-item">어느정도 그렇다 (4점)</div>
+                <div class="score-item">매우 그렇다 (5점)</div>
+            </div>
+        </div>
+
+       
+
+        <form id="checklistForm">
+            <div id="questionContainer"></div>
+            <button type="button" class="submit-btn" onclick="calculateResults()">결과 확인하기</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const questionGroups = {
+            A: {
+                title: "A형: 네모형 그룹",
+                questions: [
+                    "규칙에 어긋나는 행동은 잘 하지 않는 편이다.",
+                    "내 물건들은 정해진 위치나 자리가 있다.",
+                    "자료를 잘 모으고 일할 내용도 정리를 꼼꼼하게 하는 편이다.",
+                    "시끄러우면 일하는데 집중하기 힘들다.",
+                    "잘 짜진 계획을 좋아한다.",
+                    "구체적이고 사실적인 내용을 선택하는 편이다.",
+                    "주어진 일을 충실하게 하려고 애쓰지만 때로는 스트레스가 되기도 한다."
+                ],
+                description: "체계적이고 계획적인 성향",
+                imageUrl: "/api/placeholder/500/300"
+            },
+            B: {
+                title: "B형: 세모형 그룹",
+                questions: [
+                    "목표를 높이 세우는 편이다.",
+                    "수업은 주로 들으면서 이해하고 필기를 짜임새 있게 하지 않는다.",
+                    "평소에 자신감이 넘쳐서 언제든지 해야 할 일을 잘할 수 있다고 생각한다.",
+                    "때때로 현재의 일보다 미래의 목표와 일을 중요하게 여긴다.",
+                    "다른 사람이 말하는 내용이 내 생각과 다르면 질문을 잘한다.",
+                    "내가 일하는데 원하는 환경을 만들려고 노력하는 편이다.",
+                    "어떤 일이든 코앞에 닥쳐서 하고 순발력과 융통성이 있다."
+                ],
+                description: "도전적이고 진취적인 성향",
+                imageUrl: "/api/placeholder/500/300"
+            },
+            C: {
+                title: "C형: 동그라미형 그룹",
+                questions: [
+                    "다른 사람의 필요를 빨리 알아채고 남을 잘 도와준다.",
+                    "자신의 처지보다 타인이나 주변의 일에 관심이 많다.",
+                    "다른 사람이 잔소리하고 훈계하면 스트레스를 많이 받는 편이다.",
+                    "일이 어려워지면 해결하려고 노력하기보다는 고민하느라 시간을 보낸다.",
+                    "실천할 의지와 생각이 있지만, 현실적으로 계획을 세우거나 행동하기가 어렵다.",
+                    "주변에 친한 친구들이 많은 편이다.",
+                    "해결해야할 내용이 어려우면 어떻게 해야 할지 방법적인 면에서 막막하다."
+                ],
+                description: "관계 지향적이고 감성적인 성향",
+                imageUrl: "/api/placeholder/500/300"
+            },
+            D: {
+                title: "D형: 별형 그룹",
+                questions: [
+                    "집중해야 할 때 산만하고 딴 생각이 많이 나서 어려움을 겪는다.",
+                    "호기심이나 흥미를 갖는 일이 많고 하고 싶은 일이 많아 한 가지를 끝까지 하기가 어렵다.",
+                    "늘 새로운 생각과 아이디어가 많아 기분이 좋다.",
+                    "공부를 하면서 계획대로 끝까지 해본 적이 거의 없다.",
+                    "유행에 민감하고 환경 탓을 많이 하는 편이다.",
+                    "마음먹고 공부를 시작하더라도 감정기복이 커서 작심삼일이 되기 쉽다.",
+                    "순발력이 뛰어나며 활동적인 편이다."
+                ],
+                description: "창의적이고 자유로운 성향",
+                imageUrl: "/api/placeholder/500/300"
+            }
+        };
+
+        function createQuestions() {
+            const container = document.getElementById('questionContainer');
+            let questionNumber = 1;
+            
+            const allQuestions = [
+                ...questionGroups.A.questions,
+                ...questionGroups.B.questions,
+                ...questionGroups.C.questions,
+                ...questionGroups.D.questions
+            ];
+            
+            allQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const scoreButtons = document.createElement('div');
+                scoreButtons.className = 'score-buttons';
+                
+                for (let i = 1; i <= 5; i++) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'score-button';
+                    button.textContent = i + '점';
+                    button.onclick = function() {
+                        questionDiv.querySelectorAll('.score-button').forEach(btn => {
+                            btn.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        questionDiv.querySelector('input[type="hidden"]').value = i;
+                    };
+                    scoreButtons.appendChild(button);
+                }
+                
+                questionDiv.innerHTML = `
+                    <div class="question-number">${questionNumber}</div>
+                    <div class="question-text">${question}</div>
+                    <input type="hidden" name="q${questionNumber}" value="">
+                `;
+                questionDiv.appendChild(scoreButtons);
+                
+                container.appendChild(questionDiv);
+                questionNumber++;
+            });
+        }
+
+        function calculateResults() {
+            const form = document.getElementById('checklistForm');
+            const results = document.getElementById('results');
+            let scores = { A: 0, B: 0, C: 0, D: 0 };
+            let unanswered = [];
+
+            // Calculate scores for each group
+            for (let i = 1; i <= 28; i++) {
+                const input = form.querySelector(`input[name="q${i}"]`);
+                const value = input.value;
+                
+                if (!value) {
+                    unanswered.push(i);
+                    continue;
+                }
+
+                if (i <= 7) scores.A += parseInt(value);
+                else if (i <= 14) scores.B += parseInt(value);
+                else if (i <= 21) scores.C += parseInt(value);
+                else scores.D += parseInt(value);
+            }
+
+            if (unanswered.length > 0) {
+                alert(`다음 문항에 답해주세요: ${unanswered.join(', ')}`);
+                return;
+            }
+
+            // 최고 점수 찾기
+            const maxScore = Math.max(...Object.values(scores));
+            
+            // 최고 점수와 동일한 점수를 가진 그룹 찾기
+            const maxScoreGroups = Object.entries(scores).filter(([_, score]) => score === maxScore);
+
+            // 동점인 그룹이 있는지 확인
+            if (maxScoreGroups.length > 1) {
+                const groupNames = {
+                    A: "네모형",
+                    B: "세모형",
+                    C: "동그라미형",
+                    D: "별형"
+                };
+                
+                const tiedGroups = maxScoreGroups.map(([group, _]) => groupNames[group]).join(', ');
+                
+                // 스타일이 적용된 커스텀 알림창 생성
+                const popup = document.createElement('div');
+                popup.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    text-align: center;
+                    min-width: 300px;
+                    border: 2px solid #2E8B57;
+                `;
+                
+                popup.innerHTML = `
+                    <h3 style="color: #2E8B57; margin-bottom: 20px; font-size: 20px;">다시 해보세요!</h3>
+                    <p style="margin-bottom: 20px; line-height: 1.6;">
+                        ${tiedGroups} 유형이<br>
+                        동일한 점수(${maxScore}점)로 나왔습니다.<br>
+                        더 신중하게 다시 체크해주세요.
+                    </p>
+                    <button onclick="this.parentElement.remove()" 
+                        style="
+                            background: #2E8B57;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: bold;
+                            transition: all 0.3s ease;
+                        "
+                        onmouseover="this.style.backgroundColor='#267347'"
+                        onmouseout="this.style.backgroundColor='#2E8B57'"
+                    >
+                        확인
+                    </button>
+                `;
+                
+                // 배경 오버레이 생성
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.5);
+                    z-index: 999;
+                `;
+                overlay.onclick = () => {
+                    overlay.remove();
+                    popup.remove();
+                };
+                
+                document.body.appendChild(overlay);
+                document.body.appendChild(popup);
+                
+                return; // 결과 표시하지 않고 종료
+            }
+
+            // 동점이 아닐 경우 기존 결과 표시 로직 실행
+            const dominantType = maxScoreGroups[0][0];
+            
+            results.style.display = 'block';
+            results.innerHTML = `
+                <h3>학습유형 결과</h3>
+                <div class="scores-summary">
+                    <div class="score-item">
+                        <h4>A형: 네모형</h4>
+                        <p>${scores.A}점</p>
+                    </div>
+                    <div class="score-item">
+                        <h4>B형: 세모형</h4>
+                        <p>${scores.B}점</p>
+                    </div>
+                    <div class="score-item">
+                        <h4>C형: 동그라미형</h4>
+                        <p>${scores.C}점</p>
+                    </div>
+                    <div class="score-item">
+                        <h4>D형: 별형</h4>
+                        <p>${scores.D}점</p>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <h3>${questionGroups[dominantType].title}</h3>
+                    <p>${questionGroups[dominantType].description}</p>
+                    <img src="${questionGroups[dominantType].imageUrl}" alt="${questionGroups[dominantType].title} 설명 이미지" class="result-image">
+                </div>
+            `;
+        }
+
+        // Initialize questions when page loads
+        createQuestions();
+    </script>
+</body>
+</html>

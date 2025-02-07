@@ -1,233 +1,132 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진로 상담 튜터봇</title>
+    <title>AI Academic Counselor</title>
     <style>
-        /* 챗봇 컨테이너 스타일 */
-        .chatbot-container {
+        .chat-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            cursor: pointer;
             z-index: 1000;
         }
 
-        /* 튜터 아바타 스타일 */
-        .tutor-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #6c5ce7;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .tutor-avatar img {
-            width: 40px;
-            height: 40px;
-        }
-
-        /* 채팅창 스타일 */
-        .chat-window {
+        .chat-container {
+            display: none;
             position: fixed;
             bottom: 100px;
             right: 20px;
             width: 350px;
             height: 500px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1001;
         }
 
-        /* 채팅창 헤더 */
         .chat-header {
+            background: #8B5CF6;
+            color: white;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-radius: 10px 10px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .chat-header h3 {
-            color: white;
-            margin: 0;
-        }
-
-        .close-btn {
-            color: white;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        /* 채팅 메시지 영역 */
         .chat-messages {
             height: 380px;
             padding: 15px;
             overflow-y: auto;
-            background: white;
         }
 
-        /* 입력 영역 */
         .chat-input {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            display: flex;
-            gap: 10px;
+            box-sizing: border-box;
+            border-top: 1px solid #eee;
         }
 
         .chat-input input {
-            flex: 1;
+            width: 80%;
             padding: 8px;
-            border: none;
-            border-radius: 20px;
-            outline: none;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
 
-        .chat-input button {
-            background: #4834d4;
+        .close-button {
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
             cursor: pointer;
-        }
-
-        .chat-input button:hover {
-            background: #686de0;
-        }
-
-        /* 메시지 스타일 */
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-        }
-
-        .user-message {
-            background: #e8e8e8;
-            margin-left: auto;
-        }
-
-        .bot-message {
-            background: #6c5ce7;
-            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="chatbot-container">
-        <!-- 튜터 아바타 -->
-        <div class="tutor-avatar" id="tutorAvatar">
-            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f469-200d-1f4bb.png" alt="Tutor">
-        </div>
+    <img src="assets/ai-tutor-self.png" class="chat-button" onclick="toggleChat()">
+    
 
-        <!-- 채팅창 -->
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <h3>진로 상담 튜터</h3>
-                <span class="close-btn" id="closeChat">×</span>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <!-- 메시지들이 여기에 추가됩니다 -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="messageInput" placeholder="메시지를 입력하세요...">
-                <button id="sendMessage">전송</button>
-            </div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <span>AI학과전문 튜터</span>
+            <span class="close-button" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="메시지를 입력하세요..." onkeypress="handleKeyPress(event)">
         </div>
     </div>
 
     <script>
-        // DOM 요소들
-        const tutorAvatar = document.getElementById('tutorAvatar');
-        const chatWindow = document.getElementById('chatWindow');
-        const closeChat = document.getElementById('closeChat');
-        const messageInput = document.getElementById('messageInput');
-        const sendMessage = document.getElementById('sendMessage');
-        const chatMessages = document.getElementById('chatMessages');
-
-        // 챗봇 열기/닫기 기능
-        tutorAvatar.addEventListener('click', () => {
-            chatWindow.style.display = 'block';
-            // 첫 메시지 표시
-            if (chatMessages.children.length === 0) {
-                addBotMessage("안녕하세요! 진로에 대해 궁금한 점이 있으시다면 언제든 물어보세요. 어떤 주제에 대해 도움이 필요하신가요?");
-            }
-        });
-
-        closeChat.addEventListener('click', () => {
-            chatWindow.style.display = 'none';
-        });
-
-        // 메시지 전송 기능
-        function sendMessageHandler() {
-            const message = messageInput.value.trim();
-            if (message) {
-                addUserMessage(message);
-                // 봇 응답 처리
-                handleBotResponse(message);
-                messageInput.value = '';
-            }
+        function toggleChat() {
+            const container = document.getElementById('chatContainer');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
         }
 
-        sendMessage.addEventListener('click', sendMessageHandler);
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessageHandler();
-            }
-        });
-
-        // 사용자 메시지 추가
-        function addUserMessage(text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message user-message';
-            messageDiv.textContent = text;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // 봇 메시지 추가
-        function addBotMessage(text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message bot-message';
-            messageDiv.textContent = text;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // 봇 응답 처리
-        function handleBotResponse(userMessage) {
-            // 간단한 응답 로직 (실제 구현에서는 더 복잡한 로직이 필요할 수 있습니다)
-            const responses = {
-                "안녕": "안녕하세요! 무엇을 도와드릴까요?",
-                "자바스크립트": "자바스크립트는 웹 개발에서 가장 중요한 프로그래밍 언어 중 하나입니다. 어떤 부분이 궁금하신가요?",
-                "진로": "진로 선택은 중요한 결정이에요. 관심 있는 분야나 직업이 있으신가요?",
-                "도움": "네, 어떤 주제에 대해 도움이 필요하신가요?"
-            };
-
-            setTimeout(() => {
-                let botResponse = "죄송합니다. 질문을 이해하지 못했습니다. 다르게 질문해 주시겠어요?";
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                const input = event.target;
+                const message = input.value;
                 
-                // 사용자 메시지에서 키워드 찾기
-                for (let key in responses) {
-                    if (userMessage.includes(key)) {
-                        botResponse = responses[key];
-                        break;
-                    }
+                if (message.trim()) {
+                    addMessage(message, 'user');
+                    // Here you would integrate with your AI service
+                    // Make sure to implement proper security measures
+                    respondToMessage(message);
+                    input.value = '';
                 }
-                
-                addBotMessage(botResponse);
-            }, 1000);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = text;
+            messageDiv.style.margin = '10px';
+            messageDiv.style.padding = '10px';
+            messageDiv.style.borderRadius = '5px';
+            messageDiv.style.maxWidth = '70%';
+            
+            if (sender === 'user') {
+                messageDiv.style.backgroundColor = '#e9ecef';
+                messageDiv.style.marginLeft = 'auto';
+            } else {
+                messageDiv.style.backgroundColor = '#f8f9fa';
+            }
+            
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        async function respondToMessage(message) {
+            // This is where you would implement your AI service integration
+            // Make sure to use secure practices and proper error handling
+            addMessage('죄송합니다. 현재 AI 서비스를 연결하는 중입니다.', 'bot');
         }
     </script>
 </body>
