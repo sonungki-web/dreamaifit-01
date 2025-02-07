@@ -12,17 +12,18 @@
         }
 
         body {
+            background-color: #E6F3FF;
+            margin: 0;
+            padding: 20px;
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
             color: #333;
-            padding: 20px;
         }
 
         .container {
             width: 100%;
             margin: 0 auto;
-            background-color: #ffffff;
+            background-color: #E6F3FF;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.06);
             padding: 40px;
@@ -101,54 +102,58 @@
             padding: 40px;
             margin-bottom: 20px;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            border: 1px solid rgba(46, 139, 87, 0.2);
-            border-bottom: 4px solid rgba(46, 139, 87, 0.25);
+            border-left: 6px solid transparent;
         }
 
-        /* 문항별로 다른 배경색 적용 - 선명한 그라데이션 */
+        /* 문항별로 다른 배경색 적용 - 색상 농도 증가 */
         .question:nth-child(4n+1) {
-            background: linear-gradient(to right, rgba(46, 139, 87, 0.2), rgba(46, 139, 87, 0.1));
-            border-left: 5px solid #2E8B57;
+            background-color: rgba(46, 139, 87, 0.18);  /* 농도 증가 */
+            border-left-color: #2E8B57;
         }
         .question:nth-child(4n+2) {
-            background: linear-gradient(to right, rgba(100, 139, 46, 0.2), rgba(100, 139, 46, 0.1));
-            border-left: 5px solid #648B2E;
+            background-color: rgba(100, 139, 46, 0.18);  /* 농도 증가 */
+            border-left-color: #648B2E;
         }
         .question:nth-child(4n+3) {
-            background: linear-gradient(to right, rgba(139, 87, 46, 0.2), rgba(139, 87, 46, 0.1));
-            border-left: 5px solid #8B572E;
+            background-color: rgba(139, 87, 46, 0.18);  /* 농도 증가 */
+            border-left-color: #8B572E;
         }
         .question:nth-child(4n+4) {
-            background: linear-gradient(to right, rgba(87, 46, 139, 0.2), rgba(87, 46, 139, 0.1));
-            border-left: 5px solid #572E8B;
+            background-color: rgba(87, 46, 139, 0.18);  /* 농도 증가 */
+            border-left-color: #572E8B;
         }
 
         .question:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-            border-bottom: 4px solid rgba(46, 139, 87, 0.4);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+            background-color: rgba(46, 139, 87, 0.15);  /* hover시 약간 진해짐 */
         }
 
         .question-number {
-            font-weight: 600;
-            color: #2E8B57;
+            font-weight: 700;
             font-size: 32px;
-            text-shadow: 1px 1px 0 rgba(46, 139, 87, 0.1);
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
         }
 
-        /* 문항 번호 색상도 각각 다르게 적용 */
+        /* 각 문항 번호의 색상도 해당 색상과 매칭 */
         .question:nth-child(4n+1) .question-number { color: #2E8B57; }
         .question:nth-child(4n+2) .question-number { color: #648B2E; }
         .question:nth-child(4n+3) .question-number { color: #8B572E; }
         .question:nth-child(4n+4) .question-number { color: #572E8B; }
 
+        /* hover 시 더 진한 색상으로 변경 */
+        .question:nth-child(4n+1):hover { background-color: rgba(46, 139, 87, 0.22); }
+        .question:nth-child(4n+2):hover { background-color: rgba(100, 139, 46, 0.22); }
+        .question:nth-child(4n+3):hover { background-color: rgba(139, 87, 46, 0.22); }
+        .question:nth-child(4n+4):hover { background-color: rgba(87, 46, 139, 0.22); }
+
         .question-text {
             font-size: 32px;
             line-height: 1.4;
             color: #2c3e50;
-            padding-right: 20px;
+            font-weight: 500;
         }
 
         .score-buttons {
@@ -168,40 +173,32 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: 600;
-            box-shadow: 
-                8px 8px 15px rgba(0, 0, 0, 0.15),
-                -4px -4px 15px rgba(255, 255, 255, 0.8),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.8),
-                inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
         }
 
         /* 점수별 버튼 색상 */
         .score-button:nth-child(1) {
             color: #d32f2f;
-            border: 2px solid #d32f2f;
-            font-weight: 700;
+            border: 2.5px solid #d32f2f;
         }
         .score-button:nth-child(2) {
             color: #f57c00;
-            border: 2px solid #f57c00;
-            font-weight: 700;
+            border: 2.5px solid #f57c00;
         }
         .score-button:nth-child(3) {
             color: #388e3c;
-            border: 2px solid #388e3c;
-            font-weight: 700;
+            border: 2.5px solid #388e3c;
         }
         .score-button:nth-child(4) {
             color: #1976d2;
-            border: 2px solid #1976d2;
-            font-weight: 700;
+            border: 2.5px solid #1976d2;
         }
         .score-button:nth-child(5) {
             color: #7b1fa2;
-            border: 2px solid #7b1fa2;
-            font-weight: 700;
+            border: 2.5px solid #7b1fa2;
         }
 
         .score-button:hover {
@@ -236,11 +233,9 @@
         }
 
         .score-button.selected {
-            transform: translateY(1px);
-            box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.3),
-                inset -2px -2px 8px rgba(255, 255, 255, 0.1),
-                2px 2px 10px rgba(46, 139, 87, 0.3);
+            font-weight: 800;
+            text-shadow: none;
+            letter-spacing: 0.5px;
         }
 
         /* 선택된 버튼 스타일 강화 */
@@ -303,13 +298,13 @@
         #results {
             margin-top: 30px;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #d0e0f0;
             border-radius: 8px;
             display: none;
         }
 
         .result-box {
-            background-color: white;
+            background-color: rgb(201, 203, 230);
             border-radius: 8px;
             padding: 20px;
             margin-top: 20px;
@@ -373,7 +368,7 @@
                     "주어진 일을 충실하게 하려고 애쓰지만 때로는 스트레스가 되기도 한다."
                 ],
                 description: "체계적이고 계획적인 성향",
-                imageUrl: "/api/placeholder/500/300"
+                imageUrl: "/static/img/learn-style/A.png"
             },
             B: {
                 title: "B형: 세모형 그룹",
@@ -387,7 +382,7 @@
                     "어떤 일이든 코앞에 닥쳐서 하고 순발력과 융통성이 있다."
                 ],
                 description: "도전적이고 진취적인 성향",
-                imageUrl: "/api/placeholder/500/300"
+                imageUrl: "/static/img/learn-style/B.png"
             },
             C: {
                 title: "C형: 동그라미형 그룹",
@@ -401,8 +396,9 @@
                     "해결해야할 내용이 어려우면 어떻게 해야 할지 방법적인 면에서 막막하다."
                 ],
                 description: "관계 지향적이고 감성적인 성향",
-                imageUrl: "/api/placeholder/500/300"
+                imageUrl: "/static/img/learn-style/C.png"
             },
+
             D: {
                 title: "D형: 별형 그룹",
                 questions: [
@@ -415,9 +411,10 @@
                     "순발력이 뛰어나며 활동적인 편이다."
                 ],
                 description: "창의적이고 자유로운 성향",
-                imageUrl: "/api/placeholder/500/300"
+                imageUrl: "/static/img/learn-style/D.png"
             }
         };
+
 
         function createQuestions() {
             const container = document.getElementById('questionContainer');
@@ -572,36 +569,64 @@
                 return; // 결과 표시하지 않고 종료
             }
 
-            // 동점이 아닐 경우 기존 결과 표시 로직 실행
+            // 동점이 아닐 경우 결과 표시
             const dominantType = maxScoreGroups[0][0];
+            const typeInfo = {
+                A: {
+                    title: "A형: 네모형 그룹",
+                    score: maxScore,
+                    imageUrl: "/static/images/learn-style/A.png"
+                },
+                B: {
+                    title: "B형: 세모형 그룹",
+                    score: maxScore,
+                    imageUrl: "/static/images/learn-style/B.png"
+                },
+                C: {
+                    title: "C형: 동그라미형 그룹",
+                    score: maxScore,
+                    imageUrl: "/static/images/learn-style/C.png"
+                },
+                D: {
+                    title: "D형: 별형 그룹",
+                    score: maxScore,
+                    imageUrl: "/static/images/learn-style/D.png"
+                }
+            };
             
             results.style.display = 'block';
             results.innerHTML = `
-                <h3>학습유형 결과</h3>
-                <div class="scores-summary">
-                    <div class="score-item">
-                        <h4>A형: 네모형</h4>
-                        <p>${scores.A}점</p>
+                <div style="
+                    text-align: center;
+                    max-width: 105%;
+                    margin: 0 auto;
+                    transform: scale(1.05);
+                    transform-origin: top center;
+                    padding: 20px;
+                    background-color: #E6F3FF;
+                    border-radius: 20px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+                ">
+                   
+                    <div style="
+                        margin-top: 20px;
+                        background-color: #E6F3FF;
+                        padding: 20px;
+                        border-radius: 16px;
+                    ">
+                        <img src="${typeInfo[dominantType].imageUrl}" 
+                            alt="${typeInfo[dominantType].title} 설명 이미지" 
+                            style="
+                                width: 100%;
+                                height: auto;
+                                border-radius: 16px;
+                                box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+                            ">
                     </div>
-                    <div class="score-item">
-                        <h4>B형: 세모형</h4>
-                        <p>${scores.B}점</p>
-                    </div>
-                    <div class="score-item">
-                        <h4>C형: 동그라미형</h4>
-                        <p>${scores.C}점</p>
-                    </div>
-                    <div class="score-item">
-                        <h4>D형: 별형</h4>
-                        <p>${scores.D}점</p>
-                    </div>
-                </div>
-                <div class="result-box">
-                    <h3>${questionGroups[dominantType].title}</h3>
-                    <p>${questionGroups[dominantType].description}</p>
-                    <img src="${questionGroups[dominantType].imageUrl}" alt="${questionGroups[dominantType].title} 설명 이미지" class="result-image">
                 </div>
             `;
+
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // Initialize questions when page loads
