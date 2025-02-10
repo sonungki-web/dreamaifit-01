@@ -23,16 +23,16 @@
             justify-content: center;
         }
         .container {
-            background: linear-gradient(to bottom right, #ffffff, #f8faff);
+            background: linear-gradient(to bottom right, #cad5dd, #e9e7c8);
             padding: 60px;
-            border-radius: 20px;
+            border-radius: 30px;
             box-shadow: 
                 0 10px 30px rgba(0,0,0,0.1),
                 0 1px 8px rgba(0,0,0,0.05);
             width: 90%;
             max-width: 2000px;
             margin: 40px auto;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(2, 83, 2, 0.8);
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
@@ -43,9 +43,7 @@
             color: #550323;
             font-size: 60px;
             font-family: 'Black Han Sans', sans-serif;
-            text-shadow: 
-                2px 2px 4px rgba(0,0,0,0.1),
-                -1px -1px 0 rgba(255,255,255,0.5);
+          
             font-weight: normal;
             position: relative;
             z-index: 1;
@@ -54,17 +52,8 @@
             
             padding: 10px 0;
         }
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(45deg, #3498db, #2c3e50);
-            border-radius: 2px;
-        }
+        
+        
         .game-container {
             margin-bottom: 20px;
         }
@@ -76,6 +65,57 @@
             font-weight: 600;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
             animation: fadeIn 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 80%;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        .progress-chart {
+            width: 800px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: visible;
+            position: relative;
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.1),
+                0 2px 4px rgba(255,255,255,0.1);
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #4158D0, #C850C0);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(192, 80, 192, 0.3);
+            position: relative;
+        }
+        .progress-emoji {
+            position: absolute;
+            right: -15px;
+            top: -25px;
+            font-size: 35px;
+            transform: translateX(50%);
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            animation: bounce 1s ease-in-out infinite;
+        }
+        .progress-goal {
+            position: absolute;
+            right: -15px;
+            top: -25px;
+            font-size: 35px;
+            transform: translateX(50%);
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(50%) translateY(0);
+            }
+            50% {
+                transform: translateX(50%) translateY(-5px);
+            }
         }
         .choices {
             display: grid;
@@ -190,7 +230,7 @@
         .chart-container {
             margin: 40px 0;
             height: 400px;
-            background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,250,255,0.95));
+            background: linear-gradient(145deg, rgba(230, 197, 197, 0.95), rgba(248,250,255,0.95));
             padding: 20px;
             border-radius: 16px;
             box-shadow: 
@@ -218,12 +258,11 @@
             animation: aurora 10s linear infinite;
             z-index: 0;
         }
-        .restart-btn {
-            display: block;
+        .restart-btn, .recommend-job-btn {
+            display: inline-block;
             width: 200px;
-            margin: 20px auto;
+            margin: 20px 10px;
             padding: 15px 30px;
-            background: linear-gradient(45deg, #2196F3, #1976D2);
             color: white;
             border: none;
             border-radius: 10px;
@@ -231,11 +270,56 @@
             font-size: 16px;
             font-weight: bold;
             transition: all 0.3s;
+        }
+
+        .restart-btn {
+            display: inline-block;
+            width: 200px;
+            margin: 20px 10px;
+            padding: 15px 30px;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
             box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
-        .restart-btn:hover {
+
+        .recommend-job-btn {
+            display: inline-block;
+            width: 200px;
+            margin: 20px 10px;
+            padding: 15px 30px;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, #8B5CF6, #D946EF);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .recommend-job-btn:hover {
             transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            background: linear-gradient(45deg, #7C3AED, #C026D3);
+        }
+
+        .restart-btn:hover, .recommend-job-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .restart-btn:hover {
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .recommend-job-btn:hover {
+            box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
         }
         .hidden {
             display: none;
@@ -444,7 +528,11 @@
             <div class="chart-container">
                 <canvas id="resultChart"></canvas>
             </div>
+            
+        </div>
+        <div style="text-align: center;">
             <button class="restart-btn" onclick="restartGame()">다시 시작하기</button>
+            <button class="recommend-job-btn" onclick="recommendJobs()">추천직업</button>
         </div>
     </div>
 
@@ -499,8 +587,18 @@
         let chart = null;
 
         function updateProgress() {
-            document.getElementById('progress').textContent = 
-                `질문 ${currentQuestion + 1} / ${questions.length}`;
+            const progressText = document.getElementById('progress');
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            
+            progressText.innerHTML = `
+                <div class="progress-chart">
+                    <div class="progress-bar" style="width: ${percentage}%">
+                        <span class="progress-emoji">🦊</span>
+                    </div>
+                    
+                </div>
+                <span>${currentQuestion + 1} / ${questions.length}</span>
+            `;
         }
 
         function updateChoices() {
@@ -653,16 +751,200 @@
             });
         }
 
+        // 직업 데이터 추가
+        const jobsByValue = {
+            '☆': ['법조인', '대학교수', '아나운서', '항공우주공학자', '작곡가', '연출가'],
+            '♡': ['공무원', '미용사', '운전기사', '사회복지사', '응급구조사', '성직자', '소방관'],
+            '◇': ['검사', '경찰관', '운동감독', '영화감독', '교사', '의사', '지휘자', '안무가'],
+            '◎': ['물리치료사', '교사', '한의사', '의사', '변리사', '손해사정인', '철도기관사'],
+            '▷': ['감정평가사', '공인회계사', '관세사', '외환딜러', '시스템 엔지니어', '로봇연구원'],
+            '◈': ['웹디자이너', '광통신연구원', '귀금속세공사', '미생물학자', '기업분석가'],
+            '□': ['가수', '건축기술자', '검사', '국제 무역가', '디자이너', '작가', '경영컨설턴트'],
+            '¤': ['게임기획자', '컴퓨터프로그래머', '디자이너', '일러스트레이터', '음악가']
+        };
+
+        function recommendJobs() {
+            // 최고 점수 찾기
+            const maxScore = Math.max(...Object.values(scores));
+            
+            // 최고 점수를 가진 가치들 찾기
+            const topValues = Object.entries(scores)
+                .filter(([_, score]) => score === maxScore)
+                .map(([symbol]) => symbol);
+
+            // 추천 직업 목록 생성
+            let recommendedJobs = new Set();
+            topValues.forEach(symbol => {
+                jobsByValue[symbol].forEach(job => recommendedJobs.add(job));
+            });
+
+            // 팝업 창 스타일
+            const popupStyle = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,250,255,0.95));
+                padding: 30px;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                z-index: 1000;
+                max-width: 80%;
+                width: 600px;
+                text-align: center;
+                backdrop-filter: blur(10px);
+                border: 2px solid rgba(255,255,255,0.8);
+            `;
+
+            // 직업 목록 스타일
+            const jobListStyle = `
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+                margin: 20px 0;
+            `;
+
+            // 직업 아이템 스타일
+            const jobItemStyle = `
+                background: linear-gradient(145deg, #f8faff, #ffffff);
+                padding: 12px 25px;
+                border-radius: 50px;
+                box-shadow: 
+                    0 2px 10px rgba(0,0,0,0.1),
+                    0 4px 6px rgba(0,0,0,0.06),
+                    inset 0 -2px 5px rgba(0,0,0,0.05);
+                font-size: 20px;
+                font-weight: 500;
+                color: #333;
+                border: 1px solid rgba(255,255,255,0.8);
+                transition: all 0.3s ease;
+                cursor: default;
+                text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            `;
+
+            // 닫기 버튼 스타일
+            const closeButtonStyle = `
+                background: linear-gradient(45deg, #FF416C, #FF4B2B);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 16px;
+                margin-top: 20px;
+                transition: all 0.3s ease;
+            `;
+
+            // 팝업 창 생성
+            const popup = document.createElement('div');
+            popup.style.cssText = popupStyle;
+
+            // 제목 추가
+            const title = document.createElement('h2');
+            title.textContent = `당신에게 추천하는 직업`;
+            title.style.marginBottom = '20px';
+            title.style.color = '#333';
+            popup.appendChild(title);
+
+            // 가치관 설명 추가
+            const valueDescription = document.createElement('p');
+            valueDescription.innerHTML = `선택하신 가치관: <strong>'${topValues.map(symbol => valueMapping[symbol]).join("', '")}'</strong>`;
+            valueDescription.style.marginBottom = '30px';
+            valueDescription.style.color = '#0047AB';
+            valueDescription.style.fontSize = '24px';
+            popup.appendChild(valueDescription);
+
+            // 직업 목록 컨테이너
+            const jobList = document.createElement('div');
+            jobList.style.cssText = jobListStyle;
+
+            // 직업 아이템 추가
+            Array.from(recommendedJobs).forEach(job => {
+                const jobItem = document.createElement('span');
+                jobItem.textContent = job;
+                jobItem.style.cssText = jobItemStyle;
+                jobItem.onmouseover = () => {
+                    jobItem.style.transform = 'translateY(-3px)';
+                    jobItem.style.boxShadow = `
+                        0 6px 20px rgba(0,0,0,0.15),
+                        0 6px 8px rgba(0,0,0,0.08),
+                        inset 0 -2px 5px rgba(0,0,0,0.05)
+                    `;
+                    jobItem.style.textShadow = '2px 2px 2px rgba(255,255,255,1)';
+                };
+                jobItem.onmouseout = () => {
+                    jobItem.style.transform = 'translateY(0)';
+                    jobItem.style.boxShadow = `
+                        0 2px 10px rgba(0,0,0,0.1),
+                        0 4px 6px rgba(0,0,0,0.06),
+                        inset 0 -2px 5px rgba(0,0,0,0.05)
+                    `;
+                    jobItem.style.textShadow = '1px 1px 1px rgba(255,255,255,0.8)';
+                };
+                jobList.appendChild(jobItem);
+            });
+            popup.appendChild(jobList);
+
+            // 닫기 버튼 추가
+            const closeButton = document.createElement('button');
+            closeButton.textContent = '닫기';
+            closeButton.style.cssText = closeButtonStyle;
+            closeButton.onmouseover = () => {
+                closeButton.style.transform = 'translateY(-2px)';
+                closeButton.style.boxShadow = '0 4px 15px rgba(255,75,43,0.4)';
+            };
+            closeButton.onmouseout = () => {
+                closeButton.style.transform = 'translateY(0)';
+                closeButton.style.boxShadow = 'none';
+            };
+            closeButton.onclick = () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            };
+            popup.appendChild(closeButton);
+
+            // 오버레이 생성
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                backdrop-filter: blur(5px);
+                z-index: 999;
+            `;
+            overlay.onclick = () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            };
+
+            // 팝업과 오버레이를 페이지에 추가
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+        }
+
         function restartGame() {
+            // 게임 상태 초기화
             currentQuestion = 0;
             scores = {
                 '☆': 0, '♡': 0, '◇': 0, '◎': 0,
                 '▷': 0, '◈': 0, '□': 0, '¤': 0
             };
             
-            document.getElementById('gameContainer').classList.remove('hidden');
+            // UI 초기화
             document.getElementById('resultContainer').classList.add('hidden');
+            document.getElementById('gameContainer').classList.remove('hidden');
             
+            // 차트 제거
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
+            
+            // 게임 다시 시작
             updateProgress();
             updateChoices();
         }
