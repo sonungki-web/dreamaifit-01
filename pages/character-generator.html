@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>성격 기반 캐릭터 생성기</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+        .personality-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .personality-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .personality-button.selected {
+            background-color: #4CAF50;
+            color: white;
+            transform: scale(1.05);
+        }
+        #image-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #image-container img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        #description {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            line-height: 1.6;
+        }
+        .generate-button-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .generate-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .generate-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .generate-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .traits-counter {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        #character-image {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: none; /* 초기에는 숨김 */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .character-container {
+            display: flex;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .description-box {
+            flex: 1;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+        .recommendations-container {
+            display: flex;
+            gap: 20px;
+        }
+        .recommendation-box {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .recommendation-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .recommendation-content {
+            line-height: 1.6;
+        }
+        #character-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>성격 기반 캐릭터 생성기</h1>
+
+    <div class="button-container">
+        <button class="personality-button" onclick="toggleTrait(this, '다정한')">다정한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '꼼꼼한')">꼼꼼한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '열정적인')">열정적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '책임감 있는')">책임감 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '창의적인')">창의적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '긍정적인')">긍정적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '침착한')">침착한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '활발한')">활발한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '신중한')">신중한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '친절한')">친절한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '성실한')">성실한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '예민한')">예민한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '겸손한')">겸손한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '용감한')">용감한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '낙천적인')">낙천적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '온화한')">온화한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '진취적인')">진취적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '배려심 많은')">배려심 많은</button>
+        <button class="personality-button" onclick="toggleTrait(this, '관대한')">관대한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '끈기 있는')">끈기 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '독립적인')">독립적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '유머러스한')">유머러스한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '정직한')">정직한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '융통성 있는')">융통성 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '논리적인')">논리적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '결단력 있는')">결단력 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '섬세한')">섬세한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '헌신적인')">헌신적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '단호한')">단호한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '소심한')">소심한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '대담한')">대담한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '차분한')">차분한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '명랑한')">명랑한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '깔끔한')">깔끔한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '엄격한')">엄격한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '자신감 있는')">자신감 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '완벽주의적인')">완벽주의적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '감성적인')">감성적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '이해심 많은')">이해심 많은</button>
+        <button class="personality-button" onclick="toggleTrait(this, '주도적인')">주도적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '체계적인')">체계적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '신뢰할 수 있는')">신뢰할 수 있는</button>
+        <button class="personality-button" onclick="toggleTrait(this, '적극적인')">적극적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '사교적인')">사교적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '솔직한')">솔직한</button>
+        <button class="personality-button" onclick="toggleTrait(this, '합리적인')">합리적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '개방적인')">개방적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '호기심 많은')">호기심 많은</button>
+        <button class="personality-button" onclick="toggleTrait(this, '직관적인')">직관적인</button>
+        <button class="personality-button" onclick="toggleTrait(this, '공감능력이 뛰어난')">공감능력이 뛰어난</button>
+    </div>
+
+    <div class="generate-button-container">
+        <button id="generate-button" onclick="generateCharacter()" class="generate-button">캐릭터 생성</button>
+    </div>
+
+    <div class="results-container">
+        <div class="character-container">
+            <img id="character-image" src="https://via.placeholder.com/300x300?text=Character" alt="Character">
+            <div id="description" class="description-box"></div>
+        </div>
+        <div class="recommendations-container">
+            <div class="recommendation-box">
+                <h3>추천 학과</h3>
+                <div id="major-recommendations" class="recommendation-content"></div>
+            </div>
+            <div class="recommendation-box">
+                <h3>추천 직업</h3>
+                <div id="career-recommendations" class="recommendation-content"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const selectedTraits = new Set();
+    const MAX_TRAITS = 10;
+
+    function toggleTrait(button, trait) {
+        if (selectedTraits.has(trait)) {
+            selectedTraits.delete(trait);
+            button.classList.remove('selected');
+        } else {
+            if (selectedTraits.size >= MAX_TRAITS) {
+                alert('최대 10개까지만 선택할 수 있습니다.');
+                return;
+            }
+            selectedTraits.add(trait);
+            button.classList.add('selected');
+        }
+        updateGenerateButton();
+    }
+
+    function updateGenerateButton() {
+        const generateButton = document.getElementById('generate-button');
+        generateButton.disabled = selectedTraits.size === 0;
+    }
+
+    async function generateCharacter() {
+        try {
+            if (selectedTraits.size === 0) {
+                alert('하나 이상의 특성을 선택해주세요.');
+                return;
+            }
+
+            // 로딩 상태 표시
+            document.getElementById('description').textContent = '생성 중...';
+            document.getElementById('major-recommendations').textContent = '학과 추천 생성 중...';
+            document.getElementById('career-recommendations').textContent = '직업 추천 생성 중...';
+
+            const response = await fetch('http://localhost:9090/api/character', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    traits: Array.from(selectedTraits)
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || '서버 오류가 발생했습니다.');
+            }
+
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error || '캐릭터 생성에 실패했습니다.');
+            }
+
+            // 결과 표시
+            document.getElementById('character-image').src = data.imageUrl;
+            document.getElementById('description').textContent = data.description;
+            
+            // 추천 내용을 줄바꿈과 함께 보기 좋게 표시
+            const majorContent = document.getElementById('major-recommendations');
+            majorContent.innerHTML = data.majorRecommendations.split('\n').map(line => 
+                `<p>${line}</p>`
+            ).join('');
+
+            const careerContent = document.getElementById('career-recommendations');
+            careerContent.innerHTML = data.careerRecommendations.split('\n').map(line => 
+                `<p>${line}</p>`
+            ).join('');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('캐릭터 생성 중 오류가 발생했습니다: ' + error.message);
+            
+            // 에러 시 내용 초기화
+            document.getElementById('description').textContent = '생성에 실패했습니다.';
+            document.getElementById('major-recommendations').textContent = '학과 추천 생성에 실패했습니다.';
+            document.getElementById('career-recommendations').textContent = '직업 추천 생성에 실패했습니다.';
+        }
+    }
+
+    // 초기 버튼 상태 설정
+    updateGenerateButton();
+</script>
+   
+</body>
+</html>
