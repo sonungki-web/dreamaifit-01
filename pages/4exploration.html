@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT-4[고교학점제]</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(
+                135deg,
+                #ffeef7,
+                #ffe6f3,
+                #ffeef7,
+                #ffe0f0
+            );
+            background-size: 400% 400%;
+            animation: aurora 15s ease infinite;
+        }
+        
+        .header {
+            background-color: #FF8000; /* 이전 #FF9933에서 더 진한 주황색으로 변경 */
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: headerAurora 10s ease infinite;
+            color: white;
+        }
+        
+        .home-icon {
+            position: absolute;
+            left: 15px;
+            background-color: rgba(241, 185, 131, 0.45); /* nav-icon과 동일하게 조정 */
+            padding: 10px;
+            border-radius: 5px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .home-icon:hover {
+            background-color: rgba(255, 255, 255, 0.55); /* nav-icon과 동일하게 조정 */
+        }
+        
+        .home-icon:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .home-icon svg {
+            fill: white;
+        }
+        
+        .title {
+            color: white;
+            font-weight: 600;
+            font-size: 2em;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-left: 15px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            margin-top: 10px;
+        }
+        
+        .left-container {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #eca14c; /* 이전보다 밝은 주황색 */
+            box-shadow: 
+                0 2px 4px rgba(196,20,110,0.05),
+                0 0 0 2px #C4146E,
+                8px 8px 16px rgba(196,20,110,0.1),
+                -8px -8px 16px rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .left-container:hover {
+            box-shadow: 
+                0 4px 8px rgba(196,20,110,0.08),
+                0 0 0 2px #D4147E,
+                10px 10px 20px rgba(196,20,110,0.12),
+                -10px -10px 20px rgba(255,255,255,0.9);
+            background: #faa250;
+        }
+        
+        .tutor-image-container {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .tutor-image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        .tutor-description {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .tutor-description h3 {
+            color: #0c0107;
+            margin-bottom: 10px;
+        }
+        
+        .tutor-description p {
+            color: #131212;
+            line-height: 1.5;
+        }
+        
+        .right-container {
+            flex: 1;
+            width: calc(100% - 40px);
+            margin: 0 auto;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #FFF2E6; /* 거의 흰색에 가까운 아주 연한 주황색으로 변경 */
+            box-shadow: 
+                0 2px 4px rgba(142,68,173,0.05),
+                0 0 0 2px #8e44ad,
+                8px 8px 16px rgba(142,68,173,0.1),
+                -8px -8px 16px rgba(255,255,255,0.8);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .right-container:hover {
+            box-shadow: 
+                0 4px 8px rgba(142,68,173,0.08),
+                0 0 0 2px #9b59b6,
+                10px 10px 20px rgba(142,68,173,0.12),
+                -10px -10px 20px rgba(255,255,255,0.9);
+        }
+        
+        .eduteach-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;  /* 마진 증가 */
+            padding: 15px;
+            background: linear-gradient(135deg, #f3ead6, #f3c776);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: titlePulse 2s infinite;
+            position: relative;  /* 가상 요소 위치 기준 */
+        }
+        
+        /* 구분선 효과 추가 */
+        .eduteach-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent,
+                #a15803,
+                #be6f08,
+                #be760a,
+                transparent
+            );
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* 추가 장식 요소 */
+        .eduteach-title::before {
+            content: '✦';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #C4146E;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .eduteach-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .eduteach-text {
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 15px;  /* 이모지와 텍스트 사이 간격 */
+        }
+        
+        .eduteach-text::before,
+        .eduteach-text::after {
+            content: '🧭';  /* 나침반 이모지로 변경 */
+            font-size: 20px;
+            filter: drop-shadow(0 0 2px #FF4444);
+            animation: compassSpin 2s ease-in-out infinite;
+        }
+        
+        @keyframes compassSpin {
+            0% {
+                opacity: 0.7;
+                transform: scale(0.8) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1) rotate(20deg);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(0.8) rotate(0deg);
+            }
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background-color: #f0aa69; /* 이전 상태로 복원 */
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+        
+        .card {
+            background-color: #FF6600; /* 호버 시 밝은 진한 주황색 */
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: #FF4400; /* 호버 시 더 진한 주황색 */
+        }
+        
+        .card-icon {
+            background-color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon svg {
+            fill: #FF6600;  /* 아이콘 색상 변경 */
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .card-description {
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        
+        
+        /* 반응형 미디어 쿼리 추가 */
+        @media (max-width: 1200px) {
+            .content-wrapper {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .left-container, .right-container {
+                flex: 1;
+                width: 100%;
+            }
+            
+            .right-container {
+                flex: 1;
+                width: calc(100% - 40px);
+                margin: 0 auto;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .eduteach-title::after {
+                width: 90%;
+            }
+            
+            .right-container {
+                box-shadow: 
+                    0 2px 4px rgba(142,68,173,0.05),
+                    0 0 0 2px #8e44ad,
+                    4px 4px 8px rgba(142,68,173,0.1),
+                    -4px -4px 8px rgba(255,255,255,0.8);
+            }
+        }
+
+        @keyframes aurora {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes headerAurora {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 추가적인 오로라 효과를 위한 가상 요소 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(142,68,173,0.03),
+                rgba(155,89,182,0.03),
+                rgba(142,68,173,0.03)
+            );
+            background-size: 200% 200%;
+            animation: shimmer 20s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 150%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .navigation-icons {
+            position: absolute;
+            left: 70px;  /* 홈 아이콘 옆으로 배치 */
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 15px; /* 아이콘 사이의 간격을 15px로 통일 */
+            margin-right: 15px; /* 마지막 아이콘과 타이틀 사이 간격도 동일하게 */
+        }
+
+        .nav-icon {
+            position: relative;
+            background-color: rgba(241, 185, 131, 0.45); /* nav-icon과 동일하게 조정 */
+           /* 0.35에서 0.45로 더 진하게 */
+            padding: 10px;
+            border-radius: 5px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icon:hover {
+            background-color: rgba(255, 255, 255, 0.55); /* 0.45에서 0.55로 더 진하게 */
+        }
+
+        .nav-icon:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* 공통 툴팁 스타일 */
+        .tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 5px;  /* 툴팁과 아이콘 사이 간격 추가 */
+        }
+
+        /* 태블릿 화면 */
+        @media screen and (max-width: 1024px) {
+            .left-container {
+                flex: 0 0 250px;  /* 너비 축소 */
+                padding: 15px;    /* 패딩 축소 */
+            }
+
+            .tutor-description {
+                font-size: 0.9em;  /* 글자 크기 축소 */
+            }
+        }
+
+        /* 모바일 화면 */
+        @media screen and (max-width: 768px) {
+            .left-container {
+                flex: 1 1 100%;  /* 전체 너비로 변경 */
+                margin-bottom: 20px;  /* 아래 여백 추가 */
+            }
+
+            .container {
+                flex-direction: column;  /* 세로 배치로 변경 */
+            }
+
+            .tutor-image-container {
+                max-width: 200px;  /* 이미지 최대 너비 제한 */
+                margin: 0 auto;    /* 중앙 정렬 */
+            }
+
+            .tutor-description {
+                text-align: center;
+                font-size: 1em;    /* 글자 크기 복원 */
+            }
+        }
+
+        /* 작은 모바일 화면 */
+        @media screen and (max-width: 480px) {
+            .left-container {
+                padding: 10px;     /* 패딩 더 축소 */
+                margin-bottom: 15px;
+            }
+
+            .tutor-image-container {
+                max-width: 150px;  /* 이미지 크기 더 축소 */
+            }
+
+            .tutor-description {
+                font-size: 0.9em;  /* 글자 크기 다시 축소 */
+            }
+        }
+
+        /* 컨테이너 전체 반응형 스타일 */
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+                gap: 15px;
+            }
+        }
+
+        .card-container {
+            background-color: #FF6600; /* 진한 주황색 유지 */
+            border: 1px solid #E65C00;
+            box-shadow: 0 4px 8px rgba(255, 102, 0, 0.25);
+        }
+
+        .card-container:hover {
+            background-color: #FF751A; /* 호버 효과 유지 */
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .tutor-container {
+            background-color: #FFA64D; /* 튜터 컨테이너도 밝게 조정 */
+        }
+
+        .section-title {
+            background-color: #FFDDCC; /* 섹션 제목도 더 연하게 조정 */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <!-- 홈 아이콘 -->
+        <div class="home-icon" onclick="window.location.href='../index.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span class="tooltip">홈으로 이동</span>
+        </div>
+
+        <!-- 네비게이션 아이콘들 추가 -->
+        <div class="navigation-icons">
+            <div class="nav-icon" onclick="window.location.href='1exploration.html'">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                    <path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z"/>
+                </svg>
+                <span class="tooltip">자아탐색</span>
+            </div>
+            
+            <!-- 2단계: 학과탐색 -->
+            <div class="nav-icon" onclick="window.location.href='2exploration.html'">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                    <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                </svg>
+                <span class="tooltip">학과탐색</span>
+            </div>
+           
+            <div class="nav-icon" onclick="window.location.href='3exploration.html'">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                    <path d="M10 16v-1H3.01L3 19c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2v-4h-7v1h-4zm10-9h-4.01V5l-2-2h-4l-2 2v2H4c-1.1 0-2 .9-2 2v3c0 1.11.89 2 2 2h6v-2h4v2h6c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-6 0h-4V5h4v2z"/>
+                </svg>
+                <span class="tooltip">직업탐색</span>
+            </div><!-- 4단계: 고교학점제 -->
+            
+
+            <!-- 자아탐색 -->
+            
+        </div>
+
+        <div class="title">꿈AI-FIT</div>
+    </div>
+    
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <div class="message-container">
+            
+               </div>
+        
+        <div class="content-wrapper">
+            <!-- Left Container: Tutor Image and Description -->
+            <div class="left-container">
+                <div class="tutor-image-container">
+                    <img src="/assets/ai-tutor-growth.png" alt="직업업 튜터 이미지">
+                </div>
+                <div class="tutor-description">
+                    <h3>고교학점제 도움 튜터</h3>
+                    <p>고교학점제 운영을 위한 맞춤형 튜터입니다. 학생들의 과목 선택과 진로 설계를 지원합니니다.</p>
+                </div>
+            </div>
+            
+            <!-- Right Container: Activity Cards -->
+            <div class="right-container">
+                <div class="eduteach-title">
+                   
+                    <div class="eduteach-text">4단계 - 고교학점제 준비 활동</div>
+                </div>
+                
+                <div class="cards-container">
+                    <!-- 학과탐색 -->
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">고교학점제 이해</div>
+                        <div class="card-description">고교학점제의 기본 개념과 운영 방식, 학점 이수 체계 이해</div>
+                    </div>
+                    
+                    <!-- 학과밸런스게임 -->
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 14h-3v3h-2v-3H8v-2h3v-3h2v3h3v2zm-3-7V3.5L18.5 9H13z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">교육과정의 이해</div>
+                        <div class="card-description">고교학점제 교육과정의 구조와 과목 선택 방법 알기</div>
+                    </div>
+                    
+                    <!-- 학과워드클라우드 -->
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 14h-3v3h-2v-3H8v-2h3v-3h2v3h3v2zm-3-7V3.5L18.5 9H13z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">나만의 교육과정</div>
+                        <div class="card-description">자신의 진로와 적성에 맞는 맞춤형 교육과정을 설계와 구성</div>
+                    </div>
+                    
+                    <!-- 학과워드밸런스게임 -->
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">학과선택 전략</div>
+                        <div class="card-description">효과적인 과목 선택과 학점 이수를 위한 구체적인 전략 수립</div>
+                    </div>
+                    
+                    <!-- 진학준비 만다라트 -->
+                    <div class="card" onclick="window.location.href='dream-mandal.html'">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h1.5v3l2-3h1.7l-2 3 2 3h-1.7l-2-3v3H12V5zM7 7.25h2.5V6.5H7V5h4v3.75H8.5v.75H11V11H7V7.25zM19 13l-6 6-4-4-4 4v-2.5l4-4 4 4 6-6V13z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">진학준비 만다라트</div>
+                        <div class="card-description">만다라트 기법을 활용하여 체계적인 진학 준비 계획 수립립</div>
+                    </div>
+
+                    <!-- 학과상담소 -->
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0052A4" width="35" height="35">
+                                <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/>
+                            </svg>
+                        </div>
+                        <div class="card-title">고교학점제 상담소</div>
+                        <div class="card-description">AI 튜터와 함께 고교학점제 관련 맞춤형 상담 진행</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
